@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --bg: #f5f4f1;
+  --surface: #ffffff;
+  --foreground: #010207;
+  --text-secondary: #6b6b6b;
+  --text-muted: #999999;
+  --border: #eaeaea;
+  --hover: #f5f5f5;
+  --blue: #5b6cf0;
+  --blue-light: #eef0ff;
+  --blue-gradient: linear-gradient(135deg, #5b6cf0, #8b5cf6);
+  --green: #22c55e;
+  --green-light: #f0fdf4;
+  --green-gradient: linear-gradient(135deg, #22c55e, #16a34a);
+  --red: #ef4444;
+  --red-light: #fef2f2;
+  --orange: #f59e0b;
+  --orange-light: #fffbeb;
+  --orange-gradient: linear-gradient(135deg, #f59e0b, #ea580c);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+  --bg: #111113;
+  --surface: #1a1a1e;
+  --foreground: #f0f0f0;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  --border: #2a2a2e;
+  --hover: #222226;
+  --blue: #7c8cf8;
+  --blue-light: #1a1a3a;
+  --blue-gradient: linear-gradient(135deg, #7c8cf8, #a78bfa);
+  --green: #34d399;
+  --green-light: #0a2a1a;
+  --green-gradient: linear-gradient(135deg, #34d399, #22c55e);
+  --red: #f87171;
+  --red-light: #2a1010;
+  --orange: #fbbf24;
+  --orange-light: #2a1a05;
+  --orange-gradient: linear-gradient(135deg, #fbbf24, #f59e0b);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Albert Sans', sans-serif;
+  background: var(--bg);
+  color: var(--foreground);
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  transition: width 200ms ease, min-width 200ms ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.sidebar.collapsed {
+  width: 64px;
+  min-width: 64px;
+}
+.sidebar.collapsed .sidebar-label,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .promo-card,
+.sidebar.collapsed .pro-badge {
+  display: none;
+}
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding: 10px;
+}
+.sidebar.collapsed .logo-area {
+  display: none;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.logo-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pro-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--foreground);
+  color: var(--bg);
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 14px 6px;
+  letter-spacing: 0.5px;
+}
+.sidebar-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 150ms;
+  user-select: none;
+  white-space: nowrap;
+}
+.nav-item.active {
+  background: var(--hover);
+  color: var(--foreground);
+  font-weight: 600;
+}
+.nav-item:hover:not(.active) {
+  background: var(--hover);
+}
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.nav-text {
+  flex: 1;
+}
+.sidebar-bottom {
+  margin-top: auto;
+}
+.promo-card {
+  background: var(--foreground);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--bg);
+  margin-top: 12px;
+}
+.promo-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.promo-card p {
+  font-size: 12px;
+  opacity: 0.85;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.promo-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  backdrop-filter: blur(4px);
+  transition: background 150ms;
+}
+.promo-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ========== MAIN WRAPPER ========== */
+.main-wrapper {
+  flex: 1;
+  margin-left: 240px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 200ms ease;
+}
+.sidebar.collapsed ~ .main-wrapper {
+  margin-left: 64px;
+}
+
+/* ========== TOP BAR ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 28px;
+  flex-shrink: 0;
+}
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.sidebar-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 150ms;
+  padding: 0;
+}
+.sidebar-toggle:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+.sidebar-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+.sidebar.collapsed .sidebar-toggle {
+  margin: 0 auto;
+}
+.sidebar.collapsed .sidebar-top {
+  justify-content: center;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 13px;
+  width: 220px;
+  box-shadow: var(--shadow-sm);
+}
+.search-bar svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  width: 100%;
+  height: auto;
+  padding: 0;
+  box-shadow: none;
+}
+.search-bar input::placeholder {
+  color: var(--text-muted);
+}
+.search-bar input:focus {
+  border: none;
+  box-shadow: none;
+}
+.top-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 150ms;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.top-icon:hover {
+  background: var(--hover);
+}
+.top-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.notif-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 28px 28px;
+}
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+.page-header {
+  margin-bottom: 20px;
+}
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.page-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.page-desc .more-text {
+  display: none;
+}
+.page-desc .more-text.show {
+  display: block;
+  margin-top: 6px;
+}
+.toggle-more {
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 4px;
+}
+.toggle-more:hover {
+  text-decoration: underline;
+}
+
+/* ========== CARDS ========== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.col-left .card {
+  padding: 12px 14px;
+}
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--foreground);
+}
+.col-left .card + .card {
+  margin-top: 0;
+}
+
+/* ========== LAYOUT ========== */
+.two-col {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 140px);
+  min-height: 500px;
+}
+.col-left {
+  width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.col-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.col-55 {
+  flex: 0 0 55%;
+  min-width: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.col-45 {
+  flex: 0 0 calc(45% - 20px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* ========== RADIO CARDS ========== */
+.radio-group {
+  display: flex;
+  gap: 8px;
+}
+.radio-card {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 150ms;
+  color: var(--text-secondary);
+  user-select: none;
+}
+.radio-card.selected {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--bg);
+  font-weight: 600;
+}
+.radio-card:hover:not(.selected) {
+  border-color: var(--text-muted);
+}
+
+/* ========== TOGGLE SWITCH ========== */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+.toggle-row + .toggle-row {
+  border-top: 1px solid var(--border);
+  margin-top: 6px;
+  padding-top: 10px;
+}
+.toggle-label {
+  font-size: 13px;
+  color: var(--foreground);
+  font-weight: 500;
+}
+.toggle-switch {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--border);
+  cursor: pointer;
+  position: relative;
+  transition: background 200ms;
+  flex-shrink: 0;
+}
+.toggle-switch.on {
+  background: var(--foreground);
+}
+.toggle-switch .knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 200ms;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle-switch.on .knob {
+  left: 21px;
+}
+
+/* ========== STAT CARDS ========== */
+.stats-row {
+  display: flex;
+  gap: 8px;
+}
+.stat-card {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 10px;
+  text-align: center;
+  background: var(--hover) !important;
+  color: var(--foreground) !important;
+}
+.stat-number {
+  font-size: 20px;
+  font-weight: 700;
+}
+.stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ========== PROGRESS BAR ========== */
+.progress-track {
+  height: 6px;
+  background: var(--hover);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--foreground);
+  border-radius: 3px;
+  transition: width 300ms;
+  width: 0%;
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  transition: all 150ms;
+  white-space: nowrap;
+}
+.btn:hover {
+  background: var(--hover);
+}
+.btn-start {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--foreground);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 200ms;
+}
+.btn-start:hover {
+  opacity: 0.85;
+}
+.btn-start:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-red {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+.btn-red:hover {
+  background: var(--hover);
+  color: var(--foreground);
+}
+.btn-blue {
+  background: var(--foreground);
+  color: var(--bg);
+  border-color: var(--foreground);
+}
+.btn-blue:hover {
+  opacity: 0.85; background: var(--foreground);
+  color: white;
+}
+.action-row {
+  display: flex;
+  gap: 8px;
+}
+.action-row .btn {
+  flex: 1;
+}
+
+/* ========== LOG ========== */
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.log-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.log-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--blue-light);
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.log-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 200px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+}
+.log-container .log-entry {
+  padding: 2px 0;
+}
+.log-container .success {
+  color: var(--green);
+}
+.log-container .error {
+  color: var(--red);
+}
+.log-container .warn {
+  color: var(--orange);
+}
+.log-container .info {
+  color: var(--blue);
+}
+
+/* ========== INPUTS ========== */
+input, textarea, select {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 14px;
+  color: var(--foreground);
+  font-family: inherit;
+  transition: border-color 150ms, box-shadow 150ms;
+  width: 100%;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(91,108,240,0.1);
+  outline: none;
+}
+textarea {
+  height: auto;
+  padding: 10px 14px;
+  resize: vertical;
+  min-height: 100px;
+}
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+.form-group {
+  margin-bottom: 14px;
+}
+.char-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* ========== TABLES ========== */
+.table-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.table-toolbar .btn svg {
+  width: 14px;
+  height: 14px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  background: var(--hover);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+tbody td {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  vertical-align: middle;
+}
+tbody tr:hover {
+  background: var(--blue-light);
+}
+tbody tr.new-row {
+  animation: rowHighlight 1.5s ease;
+}
+@keyframes rowHighlight {
+  0% { background: var(--blue-light); }
+  100% { background: transparent; }
+}
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-ok {
+  background: var(--green-light);
+  color: var(--green);
+}
+.badge-empty {
+  background: var(--hover);
+  color: var(--text-muted);
+}
+.badge-active {
+  background: var(--green-light);
+  color: var(--green);
+}
+.badge-inactive {
+  background: var(--red-light);
+  color: var(--red);
+}
+.delete-btn {
+  opacity: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: var(--red-light);
+  color: var(--red);
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 150ms, background 150ms;
+}
+tbody tr:hover .delete-btn {
+  opacity: 1;
+}
+.delete-btn:hover {
+  background: var(--red);
+  color: white;
+}
+.table-scroll {
+  max-height: calc(100vh - 340px);
+  overflow-y: auto;
+}
+
+/* ========== ANALYTICS ========== */
+.overview-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.overview-gradient {
+  padding: 20px;
+  border-radius: 16px;
+  color: var(--foreground) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.overview-gradient::after, .overview-gradient::before { display: none; }
+.overview-gradient .ov-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.overview-gradient .ov-number {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 6px 0 4px;
+  color: var(--foreground);
+}
+.overview-gradient .ov-change {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+.tab-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-secondary);
+  transition: all 150ms;
+}
+.tab-btn.active {
+  background: var(--foreground);
+  color: var(--bg);
+  border-color: var(--foreground);
+  font-weight: 600;
+}
+.tab-btn:hover:not(.active) {
+  background: var(--hover);
+}
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.metric-card {
+  padding: 16px;
+}
+.metric-card .metric-val {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.metric-card .metric-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.chart-card {
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.chart-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.chart-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.chart-area {
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding-top: 10px;
+}
+.chart-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.chart-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: var(--foreground);
+  opacity: 0.7;
+  transition: height 400ms;
+  min-height: 4px;
+}
+.chart-bar-label {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.range-btns {
+  display: flex;
+  gap: 4px;
+}
+.range-btn {
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-secondary);
+  transition: all 150ms;
+}
+.range-btn.active {
+  background: var(--foreground);
+  color: var(--bg);
+  border-color: var(--foreground);
+}
+.range-btn:hover:not(.active) {
+  background: var(--hover);
+}
+.data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ========== PUBLISH ========== */
+.status-bar {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.status-bar.idle {
+  background: var(--hover);
+  color: var(--text-secondary);
+}
+.status-bar.working {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+.status-bar.done {
+  background: var(--green-light);
+  color: var(--green);
+}
+.status-bar.error {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+/* ========== MORE MENU ========== */
+.more-menu-wrap {
+  position: relative;
+  display: inline-block;
+}
+.more-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+  margin-top: 4px;
+}
+.more-menu.show {
+  display: block;
+}
+.more-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.more-menu button:hover {
+  background: var(--hover);
+}
+.more-menu button.danger {
+  color: var(--red);
+}
+
+/* ========== MODAL ========== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.show {
+  display: flex;
+}
+.modal {
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  background: var(--surface);
+  max-width: 400px;
+  width: 90%;
+  animation: modalIn 200ms ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.modal p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ========== ENGAGE GROUPS ========== */
+.groups-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+.group-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+.group-check + .group-check {
+  border-top: 1px solid var(--border);
+}
+.group-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+}
+
+/* ========== SESSION CARD ========== */
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 5px 0;
+}
+.session-item + .session-item {
+  border-top: 1px solid var(--border);
+}
+.session-email {
+  color: var(--foreground);
+  font-weight: 500;
+}
+.session-meta {
+  color: var(--text-muted);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========== SINGLE-COL PAGE ========== */
+.page-single-col {
+  width: 100%;
+}
+.page-single-col .card + .card {
+  margin-top: 10px;
+}
+
+/* ========== COLLAPSIBLE LOG PANEL ========== */
+.log-panel {
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.log-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  user-select: none;
+}
+.log-panel-header:hover {
+  background: var(--hover);
+}
+.log-chevron {
+  transition: transform 200ms;
+  color: var(--text-muted);
+}
+.log-panel.open .log-chevron {
+  transform: rotate(180deg);
+}
+.log-panel-body {
+  border-top: 1px solid var(--border);
+  max-height: 300px;
+}
+.log-panel-body .log-container {
+  border: none;
+  border-radius: 0;
+  max-height: 300px;
+  min-height: 100px;
+}
+
+/* ========== HELPERS ========== */
+.hidden {
+  display: none !important;
+}
+</style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="logo-area">
+      <div class="logo-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <div class="logo-text">Marketing AI <span class="pro-badge">Pro</span></div>
+    </div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="sidebar-label">Main</div>
+
+  <div class="nav-item active" onclick="switchPage('engage')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <span class="nav-text">Engage</span>
+  </div>
+
+  <div class="nav-item" onclick="switchPage('connections')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    <span class="nav-text">Connections</span>
+  </div>
+
+  <div class="nav-item" onclick="switchPage('publish')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+    <span class="nav-text">Publish</span>
+  </div>
+
+  <div class="nav-item" onclick="switchPage('analytics')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    <span class="nav-text">Analytics</span>
+  </div>
+
+  <div class="sidebar-separator"></div>
+  <div class="sidebar-label">Settings</div>
+
+  <div class="nav-item" onclick="switchPage('accounts')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="nav-text">Accounts</span>
+  </div>
+
+  <div class="nav-item" onclick="switchPage('groups')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="nav-text">Groups</span>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="promo-card">
+      <h4>Upgrade to Pro</h4>
+      <p>Get advanced analytics and unlimited accounts</p>
+      <button class="promo-btn">Learn more</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ========== MAIN WRAPPER ========== -->
+<div class="main-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="search-bar" style="margin-right:auto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search...">
+    </div>
+    <button class="top-icon" onclick="toggleTheme()" title="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <button class="top-icon" style="position:relative" title="Notifications" onclick="showWarning('Notifications','No new notifications.')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-avatar" onclick="showWarning('Profile','User profile settings coming soon.')" style="cursor:pointer" title="Profile">NL</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- ==================== ENGAGE PAGE ==================== -->
+    <div class="page active" id="page-engage">
+      <div class="page-header">
+        <h1>Engage</h1>
+        <p class="page-desc">
+          Boost your visibility by automatically liking and commenting on posts from your target audience.
+          <span class="toggle-more" onclick="toggleDescription('engage-more')">more</span>
+          <span class="more-text" id="engage-more">
+            Choose a company page or LinkedIn groups to target, pick how many posts to interact with, and let the tool handle the rest. You can run multiple accounts at once for faster results.
+            <span class="toggle-more" onclick="toggleDescription('engage-more')">less</span>
+          </span>
+        </p>
+      </div>
+      <div class="page-single-col">
+          <!-- Source -->
+          <div class="card">
+            <div class="card-title">Source</div>
+            <div class="radio-group" id="engage-source">
+              <div class="radio-card selected" onclick="setRadioCard(this,'engage-source');toggleSource('company')">Single Company</div>
+              <div class="radio-card" onclick="setRadioCard(this,'engage-source');toggleSource('groups')">Groups</div>
+            </div>
+            <div id="engage-company-field" style="margin-top:12px">
+              <label>Company LinkedIn URL</label>
+              <input type="text" placeholder="https://linkedin.com/company/...">
+            </div>
+            <div id="engage-groups-field" class="hidden" style="margin-top:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <label style="margin:0">Groups <span id="engage-groups-count" class="log-badge">0 selected</span></label>
+                <button class="btn" style="padding:4px 10px;font-size:11px" onclick="reloadGroups()">Reload</button>
+              </div>
+              <div class="group-check" style="border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:4px">
+                <input type="checkbox" onchange="toggleAllGroups(this.checked)"><span style="font-weight:600">Select All</span>
+              </div>
+              <div class="groups-list" id="engage-groups-list"></div>
+            </div>
+          </div>
+          <!-- Accounts -->
+          <div class="card">
+            <div class="card-title">Accounts</div>
+            <div class="radio-group" id="engage-accounts">
+              <div class="radio-card selected" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','all')">All</div>
+              <div class="radio-card" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','single')">Single</div>
+              <div class="radio-card" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','from')">From</div>
+            </div>
+            <div id="engage-email-field" class="hidden" style="margin-top:12px">
+              <label id="engage-email-label">Email</label>
+              <input type="text" id="engage-email-input" placeholder="email@example.com">
+            </div>
+          </div>
+          <!-- Options -->
+          <div class="card">
+            <div class="card-title">Options</div>
+            <div class="toggle-row">
+              <span class="toggle-label">Like posts</span>
+              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Comment on posts</span>
+              <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Random delay</span>
+              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Debug session</span>
+              <div class="toggle-switch" onclick="this.classList.toggle('on');toggleDebugSession()"><div class="knob"></div></div>
+            </div>
+          </div>
+          <!-- Progress -->
+          <div class="card">
+            <div class="card-title">Progress</div>
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-number" id="engage-total">0</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="engage-success">0</div>
+                <div class="stat-label">Success</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="engage-failed">0</div>
+                <div class="stat-label">Failed</div>
+              </div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="engage-progress"></div></div>
+          </div>
+          <!-- Actions -->
+          <button class="btn-start" id="engage-start-btn" onclick="startAutomation('engage')" style="margin-top:10px">Start Engagement</button>
+          <div class="action-row" style="margin-top:8px">
+            <button class="btn btn-red" onclick="stopAutomation()">Stop</button>
+            <button class="btn" onclick="skipCurrent()">Skip</button>
+            <div class="more-menu-wrap">
+              <button class="btn" onclick="toggleMoreMenu('engage-more-menu')">More &#9662;</button>
+              <div class="more-menu" id="engage-more-menu">
+                <button onclick="exportLog('engage')">Export Log</button>
+                <button class="danger" onclick="clearData()">Clear Data</button>
+              </div>
+            </div>
+          </div>
+          <!-- Collapsible Activity Log -->
+          <div class="log-panel" id="engage-log-panel">
+            <div class="log-panel-header" onclick="toggleLogPanel('engage')">
+              <span>Activity Log <span class="log-badge" id="engage-log-count">0 entries</span></span>
+              <span class="log-chevron">&#9662;</span>
+            </div>
+            <div class="log-panel-body" id="engage-log-body" style="display:none">
+              <div class="log-container" id="engage-log"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- ==================== CONNECTIONS PAGE ==================== -->
+    <div class="page" id="page-connections">
+      <div class="page-header">
+        <h1>Connections</h1>
+        <p class="page-desc">
+          Grow your network by engaging with your connections' latest posts.
+          <span class="toggle-more" onclick="toggleDescription('conn-more')">more</span>
+          <span class="more-text" id="conn-more">
+            The tool goes through your connections list, finds their recent posts, and automatically likes or comments on them. Great for staying visible and building relationships at scale.
+            <span class="toggle-more" onclick="toggleDescription('conn-more')">less</span>
+          </span>
+        </p>
+      </div>
+      <div class="page-single-col">
+          <div class="card">
+            <div class="card-title">Accounts</div>
+            <div class="radio-group" id="conn-accounts">
+              <div class="radio-card selected" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','all')">All</div>
+              <div class="radio-card" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','single')">Single</div>
+              <div class="radio-card" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','from')">From</div>
+            </div>
+            <div id="conn-email-field" class="hidden" style="margin-top:12px">
+              <label id="conn-email-label">Email</label>
+              <input type="text" id="conn-email-input" placeholder="email@example.com">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Options</div>
+            <div class="toggle-row">
+              <span class="toggle-label">Like posts</span>
+              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Comment on posts</span>
+              <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Random delay</span>
+              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Progress</div>
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-number" id="conn-total">0</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="conn-success">0</div>
+                <div class="stat-label">Success</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="conn-failed">0</div>
+                <div class="stat-label">Failed</div>
+              </div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="conn-progress"></div></div>
+          </div>
+          <button class="btn-start" id="conn-start-btn" onclick="startAutomation('connections')" style="margin-top:10px">Start Connection Engagement</button>
+          <div class="action-row" style="margin-top:8px">
+            <button class="btn btn-red" onclick="stopAutomation()">Stop</button>
+            <button class="btn" onclick="skipCurrent()">Skip</button>
+            <div class="more-menu-wrap">
+              <button class="btn" onclick="toggleMoreMenu('conn-more-menu')">More &#9662;</button>
+              <div class="more-menu" id="conn-more-menu">
+                <button onclick="exportLog('connections')">Export Log</button>
+                <button class="danger" onclick="clearData()">Clear Data</button>
+              </div>
+            </div>
+          </div>
+          <!-- Collapsible Activity Log -->
+          <div class="log-panel" id="conn-log-panel">
+            <div class="log-panel-header" onclick="toggleLogPanel('conn')">
+              <span>Activity Log <span class="log-badge" id="conn-log-count">0 entries</span></span>
+              <span class="log-chevron">&#9662;</span>
+            </div>
+            <div class="log-panel-body" id="conn-log-body" style="display:none">
+              <div class="log-container" id="conn-log"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- ==================== PUBLISH PAGE ==================== -->
+    <div class="page" id="page-publish">
+      <div class="page-header">
+        <h1>Publish</h1>
+        <p class="page-desc">
+          Create and publish LinkedIn posts with help from AI.
+          <span class="toggle-more" onclick="toggleDescription('publish-more')">more</span>
+          <span class="more-text" id="publish-more">
+            Find trending topics, generate captions in your brand voice, attach images, and publish directly to your company page -- all from one place.
+            <span class="toggle-more" onclick="toggleDescription('publish-more')">less</span>
+          </span>
+        </p>
+      </div>
+      <div class="page-single-col">
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Session active &middot; CLI connected &middot; <span id="publish-session-count">8</span> accounts loaded</div>
+          <div class="status-bar idle" id="publish-status">Ready to compose</div>
+          <div class="card">
+            <div class="card-title">Topic</div>
+            <div class="form-group">
+              <input type="text" id="publish-topic" placeholder="Enter a topic or keyword...">
+            </div>
+            <button class="btn btn-blue" onclick="simulateFindTopic()" id="find-topic-btn">Find Trending Topic</button>
+          </div>
+          <div class="card">
+            <div class="card-title">Caption</div>
+            <div class="form-group">
+              <textarea id="publish-caption" rows="6" placeholder="Write your caption or generate one with AI..." oninput="updateCharCount()"></textarea>
+              <div class="char-count"><span id="char-count">0</span> / 3000</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-blue" onclick="simulateWriteCaption()" id="write-caption-btn">Generate Caption</button>
+              <button class="btn" onclick="document.getElementById('publish-caption').value='';updateCharCount()">Clear</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Image</div>
+            <div class="form-group" style="margin-bottom:0">
+              <input type="text" id="publish-image" placeholder="Image URL (optional)">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">First Comment (optional)</div>
+            <div class="form-group" style="margin-bottom:0">
+              <input type="text" id="publish-first-comment" placeholder="Add a first comment to boost engagement...">
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <button class="btn-start" onclick="simulatePost()" id="post-btn">Publish Post</button>
+          </div>
+          <!-- Session details (collapsible) -->
+          <div class="log-panel" style="margin-top:12px">
+            <div class="log-panel-header" onclick="toggleLogPanel('publish-session')">
+              <span>Session Details</span>
+              <span class="log-chevron">&#9662;</span>
+            </div>
+            <div class="log-panel-body" id="publish-session-log-body" style="display:none">
+              <div style="padding:12px 14px" id="publish-sessions"></div>
+            </div>
+          </div>
+          <!-- Collapsible Activity Log -->
+          <div class="log-panel" id="publish-log-panel">
+            <div class="log-panel-header" onclick="toggleLogPanel('publish')">
+              <span>Activity Log <span class="log-badge" id="publish-log-count">0 entries</span></span>
+              <span class="log-chevron">&#9662;</span>
+            </div>
+            <div class="log-panel-body" id="publish-log-body" style="display:none">
+              <div class="log-container" id="publish-log"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- ==================== ANALYTICS PAGE ==================== -->
+    <div class="page" id="page-analytics">
+      <div class="page-header">
+        <h1>Analytics</h1>
+        <p class="page-desc">
+          See how your social media accounts are performing at a glance.
+          <span class="toggle-more" onclick="toggleDescription('analytics-more')">more</span>
+          <span class="more-text" id="analytics-more">
+            Track followers, engagement, reach, and content performance across Facebook, LinkedIn, and Threads. Switch between platforms and time ranges to spot trends.
+            <span class="toggle-more" onclick="toggleDescription('analytics-more')">less</span>
+          </span>
+        </p>
+      </div>
+
+      <!-- Overview gradient cards -->
+      <div class="overview-row">
+        <div class="overview-gradient" >
+          <div class="ov-label">LinkedIn Followers</div>
+          <div class="ov-number">12,847</div>
+          <div class="ov-change">+8.3% from last month</div>
+        </div>
+        <div class="overview-gradient" >
+          <div class="ov-label">Total Engagement</div>
+          <div class="ov-number">3,241</div>
+          <div class="ov-change">+12.1% from last month</div>
+        </div>
+        <div class="overview-gradient" >
+          <div class="ov-label">Content Reach</div>
+          <div class="ov-number">48,920</div>
+          <div class="ov-change">+5.7% from last month</div>
+        </div>
+      </div>
+
+      <!-- Platform tabs + sync -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div class="tabs" id="platform-tabs">
+          <button class="tab-btn active" onclick="switchPlatform('linkedin',this)">LinkedIn</button>
+          <button class="tab-btn" onclick="switchPlatform('facebook',this)">Facebook</button>
+          <button class="tab-btn" onclick="switchPlatform('threads',this)">Threads</button>
+        </div>
+        <button class="btn btn-blue" onclick="syncAnalytics()">Sync Data</button>
+      </div>
+
+      <!-- Metrics -->
+      <div class="metrics-row">
+        <div class="card metric-card">
+          <div class="metric-val" id="m-followers">12,847</div>
+          <div class="metric-label">Followers</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-val" id="m-engagement">3,241</div>
+          <div class="metric-label">Engagement</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-val" id="m-posts">142</div>
+          <div class="metric-label">Posts</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-val" id="m-reach">48.9K</div>
+          <div class="metric-label">Reach</div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="card chart-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div>
+            <h3>Engagement Over Time</h3>
+            <div class="chart-subtitle">Daily engagement metrics</div>
+          </div>
+          <div class="range-btns" id="range-btns">
+            <button class="range-btn" onclick="setRange(7,this)">7d</button>
+            <button class="range-btn active" onclick="setRange(14,this)">14d</button>
+            <button class="range-btn" onclick="setRange(30,this)">30d</button>
+          </div>
+        </div>
+        <div class="chart-area" id="chart-area"></div>
+      </div>
+
+      <!-- Data grid -->
+      <div class="data-grid">
+        <div class="card">
+          <div class="card-title">Top Performing Post</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.5">"5 AI trends that will transform B2B marketing in 2026..."</p>
+          <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">842 likes &middot; 156 comments &middot; 12.4K views</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Audience Demographics</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+            Marketing: 34%<br>Engineering: 28%<br>Sales: 18%<br>Other: 20%
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Best Posting Times</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+            Tuesday 9:00 AM<br>Wednesday 8:30 AM<br>Thursday 10:00 AM
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Growth Rate</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+            Weekly: +2.3%<br>Monthly: +8.3%<br>Quarterly: +24.1%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ACCOUNTS PAGE ==================== -->
+    <div class="page" id="page-accounts">
+      <div class="page-header">
+        <h1>Accounts</h1>
+        <p class="page-desc">
+          Add and manage the email accounts used for automation.
+          <span class="toggle-more" onclick="toggleDescription('accounts-more')">more</span>
+          <span class="more-text" id="accounts-more">
+            Each account can be used for liking, commenting, and connecting on LinkedIn. Keep track of credentials, recovery emails, and 2FA codes all in one place.
+            <span class="toggle-more" onclick="toggleDescription('accounts-more')">less</span>
+          </span>
+        </p>
+      </div>
+      <div class="table-container">
+        <div class="table-toolbar">
+          <button class="btn btn-blue" onclick="addTableRow()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Row
+          </button>
+          <div class="more-menu-wrap" style="margin-left:auto">
+            <button class="btn" onclick="toggleMoreMenu('accounts-more-menu')">More &#9662;</button>
+            <div class="more-menu" id="accounts-more-menu">
+              <button onclick="document.getElementById('csvImportInput').click()">Import CSV</button>
+              <button onclick="exportLog('accounts')">Export CSV</button>
+              <button class="danger" onclick="showConfirm('Clear All','Remove all accounts?',function(){accounts.length=0;renderAccountsTable()})">Clear All</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="csvImportInput" accept=".csv" style="display:none" onchange="importCSV(this)">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>X</th>
+                <th>LinkedIn</th>
+                <th>Recovery</th>
+                <th>Password</th>
+                <th>Note</th>
+                <th>2FA</th>
+                <th style="width:40px"></th>
+              </tr>
+            </thead>
+            <tbody id="accounts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== GROUPS PAGE ==================== -->
+    <div class="page" id="page-groups">
+      <div class="page-header">
+        <h1>Groups</h1>
+        <p class="page-desc">
+          Choose which LinkedIn groups to target for engagement.
+          <span class="toggle-more" onclick="toggleDescription('groups-more')">more</span>
+          <span class="more-text" id="groups-more">
+            Add groups by URL, enable or disable them, and manage your targeting list. Active groups will be used when you run engagement in Groups mode.
+            <span class="toggle-more" onclick="toggleDescription('groups-more')">less</span>
+          </span>
+        </p>
+      </div>
+      <div class="table-container">
+        <div class="table-toolbar">
+          <button class="btn btn-blue" onclick="addGroupRow()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Row
+          </button>
+          <div class="more-menu-wrap" style="margin-left:auto">
+            <button class="btn" onclick="toggleMoreMenu('groups-more-menu')">More &#9662;</button>
+            <div class="more-menu" id="groups-more-menu">
+              <button onclick="document.getElementById('groupsCsvImport').click()">Import CSV</button>
+              <button onclick="exportLog('groups')">Export CSV</button>
+              <button class="danger" onclick="showConfirm('Clear All','Remove all groups?',function(){groups.length=0;renderGroupsTable()})">Clear All</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="groupsCsvImport" accept=".csv" style="display:none" onchange="importGroupsCSV(this)">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th style="width:40px"></th>
+              </tr>
+            </thead>
+            <tbody id="groups-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /main-wrapper -->
+
+<!-- ========== WARNING MODAL ========== -->
+<div class="modal-overlay" id="modal-warning">
+  <div class="modal">
+    <h3 id="modal-warning-title">Warning</h3>
+    <p id="modal-warning-body">Something happened.</p>
+    <div class="modal-actions">
+      <button class="btn btn-blue" onclick="closeModal('modal-warning')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONFIRM MODAL ========== -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal">
+    <h3 id="modal-confirm-title">Confirm</h3>
+    <p id="modal-confirm-body">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-red" id="modal-confirm-ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================================== -->
+<script>
+/* ========== DATA ========== */
+const MOCK_ACCOUNTS = [
+  { email:'marketing01@8seneca.com', x:'ok', linkedin:'ok', recovery:'backup01@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Main account', code2fa:'JBSWY3DPEHPK3PXP' },
+  { email:'marketing02@8seneca.com', x:'ok', linkedin:'ok', recovery:'backup02@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'K4YDG5RDMNSWE3JR' },
+  { email:'marketing03@8seneca.com', x:'', linkedin:'ok', recovery:'backup03@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Banned Mar 2025', code2fa:'' },
+  { email:'seeder.alpha@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Connection bot', code2fa:'MFXHS33V' },
+  { email:'seeder.beta@gmail.com', x:'', linkedin:'ok', recovery:'recovery.beta@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'' },
+  { email:'seeder.gamma@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Groups only', code2fa:'N5ZHKZLQOBWXE' },
+  { email:'engage.user01@gmail.com', x:'', linkedin:'ok', recovery:'engage.recovery@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'' },
+  { email:'engage.user02@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'High engagement', code2fa:'JVSXG43DN5SQ' },
+  { email:'engage.user03@gmail.com', x:'', linkedin:'', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Setup pending', code2fa:'' },
+  { email:'publisher@8seneca.com', x:'ok', linkedin:'ok', recovery:'pub.backup@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Company page', code2fa:'PB4WK3TUHE' },
+  { email:'analytics@8seneca.com', x:'', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Read-only', code2fa:'' },
+  { email:'reserve.acct@gmail.com', x:'', linkedin:'', recovery:'reserve.backup@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Reserve', code2fa:'' },
+];
+
+const MOCK_GROUPS = [
+  { url:'https://www.linkedin.com/groups/12345678', name:'IT Leaders Slovakia', enabled:true },
+  { url:'https://www.linkedin.com/groups/23456789', name:'Digital Marketing Bratislava', enabled:true },
+  { url:'https://www.linkedin.com/groups/34567890', name:'Tech Professionals CEE', enabled:true },
+  { url:'https://www.linkedin.com/groups/45678901', name:'Startup Founders Network', enabled:false },
+  { url:'https://www.linkedin.com/groups/56789012', name:'AI & Machine Learning Europe', enabled:false },
+];
+
+const MOCK_SESSIONS = [
+  { email:'marketing01@8seneca.com', saved:'2h ago', cookies:42 },
+  { email:'marketing02@8seneca.com', saved:'2h ago', cookies:38 },
+  { email:'seeder.alpha@gmail.com', saved:'5h ago', cookies:41 },
+  { email:'seeder.beta@gmail.com', saved:'1d ago', cookies:39 },
+  { email:'seeder.gamma@gmail.com', saved:'1d ago', cookies:44 },
+  { email:'engage.user01@gmail.com', saved:'3d ago', cookies:36 },
+  { email:'engage.user02@gmail.com', saved:'3d ago', cookies:40 },
+  { email:'publisher@8seneca.com', saved:'12h ago', cookies:45 },
+];
+
+let accounts = JSON.parse(JSON.stringify(MOCK_ACCOUNTS));
+let groups = JSON.parse(JSON.stringify(MOCK_GROUPS));
+let automationInterval = null;
+let automationRunning = false;
+let currentAutomationSource = null;
+let logCounters = { engage: 0, connections: 0, publish: 0 };
+
+/* ========== 1. switchPage ========== */
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var el = document.getElementById('page-' + name);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var pages = ['engage','connections','publish','analytics','accounts','groups'];
+  var idx = pages.indexOf(name);
+  var navItems = document.querySelectorAll('.nav-item');
+  if (idx >= 0 && navItems[idx]) navItems[idx].classList.add('active');
+  // close any open more menus
+  document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
+}
+
+/* ========== 2. toggleSidebar ========== */
+function toggleSidebar() {
+  var sb = document.getElementById('sidebar');
+  sb.classList.toggle('collapsed');
+  var mw = document.querySelector('.main-wrapper');
+  if (sb.classList.contains('collapsed')) {
+    mw.style.marginLeft = '64px';
+  } else {
+    mw.style.marginLeft = '240px';
+  }
+}
+
+/* ========== 3. toggleTheme ========== */
+function toggleTheme() {
+  var html = document.documentElement;
+  var current = html.getAttribute('data-theme');
+  var next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next);
+  var icon = document.getElementById('themeIcon');
+  if (next === 'dark') {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  } else {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  }
+  // Re-render chart for theme colors
+  renderBarChart();
+}
+
+/* ========== 4. toggleDescription ========== */
+function toggleDescription(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var isShown = el.classList.toggle('show');
+  var moreBtn = el.previousElementSibling;
+  if (moreBtn && moreBtn.classList.contains('toggle-more')) {
+    moreBtn.style.display = isShown ? 'none' : '';
+  }
+}
+
+/* ========== 5. setRadioCard ========== */
+function setRadioCard(el, containerId) {
+  var container = document.getElementById(containerId);
+  container.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+/* ========== 6. toggleSource ========== */
+function toggleSource(mode) {
+  document.getElementById('engage-company-field').classList.toggle('hidden', mode === 'groups');
+  document.getElementById('engage-groups-field').classList.toggle('hidden', mode === 'company');
+  if (mode === 'groups') renderEngageGroups();
+}
+
+/* ========== 7. renderEngageGroups, toggleAllGroups, updateGroupsCount, reloadGroups ========== */
+function renderEngageGroups() {
+  var list = document.getElementById('engage-groups-list');
+  list.innerHTML = '';
+  groups.forEach(function(g, i) {
+    var div = document.createElement('div');
+    div.className = 'group-check';
+    div.innerHTML = '<input type="checkbox" ' + (g.enabled ? 'checked' : '') + ' onchange="groups[' + i + '].enabled=this.checked;updateGroupsCount()"><span>' + escapeHtml(g.name) + '</span>';
+    list.appendChild(div);
+  });
+  updateGroupsCount();
+}
+
+function toggleAllGroups(checked) {
+  groups.forEach(function(g) { g.enabled = checked; });
+  renderEngageGroups();
+  var selAll = document.querySelector('#engage-groups-field > .group-check input[type=checkbox]');
+  if (selAll) selAll.checked = checked;
+}
+
+function updateGroupsCount() {
+  var count = groups.filter(function(g) { return g.enabled; }).length;
+  document.getElementById('engage-groups-count').textContent = count + ' selected';
+}
+
+function reloadGroups() {
+  groups = JSON.parse(JSON.stringify(MOCK_GROUPS));
+  renderEngageGroups();
+  renderGroupsTable();
+}
+
+/* ========== 8. toggleEmailField ========== */
+function toggleEmailField(prefix, mode) {
+  var field = document.getElementById(prefix + '-email-field');
+  var label = document.getElementById(prefix + '-email-label');
+  if (mode === 'all') {
+    field.classList.add('hidden');
+  } else {
+    field.classList.remove('hidden');
+    label.textContent = mode === 'single' ? 'Email' : 'Start from email';
+  }
+}
+
+/* ========== 9. toggleDebugSession ========== */
+function toggleDebugSession() {
+  // Visual toggle only in prototype
+}
+
+/* ========== 10. startAutomation ========== */
+function startAutomation(source) {
+  if (automationRunning) return;
+  automationRunning = true;
+  currentAutomationSource = source;
+  var prefix = source === 'connections' ? 'conn' : 'engage';
+  var totalAccounts = accounts.length;
+  var processed = 0, success = 0, failed = 0;
+
+  document.getElementById(prefix + '-start-btn').disabled = true;
+  autoExpandLogPanel(prefix);
+  addLog('Starting automation with ' + totalAccounts + ' accounts...', 'info', source);
+
+  automationInterval = setInterval(function() {
+    if (processed >= totalAccounts || !automationRunning) {
+      clearInterval(automationInterval);
+      automationInterval = null;
+      automationRunning = false;
+      currentAutomationSource = null;
+      document.getElementById(prefix + '-start-btn').disabled = false;
+      addLog('Automation completed. ' + success + '/' + totalAccounts + ' successful.', 'info', source);
+      return;
+    }
+    var acc = accounts[processed];
+    var isSuccess = Math.random() < 0.8;
+    if (isSuccess) {
+      success++;
+      addLog('[OK] ' + escapeHtml(acc.email) + ' \u2014 liked 3 posts', 'success', source);
+    } else {
+      failed++;
+      addLog('[FAIL] ' + escapeHtml(acc.email) + ' \u2014 session expired', 'error', source);
+    }
+    processed++;
+    document.getElementById(prefix + '-total').textContent = processed;
+    document.getElementById(prefix + '-success').textContent = success;
+    document.getElementById(prefix + '-failed').textContent = failed;
+    document.getElementById(prefix + '-progress').style.width = Math.round(processed / totalAccounts * 100) + '%';
+  }, 800);
+}
+
+/* ========== 11. stopAutomation, skipCurrent, clearData, exportLog ========== */
+function stopAutomation() {
+  automationRunning = false;
+  if (automationInterval) {
+    clearInterval(automationInterval);
+    automationInterval = null;
+  }
+  if (currentAutomationSource) {
+    addLog('Automation stopped by user.', 'warn', currentAutomationSource);
+  }
+  currentAutomationSource = null;
+  document.getElementById('engage-start-btn').disabled = false;
+  document.getElementById('conn-start-btn').disabled = false;
+}
+
+function skipCurrent() {
+  if (currentAutomationSource) {
+    addLog('Skipping current account...', 'warn', currentAutomationSource);
+  }
+}
+
+function clearData() {
+  showConfirm('Clear Data', 'This will clear all logs and reset counters. Continue?', function() {
+    ['engage','conn'].forEach(function(p) {
+      document.getElementById(p + '-total').textContent = '0';
+      document.getElementById(p + '-success').textContent = '0';
+      document.getElementById(p + '-failed').textContent = '0';
+      document.getElementById(p + '-progress').style.width = '0%';
+    });
+    document.getElementById('engage-log').innerHTML = '';
+    document.getElementById('conn-log').innerHTML = '';
+    logCounters.engage = 0;
+    logCounters.connections = 0;
+    document.getElementById('engage-log-count').textContent = '0 entries';
+    document.getElementById('conn-log-count').textContent = '0 entries';
+  });
+}
+
+function exportLog(source) {
+  var logId;
+  if (source === 'connections') logId = 'conn-log';
+  else if (source === 'accounts') {
+    // export accounts as CSV
+    var csv = 'Email,X,LinkedIn,Recovery,Password,Note,2FA\n';
+    accounts.forEach(function(a) {
+      csv += [a.email, a.x, a.linkedin, a.recovery, a.password, a.note, a.code2fa].map(function(v) {
+        return '"' + (v || '').replace(/"/g, '""') + '"';
+      }).join(',') + '\n';
+    });
+    downloadText(csv, 'accounts.csv', 'text/csv');
+    return;
+  } else if (source === 'groups') {
+    var csv2 = 'URL,Name,Enabled\n';
+    groups.forEach(function(g) {
+      csv2 += [g.url, g.name, g.enabled ? 'yes' : 'no'].map(function(v) {
+        return '"' + (v || '').replace(/"/g, '""') + '"';
+      }).join(',') + '\n';
+    });
+    downloadText(csv2, 'groups.csv', 'text/csv');
+    return;
+  } else {
+    logId = source + '-log';
+  }
+  var logEl = document.getElementById(logId);
+  if (!logEl) { showWarning('Export', 'No log to export.'); return; }
+  var text = logEl.innerText;
+  downloadText(text, source + '-log.txt', 'text/plain');
+}
+
+function importCSV(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var lines = e.target.result.split('\n').filter(function(l) { return l.trim(); });
+    if (lines.length < 2) { showWarning('Import', 'CSV file is empty or has no data rows.'); return; }
+    var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/"/g, '').toLowerCase(); });
+    var imported = 0;
+    for (var i = 1; i < lines.length; i++) {
+      var vals = lines[i].match(/(".*?"|[^,]+)/g) || [];
+      vals = vals.map(function(v) { return v.replace(/^"|"$/g, '').replace(/""/g, '"').trim(); });
+      var row = { email: '', x: '', linkedin: '', recovery: '', password: '', note: '', code2fa: '' };
+      headers.forEach(function(h, idx) {
+        if (h === 'email') row.email = vals[idx] || '';
+        else if (h === 'x') row.x = vals[idx] || '';
+        else if (h === 'linkedin') row.linkedin = vals[idx] || '';
+        else if (h === 'recovery') row.recovery = vals[idx] || '';
+        else if (h === 'password') row.password = vals[idx] || '';
+        else if (h === 'note') row.note = vals[idx] || '';
+        else if (h === '2fa' || h === 'code2fa') row.code2fa = vals[idx] || '';
+      });
+      if (row.email) { accounts.push(row); imported++; }
+    }
+    renderAccountsTable();
+    showWarning('Import Complete', 'Imported ' + imported + ' account(s) from CSV.');
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function importGroupsCSV(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var lines = e.target.result.split('\n').filter(function(l) { return l.trim(); });
+    if (lines.length < 2) { showWarning('Import', 'CSV file is empty or has no data rows.'); return; }
+    var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/"/g, '').toLowerCase(); });
+    var imported = 0;
+    for (var i = 1; i < lines.length; i++) {
+      var vals = lines[i].match(/(".*?"|[^,]+)/g) || [];
+      vals = vals.map(function(v) { return v.replace(/^"|"$/g, '').replace(/""/g, '"').trim(); });
+      var row = { url: '', name: '', enabled: true };
+      headers.forEach(function(h, idx) {
+        if (h === 'url') row.url = vals[idx] || '';
+        else if (h === 'name') row.name = vals[idx] || '';
+        else if (h === 'enabled' || h === 'status') row.enabled = (vals[idx] || '').toLowerCase() !== 'no' && (vals[idx] || '').toLowerCase() !== 'false';
+      });
+      if (row.url) { groups.push(row); imported++; }
+    }
+    renderGroupsTable();
+    renderEngageGroups();
+    showWarning('Import Complete', 'Imported ' + imported + ' group(s) from CSV.');
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function downloadText(content, filename, type) {
+  var blob = new Blob([content], { type: type });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ========== 13. addLog, addPublishLog, escapeHtml ========== */
+function addLog(msg, cls, source) {
+  var prefix = source === 'connections' ? 'conn' : source;
+  var logEl = document.getElementById(prefix + '-log');
+  if (!logEl) return;
+  var time = new Date().toLocaleTimeString();
+  var entry = document.createElement('div');
+  entry.className = 'log-entry ' + (cls || '');
+  entry.textContent = '[' + time + '] ' + msg;
+  logEl.appendChild(entry);
+  logEl.scrollTop = logEl.scrollHeight;
+  if (!logCounters[source]) logCounters[source] = 0;
+  logCounters[source]++;
+  var badge = document.getElementById(prefix + '-log-count');
+  if (badge) badge.textContent = logCounters[source] + ' entries';
+}
+
+function addPublishLog(msg, cls) {
+  var logEl = document.getElementById('publish-log');
+  var time = new Date().toLocaleTimeString();
+  var entry = document.createElement('div');
+  entry.className = 'log-entry ' + (cls || '');
+  entry.textContent = '[' + time + '] ' + msg;
+  logEl.appendChild(entry);
+  logEl.scrollTop = logEl.scrollHeight;
+  logCounters.publish++;
+  document.getElementById('publish-log-count').textContent = logCounters.publish + ' entries';
+  // Auto-expand publish log when publishing actions happen
+  if (cls === 'info' && (msg.indexOf('Publishing') >= 0 || msg.indexOf('Searching') >= 0 || msg.indexOf('Generating') >= 0)) {
+    autoExpandLogPanel('publish');
+  }
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+/* ========== 12. simulateFindTopic, simulateWriteCaption, simulatePost, updateCharCount ========== */
+function setPublishStatus(text, cls) {
+  var bar = document.getElementById('publish-status');
+  bar.className = 'status-bar ' + cls;
+  bar.textContent = text;
+}
+
+function simulateFindTopic() {
+  var btn = document.getElementById('find-topic-btn');
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+  setPublishStatus('Finding trending topics...', 'working');
+  autoExpandLogPanel('publish');
+  addPublishLog('Searching for trending topics...', 'info');
+  setTimeout(function() {
+    var topics = [
+      'AI in B2B Marketing',
+      'Remote Team Productivity',
+      'SaaS Growth Hacks 2026',
+      'LinkedIn Algorithm Changes',
+      'Personal Branding Tips'
+    ];
+    var topic = topics[Math.floor(Math.random() * topics.length)];
+    document.getElementById('publish-topic').value = topic;
+    btn.disabled = false;
+    btn.textContent = 'Find Trending Topic';
+    setPublishStatus('Topic found', 'done');
+    addPublishLog('Found topic: ' + topic, 'success');
+  }, 2000);
+}
+
+function simulateWriteCaption() {
+  var topic = document.getElementById('publish-topic').value;
+  if (!topic) {
+    showWarning('Missing Topic', 'Please enter or find a topic first.');
+    return;
+  }
+  var btn = document.getElementById('write-caption-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  setPublishStatus('Generating caption with AI...', 'working');
+  autoExpandLogPanel('publish');
+  addPublishLog('Generating caption for: ' + topic, 'info');
+  setTimeout(function() {
+    var caption = topic + ' is reshaping how we think about growth.\n\nHere are 3 things I learned this week:\n\n1. Authenticity beats perfection every time\n2. Consistency compounds faster than you think\n3. Your network is your net worth\n\nWhat would you add to this list?\n\n#Marketing #Growth #LinkedIn #AI';
+    document.getElementById('publish-caption').value = caption;
+    updateCharCount();
+    btn.disabled = false;
+    btn.textContent = 'Generate Caption';
+    setPublishStatus('Caption generated', 'done');
+    addPublishLog('Caption generated (' + caption.length + ' chars)', 'success');
+  }, 2500);
+}
+
+function simulatePost() {
+  var caption = document.getElementById('publish-caption').value;
+  if (!caption) {
+    showWarning('Missing Caption', 'Please write or generate a caption first.');
+    return;
+  }
+  var btn = document.getElementById('post-btn');
+  btn.disabled = true;
+  setPublishStatus('Publishing post...', 'working');
+  autoExpandLogPanel('publish');
+  addPublishLog('Publishing post...', 'info');
+  setTimeout(function() {
+    btn.disabled = false;
+    setPublishStatus('Post published successfully!', 'done');
+    addPublishLog('Post published successfully!', 'success');
+  }, 3000);
+}
+
+function updateCharCount() {
+  var count = document.getElementById('publish-caption').value.length;
+  document.getElementById('char-count').textContent = count;
+}
+
+/* ========== 14. renderAccountsTable, addTableRow, deleteAccount ========== */
+function renderAccountsTable() {
+  var tbody = document.getElementById('accounts-tbody');
+  tbody.innerHTML = '';
+  accounts.forEach(function(a, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-weight:500">' + escapeHtml(a.email) + '</td>' +
+      '<td>' + (a.x ? '<span class="badge badge-ok">ok</span>' : '<span class="badge badge-empty">&mdash;</span>') + '</td>' +
+      '<td>' + (a.linkedin ? '<span class="badge badge-ok">ok</span>' : '<span class="badge badge-empty">&mdash;</span>') + '</td>' +
+      '<td style="font-size:12px;color:var(--text-secondary)">' + (escapeHtml(a.recovery) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
+      '<td style="font-size:12px;color:var(--text-muted)">' + escapeHtml(a.password) + '</td>' +
+      '<td style="font-size:12px;color:var(--text-secondary)">' + (escapeHtml(a.note) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
+      '<td style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:var(--text-muted)">' + (escapeHtml(a.code2fa) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
+      '<td><button class="delete-btn" onclick="deleteAccount(' + i + ')">&times;</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function addTableRow() {
+  var newAcc = { email:'', x:'', linkedin:'', recovery:'', password:'', note:'New account', code2fa:'' };
+  accounts.unshift(newAcc);
+  renderAccountsTable();
+  var firstRow = document.querySelector('#accounts-tbody tr');
+  if (firstRow) {
+    firstRow.classList.add('new-row');
+    var td = firstRow.querySelector('td');
+    td.setAttribute('contenteditable', 'true');
+    td.style.outline = 'none';
+    td.style.borderBottom = '2px solid var(--blue)';
+    td.textContent = '';
+    td.focus();
+    td.addEventListener('blur', function() {
+      accounts[0].email = td.textContent;
+      td.removeAttribute('contenteditable');
+      td.style.borderBottom = '';
+      if (!td.textContent) {
+        renderAccountsTable();
+      }
+    });
+    td.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        td.blur();
+      }
+    });
+  }
+}
+
+function deleteAccount(i) {
+  showConfirm('Delete Account', 'Remove ' + (accounts[i].email || 'this account') + '?', function() {
+    accounts.splice(i, 1);
+    renderAccountsTable();
+  });
+}
+
+/* ========== 15. renderGroupsTable, addGroupRow, deleteGroup ========== */
+function renderGroupsTable() {
+  var tbody = document.getElementById('groups-tbody');
+  tbody.innerHTML = '';
+  groups.forEach(function(g, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="' + escapeHtml(g.url) + '" target="_blank" style="color:var(--blue);text-decoration:none">' + escapeHtml(g.url) + '</a></td>' +
+      '<td style="font-weight:500">' + escapeHtml(g.name) + '</td>' +
+      '<td>' + (g.enabled ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-inactive">Inactive</span>') + '</td>' +
+      '<td><button class="delete-btn" onclick="deleteGroup(' + i + ')">&times;</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function addGroupRow() {
+  var newGroup = { url:'', name:'New Group', enabled:true };
+  groups.unshift(newGroup);
+  renderGroupsTable();
+  var firstRow = document.querySelector('#groups-tbody tr');
+  if (firstRow) {
+    firstRow.classList.add('new-row');
+    var td = firstRow.querySelector('td');
+    td.setAttribute('contenteditable', 'true');
+    td.style.outline = 'none';
+    td.style.borderBottom = '2px solid var(--blue)';
+    td.textContent = '';
+    td.focus();
+    td.addEventListener('blur', function() {
+      groups[0].url = td.textContent;
+      td.removeAttribute('contenteditable');
+      td.style.borderBottom = '';
+      if (!td.textContent) {
+        renderGroupsTable();
+      }
+    });
+    td.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        td.blur();
+      }
+    });
+  }
+}
+
+function deleteGroup(i) {
+  showConfirm('Delete Group', 'Remove ' + (groups[i].name || 'this group') + '?', function() {
+    groups.splice(i, 1);
+    renderGroupsTable();
+    renderEngageGroups();
+  });
+}
+
+/* ========== 16. renderBarChart, setRange, switchPlatform, syncAnalytics ========== */
+function renderBarChart() {
+  var area = document.getElementById('chart-area');
+  if (!area) return;
+  area.innerHTML = '';
+  var days = parseInt(area.dataset.days || '14');
+  var labels = [];
+  var now = new Date();
+  for (var i = days - 1; i >= 0; i--) {
+    var d = new Date(now);
+    d.setDate(d.getDate() - i);
+    labels.push(d.toLocaleDateString('en', { month: 'short', day: 'numeric' }));
+  }
+  var vals = labels.map(function() { return Math.floor(Math.random() * 180) + 40; });
+  var max = Math.max.apply(null, vals);
+
+  labels.forEach(function(l, idx) {
+    var wrap = document.createElement('div');
+    wrap.className = 'chart-bar-wrap';
+    var bar = document.createElement('div');
+    bar.className = 'chart-bar';
+    bar.style.height = '0px';
+    var lbl = document.createElement('div');
+    lbl.className = 'chart-bar-label';
+    lbl.textContent = days <= 14 ? l : (idx % 3 === 0 ? l : '');
+    wrap.appendChild(bar);
+    wrap.appendChild(lbl);
+    area.appendChild(wrap);
+    // Animate
+    setTimeout(function() {
+      bar.style.height = Math.round(vals[idx] / max * 180) + 'px';
+    }, idx * 30);
+  });
+}
+
+function setRange(days, btn) {
+  document.querySelectorAll('#range-btns .range-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('chart-area').dataset.days = days;
+  renderBarChart();
+}
+
+var platformData = {
+  linkedin: { followers: '12,847', engagement: '3,241', posts: '142', reach: '48.9K' },
+  facebook: { followers: '8,312', engagement: '1,892', posts: '98', reach: '32.1K' },
+  threads: { followers: '2,156', engagement: '678', posts: '45', reach: '11.2K' },
+};
+
+function switchPlatform(platform, btn) {
+  document.querySelectorAll('#platform-tabs .tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var d = platformData[platform];
+  document.getElementById('m-followers').textContent = d.followers;
+  document.getElementById('m-engagement').textContent = d.engagement;
+  document.getElementById('m-posts').textContent = d.posts;
+  document.getElementById('m-reach').textContent = d.reach;
+  renderBarChart();
+}
+
+function syncAnalytics() {
+  showWarning('Sync Complete', 'Analytics data synced successfully.');
+}
+
+/* ========== 17. showWarning, showConfirm, closeModal ========== */
+function showWarning(title, body) {
+  document.getElementById('modal-warning-title').textContent = title;
+  document.getElementById('modal-warning-body').textContent = body;
+  document.getElementById('modal-warning').classList.add('show');
+}
+
+var confirmCallback = null;
+function showConfirm(title, body, onOk) {
+  document.getElementById('modal-confirm-title').textContent = title;
+  document.getElementById('modal-confirm-body').textContent = body;
+  confirmCallback = onOk;
+  document.getElementById('modal-confirm-ok').onclick = function() {
+    closeModal('modal-confirm');
+    if (confirmCallback) confirmCallback();
+    confirmCallback = null;
+  };
+  document.getElementById('modal-confirm').classList.add('show');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// Close modals on overlay click
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('show');
+  }
+});
+
+/* ========== 18. toggleMoreMenu ========== */
+function toggleMoreMenu(id) {
+  var menu = document.getElementById(id);
+  var wasShown = menu.classList.contains('show');
+  document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
+  if (!wasShown) menu.classList.add('show');
+}
+
+// Close more menus on click outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.more-menu-wrap')) {
+    document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
+  }
+});
+
+/* ========== PUBLISH SESSIONS ========== */
+function renderPublishSessions() {
+  var container = document.getElementById('publish-sessions');
+  if (!container) return;
+  container.innerHTML = '';
+  MOCK_SESSIONS.forEach(function(s) {
+    var div = document.createElement('div');
+    div.className = 'session-item';
+    div.innerHTML = '<span class="session-email">' + escapeHtml(s.email) + '</span><span class="session-meta">' + s.saved + ' \u00b7 ' + s.cookies + ' cookies</span>';
+    container.appendChild(div);
+  });
+}
+
+/* ========== 19a. toggleLogPanel ========== */
+function toggleLogPanel(page) {
+  var body = document.getElementById(page + '-log-body');
+  if (!body) return;
+  var panel = body.closest('.log-panel');
+  if (!panel) return;
+  panel.classList.toggle('open');
+  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function autoExpandLogPanel(page) {
+  var body = document.getElementById(page + '-log-body');
+  if (!body) return;
+  var panel = body.closest('.log-panel');
+  if (!panel) return;
+  if (!panel.classList.contains('open')) {
+    panel.classList.add('open');
+    body.style.display = 'block';
+  }
+}
+
+/* ========== 19. BOOT ========== */
+document.addEventListener('DOMContentLoaded', function() {
+  renderAccountsTable();
+  renderGroupsTable();
+  renderBarChart();
+  renderEngageGroups();
+  renderPublishSessions();
+
+  // Boot log messages
+  var bootMessages = [
+    ['System initialized', 'info'],
+    ['Loading accounts... 12 found', 'success'],
+    ['Loading groups... 5 found', 'success'],
+    ['Sessions loaded: 8 active', 'success'],
+    ['Ready.', 'info'],
+  ];
+  bootMessages.forEach(function(m, i) {
+    setTimeout(function() {
+      addLog(m[0], m[1], 'engage');
+      addLog(m[0], m[1], 'connections');
+    }, (i + 1) * 300);
+  });
+  setTimeout(function() {
+    addPublishLog('Publisher ready.', 'info');
+  }, 500);
+});
+</script>
+</body>
+</html>
