@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketing AI</title>
+<title>PLPA</title>
 <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root, [data-theme="light"] {
@@ -60,6 +60,91 @@ body {
   display: flex;
   min-height: 100vh;
   overflow: hidden;
+}
+
+/* ========== LOGIN SCREEN ========== */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.login-screen.hidden { display: none; }
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+.login-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.login-card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.login-card .login-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.login-card .form-group {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.login-card .form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.login-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--foreground);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 200ms;
+  margin-top: 8px;
+}
+.login-btn:hover { opacity: 0.9; }
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.login-divider::before, .login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
 }
 
 /* ========== SIDEBAR ========== */
@@ -382,22 +467,6 @@ body {
   color: var(--text-secondary);
   line-height: 1.5;
 }
-.page-desc .more-text {
-  display: none;
-}
-.page-desc .more-text.show {
-  display: block;
-  margin-top: 6px;
-}
-.toggle-more {
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-weight: 500;
-  margin-left: 4px;
-}
-.toggle-more:hover {
-  text-decoration: underline;
-}
 
 /* ========== CARDS ========== */
 .card {
@@ -441,50 +510,6 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-}
-.col-55 {
-  flex: 0 0 55%;
-  min-width: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.col-45 {
-  flex: 0 0 calc(45% - 20px);
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow-y: auto;
-}
-
-/* ========== RADIO CARDS ========== */
-.radio-group {
-  display: flex;
-  gap: 8px;
-}
-.radio-card {
-  flex: 1;
-  padding: 12px 16px;
-  border-radius: 12px;
-  border: 1.5px solid var(--border);
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 150ms;
-  color: var(--text-secondary);
-  user-select: none;
-}
-.radio-card.selected {
-  border-color: var(--foreground);
-  background: var(--foreground);
-  color: var(--bg);
-  font-weight: 600;
-}
-.radio-card:hover:not(.selected) {
-  border-color: var(--text-muted);
 }
 
 /* ========== TOGGLE SWITCH ========== */
@@ -641,55 +666,6 @@ body {
   flex: 1;
 }
 
-/* ========== LOG ========== */
-.log-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.log-header h3 {
-  font-size: 15px;
-  font-weight: 600;
-}
-.log-badge {
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--blue-light);
-  color: var(--blue);
-  padding: 2px 8px;
-  border-radius: 8px;
-}
-.log-container {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 200px;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  box-shadow: var(--shadow-sm);
-}
-.log-container .log-entry {
-  padding: 2px 0;
-}
-.log-container .success {
-  color: var(--green);
-}
-.log-container .error {
-  color: var(--red);
-}
-.log-container .warn {
-  color: var(--orange);
-}
-.log-container .info {
-  color: var(--blue);
-}
-
 /* ========== INPUTS ========== */
 input, textarea, select {
   height: 38px;
@@ -731,58 +707,7 @@ label {
   margin-top: 4px;
 }
 
-/* ========== TABLES ========== */
-.table-container {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-.table-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.table-toolbar .btn svg {
-  width: 14px;
-  height: 14px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-thead th {
-  background: var(--hover);
-  padding: 10px 14px;
-  text-align: left;
-  font-weight: 600;
-  font-size: 12px;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-tbody td {
-  padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  vertical-align: middle;
-}
-tbody tr:hover {
-  background: var(--blue-light);
-}
-tbody tr.new-row {
-  animation: rowHighlight 1.5s ease;
-}
-@keyframes rowHighlight {
-  0% { background: var(--blue-light); }
-  100% { background: transparent; }
-}
+/* ========== BADGE ========== */
 .badge {
   display: inline-block;
   padding: 3px 10px;
@@ -806,31 +731,9 @@ tbody tr.new-row {
   background: var(--red-light);
   color: var(--red);
 }
-.delete-btn {
-  opacity: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  border: none;
-  background: var(--red-light);
-  color: var(--red);
-  cursor: pointer;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 150ms, background 150ms;
-}
-tbody tr:hover .delete-btn {
-  opacity: 1;
-}
-.delete-btn:hover {
-  background: var(--red);
-  color: white;
-}
-.table-scroll {
-  max-height: calc(100vh - 340px);
-  overflow-y: auto;
+.badge-blue {
+  background: var(--blue-light);
+  color: var(--blue);
 }
 
 /* ========== ANALYTICS ========== */
@@ -1004,49 +907,6 @@ tbody tr:hover .delete-btn {
   color: var(--red);
 }
 
-/* ========== MORE MENU ========== */
-.more-menu-wrap {
-  position: relative;
-  display: inline-block;
-}
-.more-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 6px;
-  min-width: 160px;
-  box-shadow: var(--shadow-lg);
-  z-index: 50;
-  margin-top: 4px;
-}
-.more-menu.show {
-  display: block;
-}
-.more-menu button {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border: none;
-  background: none;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--foreground);
-  border-radius: 8px;
-  cursor: pointer;
-}
-.more-menu button:hover {
-  background: var(--hover);
-}
-.more-menu button.danger {
-  color: var(--red);
-}
-
 /* ========== MODAL ========== */
 .modal-overlay {
   display: none;
@@ -1091,43 +951,186 @@ tbody tr:hover .delete-btn {
   justify-content: flex-end;
 }
 
-/* ========== ENGAGE GROUPS ========== */
-.groups-list {
-  max-height: 180px;
-  overflow-y: auto;
+/* ========== COMMENT STYLE ========== */
+.comment-dist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.group-check {
+.comment-dist-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 0;
+  gap: 10px;
   font-size: 13px;
 }
-.group-check + .group-check {
-  border-top: 1px solid var(--border);
+.comment-dist-pct {
+  font-weight: 700;
+  min-width: 36px;
+  color: var(--foreground);
 }
-.group-check input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--blue);
+.comment-dist-desc {
+  color: var(--text-secondary);
 }
 
-/* ========== SESSION CARD ========== */
-.session-item {
+/* ========== LIMIT CARD ========== */
+.limit-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.limit-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+.limit-usage {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+/* ========== TAG CHIPS ========== */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--blue-light);
+  color: var(--blue);
+}
+.tag-chip .tag-remove {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--blue);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.6;
+  transition: opacity 150ms;
+}
+.tag-chip .tag-remove:hover {
+  opacity: 1;
+}
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.tag-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tag-input-wrap input {
+  width: 120px;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+  border-radius: 14px;
+}
+.tag-input-wrap .tag-add-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 150ms;
+}
+.tag-input-wrap .tag-add-btn:hover {
+  background: var(--foreground);
+  color: var(--bg);
+  border-color: var(--foreground);
+}
+
+/* ========== IMAGE PREVIEW ========== */
+.image-preview-area {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  border: 2px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 10px;
+  background: var(--hover);
+}
+
+/* ========== PROFILE PANEL ========== */
+.profile-panel {
+  max-width: 420px;
+}
+.profile-panel .profile-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.profile-avatar-lg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.profile-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+}
+.profile-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+.profile-section {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.profile-section h5 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.profile-limit-row {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  padding: 5px 0;
+  font-size: 13px;
+  padding: 4px 0;
 }
-.session-item + .session-item {
-  border-top: 1px solid var(--border);
+
+/* ========== SINGLE-COL PAGE ========== */
+.page-single-col {
+  width: 100%;
 }
-.session-email {
-  color: var(--foreground);
-  font-weight: 500;
-}
-.session-meta {
-  color: var(--text-muted);
+.page-single-col .card + .card {
+  margin-top: 10px;
 }
 
 /* ========== SCROLLBAR ========== */
@@ -1145,53 +1148,6 @@ tbody tr:hover .delete-btn {
   background: var(--text-muted);
 }
 
-/* ========== SINGLE-COL PAGE ========== */
-.page-single-col {
-  width: 100%;
-}
-.page-single-col .card + .card {
-  margin-top: 10px;
-}
-
-/* ========== COLLAPSIBLE LOG PANEL ========== */
-.log-panel {
-  margin-top: 16px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--surface);
-}
-.log-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  user-select: none;
-}
-.log-panel-header:hover {
-  background: var(--hover);
-}
-.log-chevron {
-  transition: transform 200ms;
-  color: var(--text-muted);
-}
-.log-panel.open .log-chevron {
-  transform: rotate(180deg);
-}
-.log-panel-body {
-  border-top: 1px solid var(--border);
-  max-height: 300px;
-}
-.log-panel-body .log-container {
-  border: none;
-  border-radius: 0;
-  max-height: 300px;
-  min-height: 100px;
-}
-
 /* ========== HELPERS ========== */
 .hidden {
   display: none !important;
@@ -1200,12 +1156,32 @@ tbody tr:hover .delete-btn {
 </head>
 <body>
 
+<!-- ========== LOGIN SCREEN ========== -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--bg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16L8 12L12 14L20 6"/><polyline points="16 6 20 6 20 10"/><line x1="4" y1="20" x2="4" y2="14" opacity="0.4"/><line x1="8" y1="20" x2="8" y2="16" opacity="0.5"/><line x1="12" y1="20" x2="12" y2="13" opacity="0.6"/><line x1="16" y1="20" x2="16" y2="10" opacity="0.7"/><line x1="20" y1="20" x2="20" y2="8" opacity="0.8"/></svg>
+    </div>
+    <h2>Sign in to PLPA</h2>
+    <p class="login-sub">Personal LinkedIn Profile Automation</p>
+    <div class="form-group">
+      <label>LinkedIn Email</label>
+      <input type="email" id="login-email" placeholder="your@email.com" value="tomas.bucek@8seneca.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Enter your password" value="password123">
+    </div>
+    <button class="login-btn" onclick="handleLogin()">Sign In</button>
+  </div>
+</div>
+
 <!-- ========== SIDEBAR ========== -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-top">
     <div class="logo-area">
-      <div class="logo-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-      <div class="logo-text">Marketing AI <span class="pro-badge">Pro</span></div>
+      <div class="logo-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--bg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16L8 12L12 14L20 6"/><polyline points="16 6 20 6 20 10"/><line x1="4" y1="20" x2="4" y2="14" opacity="0.4"/><line x1="8" y1="20" x2="8" y2="16" opacity="0.5"/><line x1="12" y1="20" x2="12" y2="13" opacity="0.6"/><line x1="16" y1="20" x2="16" y2="10" opacity="0.7"/><line x1="20" y1="20" x2="20" y2="8" opacity="0.8"/></svg></div>
+      <div class="logo-text">PLPA <span class="pro-badge">Pro</span></div>
     </div>
     <button class="sidebar-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
@@ -1219,9 +1195,14 @@ tbody tr:hover .delete-btn {
     <span class="nav-text">Engage</span>
   </div>
 
-  <div class="nav-item" onclick="switchPage('connections')">
+  <div class="nav-item" onclick="switchPage('connect')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    <span class="nav-text">Connections</span>
+    <span class="nav-text">Connect</span>
+  </div>
+
+  <div class="nav-item" onclick="switchPage('invite')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+    <span class="nav-text">Invite</span>
   </div>
 
   <div class="nav-item" onclick="switchPage('publish')">
@@ -1234,23 +1215,10 @@ tbody tr:hover .delete-btn {
     <span class="nav-text">Analytics</span>
   </div>
 
-  <div class="sidebar-separator"></div>
-  <div class="sidebar-label">Settings</div>
-
-  <div class="nav-item" onclick="switchPage('accounts')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span class="nav-text">Accounts</span>
-  </div>
-
-  <div class="nav-item" onclick="switchPage('groups')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    <span class="nav-text">Groups</span>
-  </div>
-
   <div class="sidebar-bottom">
     <div class="promo-card">
-      <h4>Upgrade to Pro</h4>
-      <p>Get advanced analytics and unlimited accounts</p>
+      <h4>PLPA Pro</h4>
+      <p>Advanced automation and analytics for your LinkedIn profile</p>
       <button class="promo-btn">Learn more</button>
     </div>
   </div>
@@ -1261,10 +1229,7 @@ tbody tr:hover .delete-btn {
 
   <!-- TOP BAR -->
   <div class="top-bar">
-    <div class="search-bar" style="margin-right:auto">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Search...">
-    </div>
+    <div style="margin-right:auto"></div>
     <button class="top-icon" onclick="toggleTheme()" title="Toggle theme">
       <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
@@ -1272,7 +1237,7 @@ tbody tr:hover .delete-btn {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-dot"></span>
     </button>
-    <div class="user-avatar" onclick="showWarning('Profile','User profile settings coming soon.')" style="cursor:pointer" title="Profile">NL</div>
+    <div class="user-avatar" id="user-avatar" onclick="showProfilePanel()" style="cursor:pointer" title="Profile">TB</div>
   </div>
 
   <!-- MAIN CONTENT -->
@@ -1283,68 +1248,42 @@ tbody tr:hover .delete-btn {
       <div class="page-header">
         <h1>Engage</h1>
         <p class="page-desc">
-          Boost your visibility by automatically liking and commenting on posts from your target audience.
-          <span class="toggle-more" onclick="toggleDescription('engage-more')">more</span>
-          <span class="more-text" id="engage-more">
-            Choose a company page or LinkedIn groups to target, pick how many posts to interact with, and let the tool handle the rest. You can run multiple accounts at once for faster results.
-            <span class="toggle-more" onclick="toggleDescription('engage-more')">less</span>
-          </span>
+          Automatically like and comment on posts from your followers list. The tool processes 100-150 people per day, cycling through your followers sequentially.
         </p>
       </div>
       <div class="page-single-col">
-          <!-- Source -->
-          <div class="card">
-            <div class="card-title">Source</div>
-            <div class="radio-group" id="engage-source">
-              <div class="radio-card selected" onclick="setRadioCard(this,'engage-source');toggleSource('company')">Single Company</div>
-              <div class="radio-card" onclick="setRadioCard(this,'engage-source');toggleSource('groups')">Groups</div>
-            </div>
-            <div id="engage-company-field" style="margin-top:12px">
-              <label>Company LinkedIn URL</label>
-              <input type="text" placeholder="https://linkedin.com/company/...">
-            </div>
-            <div id="engage-groups-field" class="hidden" style="margin-top:12px">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-                <label style="margin:0">Groups <span id="engage-groups-count" class="log-badge">0 selected</span></label>
-                <button class="btn" style="padding:4px 10px;font-size:11px" onclick="reloadGroups()">Reload</button>
-              </div>
-              <div class="group-check" style="border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:4px">
-                <input type="checkbox" onchange="toggleAllGroups(this.checked)"><span style="font-weight:600">Select All</span>
-              </div>
-              <div class="groups-list" id="engage-groups-list"></div>
-            </div>
-          </div>
-          <!-- Accounts -->
-          <div class="card">
-            <div class="card-title">Accounts</div>
-            <div class="radio-group" id="engage-accounts">
-              <div class="radio-card selected" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','all')">All</div>
-              <div class="radio-card" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','single')">Single</div>
-              <div class="radio-card" onclick="setRadioCard(this,'engage-accounts');toggleEmailField('engage','from')">From</div>
-            </div>
-            <div id="engage-email-field" class="hidden" style="margin-top:12px">
-              <label id="engage-email-label">Email</label>
-              <input type="text" id="engage-email-input" placeholder="email@example.com">
-            </div>
-          </div>
           <!-- Options -->
           <div class="card">
             <div class="card-title">Options</div>
             <div class="toggle-row">
-              <span class="toggle-label">Like posts</span>
-              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+              <span class="toggle-label">Like posts (100-150/day)</span>
+              <div class="toggle-switch on" id="engage-like-toggle" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
             </div>
             <div class="toggle-row">
-              <span class="toggle-label">Comment on posts</span>
-              <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+              <span class="toggle-label">Comment on posts (100-150/day)</span>
+              <div class="toggle-switch on" id="engage-comment-toggle" onclick="this.classList.toggle('on');toggleCommentStyle()"><div class="knob"></div></div>
             </div>
             <div class="toggle-row">
               <span class="toggle-label">Random delay</span>
               <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
             </div>
-            <div class="toggle-row">
-              <span class="toggle-label">Debug session</span>
-              <div class="toggle-switch" onclick="this.classList.toggle('on');toggleDebugSession()"><div class="knob"></div></div>
+          </div>
+          <!-- Comment Style -->
+          <div class="card" id="engage-comment-style">
+            <div class="card-title">Comment Style Distribution</div>
+            <div class="comment-dist">
+              <div class="comment-dist-row">
+                <span class="comment-dist-pct">30%</span>
+                <span class="comment-dist-desc">One word, positive vibe</span>
+              </div>
+              <div class="comment-dist-row" style="border-top:1px solid var(--border);padding-top:8px">
+                <span class="comment-dist-pct">40%</span>
+                <span class="comment-dist-desc">2-5 words, positive vibe</span>
+              </div>
+              <div class="comment-dist-row" style="border-top:1px solid var(--border);padding-top:8px">
+                <span class="comment-dist-pct">30%</span>
+                <span class="comment-dist-desc">Up to 3 sentences, professional &amp; relevant (max 15 words)</span>
+              </div>
             </div>
           </div>
           <!-- Progress -->
@@ -1367,111 +1306,137 @@ tbody tr:hover .delete-btn {
             <div class="progress-track"><div class="progress-fill" id="engage-progress"></div></div>
           </div>
           <!-- Actions -->
-          <button class="btn-start" id="engage-start-btn" onclick="startAutomation('engage')" style="margin-top:10px">Start Engagement</button>
+          <button class="btn-start" id="engage-start-btn" onclick="startEngagement()" style="margin-top:10px">Start Engagement</button>
           <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopAutomation()">Stop</button>
-            <button class="btn" onclick="skipCurrent()">Skip</button>
-            <div class="more-menu-wrap">
-              <button class="btn" onclick="toggleMoreMenu('engage-more-menu')">More &#9662;</button>
-              <div class="more-menu" id="engage-more-menu">
-                <button onclick="exportLog('engage')">Export Log</button>
-                <button class="danger" onclick="clearData()">Clear Data</button>
-              </div>
-            </div>
-          </div>
-          <!-- Collapsible Activity Log -->
-          <div class="log-panel" id="engage-log-panel">
-            <div class="log-panel-header" onclick="toggleLogPanel('engage')">
-              <span>Activity Log <span class="log-badge" id="engage-log-count">0 entries</span></span>
-              <span class="log-chevron">&#9662;</span>
-            </div>
-            <div class="log-panel-body" id="engage-log-body" style="display:none">
-              <div class="log-container" id="engage-log"></div>
-            </div>
+            <button class="btn btn-red" onclick="stopEngagement()">Stop</button>
+            <button class="btn" onclick="skipEngagement()">Skip</button>
           </div>
       </div>
     </div>
 
-    <!-- ==================== CONNECTIONS PAGE ==================== -->
-    <div class="page" id="page-connections">
+    <!-- ==================== CONNECT PAGE ==================== -->
+    <div class="page" id="page-connect">
       <div class="page-header">
-        <h1>Connections</h1>
+        <h1>Connect</h1>
         <p class="page-desc">
-          Grow your network by engaging with your connections' latest posts.
-          <span class="toggle-more" onclick="toggleDescription('conn-more')">more</span>
-          <span class="more-text" id="conn-more">
-            The tool goes through your connections list, finds their recent posts, and automatically likes or comments on them. Great for staying visible and building relationships at scale.
-            <span class="toggle-more" onclick="toggleDescription('conn-more')">less</span>
-          </span>
+          Search and connect with people in the IT industry. The AI automatically detects your weekly connection limit.
         </p>
       </div>
       <div class="page-single-col">
+          <!-- Search Criteria -->
           <div class="card">
-            <div class="card-title">Accounts</div>
-            <div class="radio-group" id="conn-accounts">
-              <div class="radio-card selected" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','all')">All</div>
-              <div class="radio-card" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','single')">Single</div>
-              <div class="radio-card" onclick="setRadioCard(this,'conn-accounts');toggleEmailField('conn','from')">From</div>
+            <div class="card-title">Search Criteria</div>
+            <div class="form-group">
+              <label>Industry</label>
+              <select id="connect-industry">
+                <option value="it">Information Technology</option>
+                <option value="software">Software Development</option>
+                <option value="cybersecurity">Cybersecurity</option>
+                <option value="cloud">Cloud Computing</option>
+                <option value="data">Data Science & AI</option>
+                <option value="consulting">IT Consulting</option>
+              </select>
             </div>
-            <div id="conn-email-field" class="hidden" style="margin-top:12px">
-              <label id="conn-email-label">Email</label>
-              <input type="text" id="conn-email-input" placeholder="email@example.com">
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" id="connect-location" placeholder="e.g. Bratislava, Slovakia" value="Bratislava, Slovakia">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Keywords</label>
+              <input type="text" id="connect-keywords" placeholder="e.g. CTO, developer, engineer">
             </div>
           </div>
+          <!-- Connection Limits -->
           <div class="card">
-            <div class="card-title">Options</div>
-            <div class="toggle-row">
-              <span class="toggle-label">Like posts</span>
-              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            <div class="card-title">Connection Limits</div>
+            <div class="limit-info">
+              <span class="limit-value" id="connect-limit-val">100 connections/week</span>
+              <span class="badge badge-blue">Auto-detected</span>
             </div>
-            <div class="toggle-row">
-              <span class="toggle-label">Comment on posts</span>
-              <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
-            </div>
-            <div class="toggle-row">
-              <span class="toggle-label">Random delay</span>
-              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+            <div class="limit-usage" id="connect-limit-usage">47/100 used this week</div>
+            <div class="progress-track">
+              <div class="progress-fill" id="connect-limit-bar" style="width:47%"></div>
             </div>
           </div>
+          <!-- Progress -->
           <div class="card">
             <div class="card-title">Progress</div>
             <div class="stats-row">
               <div class="stat-card">
-                <div class="stat-number" id="conn-total">0</div>
+                <div class="stat-number" id="connect-total">0</div>
                 <div class="stat-label">Total</div>
               </div>
               <div class="stat-card">
-                <div class="stat-number" id="conn-success">0</div>
-                <div class="stat-label">Success</div>
+                <div class="stat-number" id="connect-sent">0</div>
+                <div class="stat-label">Sent</div>
               </div>
               <div class="stat-card">
-                <div class="stat-number" id="conn-failed">0</div>
+                <div class="stat-number" id="connect-failed">0</div>
                 <div class="stat-label">Failed</div>
               </div>
             </div>
-            <div class="progress-track"><div class="progress-fill" id="conn-progress"></div></div>
+            <div class="progress-track"><div class="progress-fill" id="connect-progress"></div></div>
           </div>
-          <button class="btn-start" id="conn-start-btn" onclick="startAutomation('connections')" style="margin-top:10px">Start Connection Engagement</button>
+          <!-- Actions -->
+          <button class="btn-start" id="connect-start-btn" onclick="startConnect()" style="margin-top:10px">Start Connecting</button>
           <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopAutomation()">Stop</button>
-            <button class="btn" onclick="skipCurrent()">Skip</button>
-            <div class="more-menu-wrap">
-              <button class="btn" onclick="toggleMoreMenu('conn-more-menu')">More &#9662;</button>
-              <div class="more-menu" id="conn-more-menu">
-                <button onclick="exportLog('connections')">Export Log</button>
-                <button class="danger" onclick="clearData()">Clear Data</button>
+            <button class="btn btn-red" onclick="stopConnect()">Stop</button>
+          </div>
+      </div>
+    </div>
+
+    <!-- ==================== INVITE PAGE ==================== -->
+    <div class="page" id="page-invite">
+      <div class="page-header">
+        <h1>Invite</h1>
+        <p class="page-desc">
+          Invite your connections to follow your company LinkedIn page. The AI detects your monthly invitation limit.
+        </p>
+      </div>
+      <div class="page-single-col">
+          <!-- Company Page -->
+          <div class="card">
+            <div class="card-title">Company Page</div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Company LinkedIn URL</label>
+              <input type="text" id="invite-company-url" placeholder="https://linkedin.com/company/..." value="https://linkedin.com/company/8seneca">
+            </div>
+          </div>
+          <!-- Invitation Limits -->
+          <div class="card">
+            <div class="card-title">Invitation Limits</div>
+            <div class="limit-info">
+              <span class="limit-value" id="invite-limit-val">250 invitations/month</span>
+              <span class="badge badge-blue">Auto-detected</span>
+            </div>
+            <div class="limit-usage" id="invite-limit-usage">112/250 used this month</div>
+            <div class="progress-track">
+              <div class="progress-fill" id="invite-limit-bar" style="width:44.8%"></div>
+            </div>
+          </div>
+          <!-- Progress -->
+          <div class="card">
+            <div class="card-title">Progress</div>
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-number" id="invite-total">0</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="invite-sent">0</div>
+                <div class="stat-label">Sent</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="invite-declined">0</div>
+                <div class="stat-label">Declined</div>
               </div>
             </div>
+            <div class="progress-track"><div class="progress-fill" id="invite-progress"></div></div>
           </div>
-          <!-- Collapsible Activity Log -->
-          <div class="log-panel" id="conn-log-panel">
-            <div class="log-panel-header" onclick="toggleLogPanel('conn')">
-              <span>Activity Log <span class="log-badge" id="conn-log-count">0 entries</span></span>
-              <span class="log-chevron">&#9662;</span>
-            </div>
-            <div class="log-panel-body" id="conn-log-body" style="display:none">
-              <div class="log-container" id="conn-log"></div>
-            </div>
+          <!-- Actions -->
+          <button class="btn-start" id="invite-start-btn" onclick="startInvite()" style="margin-top:10px">Start Inviting</button>
+          <div class="action-row" style="margin-top:8px">
+            <button class="btn btn-red" onclick="stopInvite()">Stop</button>
           </div>
       </div>
     </div>
@@ -1481,69 +1446,49 @@ tbody tr:hover .delete-btn {
       <div class="page-header">
         <h1>Publish</h1>
         <p class="page-desc">
-          Create and publish LinkedIn posts with help from AI.
-          <span class="toggle-more" onclick="toggleDescription('publish-more')">more</span>
-          <span class="more-text" id="publish-more">
-            Find trending topics, generate captions in your brand voice, attach images, and publish directly to your company page -- all from one place.
-            <span class="toggle-more" onclick="toggleDescription('publish-more')">less</span>
-          </span>
+          Scrape trending news from Twitter and create LinkedIn posts with AI-generated images.
         </p>
       </div>
       <div class="page-single-col">
-          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Session active &middot; CLI connected &middot; <span id="publish-session-count">8</span> accounts loaded</div>
           <div class="status-bar idle" id="publish-status">Ready to compose</div>
+          <!-- News Source -->
           <div class="card">
-            <div class="card-title">Topic</div>
-            <div class="form-group">
-              <input type="text" id="publish-topic" placeholder="Enter a topic or keyword...">
-            </div>
-            <button class="btn btn-blue" onclick="simulateFindTopic()" id="find-topic-btn">Find Trending Topic</button>
+            <div class="card-title">News Source</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;line-height:1.5">
+              Auto-source: Top performing Twitter/X news in IT &amp; Innovation (&lt; 5 hours old)
+            </p>
+            <button class="btn btn-blue" onclick="simulateFindNews()" id="find-news-btn">Find Trending News</button>
           </div>
+          <!-- Post Preview -->
           <div class="card">
-            <div class="card-title">Caption</div>
+            <div class="card-title">Post Preview</div>
             <div class="form-group">
-              <textarea id="publish-caption" rows="6" placeholder="Write your caption or generate one with AI..." oninput="updateCharCount()"></textarea>
+              <label>Topic</label>
+              <input type="text" id="publish-topic" placeholder="Auto-filled from trending news...">
+            </div>
+            <div class="form-group">
+              <label>Caption</label>
+              <textarea id="publish-caption" rows="5" placeholder="Short, non-AI-like tone..." oninput="updateCharCount()"></textarea>
               <div class="char-count"><span id="char-count">0</span> / 3000</div>
             </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn btn-blue" onclick="simulateWriteCaption()" id="write-caption-btn">Generate Caption</button>
-              <button class="btn" onclick="document.getElementById('publish-caption').value='';updateCharCount()">Clear</button>
+            <div class="form-group">
+              <label>AI-Generated Image</label>
+              <div class="image-preview-area" id="image-preview">
+                Click "Find Trending News" to generate an image
+              </div>
+            </div>
+            <div style="margin-top:10px">
+              <label style="font-size:12px;color:var(--text-muted)">Auto-tags (appended to every post):</label>
+              <div class="tags-container" id="publish-tags"></div>
+              <div class="tag-input-wrap" style="margin-top:6px">
+                <input type="text" id="new-tag-input" placeholder="Add tag..." onkeydown="if(event.key==='Enter'){event.preventDefault();addPublishTag()}">
+                <button class="tag-add-btn" onclick="addPublishTag()" title="Add tag">+</button>
+              </div>
             </div>
           </div>
-          <div class="card">
-            <div class="card-title">Image</div>
-            <div class="form-group" style="margin-bottom:0">
-              <input type="text" id="publish-image" placeholder="Image URL (optional)">
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">First Comment (optional)</div>
-            <div class="form-group" style="margin-bottom:0">
-              <input type="text" id="publish-first-comment" placeholder="Add a first comment to boost engagement...">
-            </div>
-          </div>
+          <!-- Publish -->
           <div style="margin-top:10px">
             <button class="btn-start" onclick="simulatePost()" id="post-btn">Publish Post</button>
-          </div>
-          <!-- Session details (collapsible) -->
-          <div class="log-panel" style="margin-top:12px">
-            <div class="log-panel-header" onclick="toggleLogPanel('publish-session')">
-              <span>Session Details</span>
-              <span class="log-chevron">&#9662;</span>
-            </div>
-            <div class="log-panel-body" id="publish-session-log-body" style="display:none">
-              <div style="padding:12px 14px" id="publish-sessions"></div>
-            </div>
-          </div>
-          <!-- Collapsible Activity Log -->
-          <div class="log-panel" id="publish-log-panel">
-            <div class="log-panel-header" onclick="toggleLogPanel('publish')">
-              <span>Activity Log <span class="log-badge" id="publish-log-count">0 entries</span></span>
-              <span class="log-chevron">&#9662;</span>
-            </div>
-            <div class="log-panel-body" id="publish-log-body" style="display:none">
-              <div class="log-container" id="publish-log"></div>
-            </div>
           </div>
       </div>
     </div>
@@ -1553,60 +1498,50 @@ tbody tr:hover .delete-btn {
       <div class="page-header">
         <h1>Analytics</h1>
         <p class="page-desc">
-          See how your social media accounts are performing at a glance.
-          <span class="toggle-more" onclick="toggleDescription('analytics-more')">more</span>
-          <span class="more-text" id="analytics-more">
-            Track followers, engagement, reach, and content performance across Facebook, LinkedIn, and Threads. Switch between platforms and time ranges to spot trends.
-            <span class="toggle-more" onclick="toggleDescription('analytics-more')">less</span>
-          </span>
+          Track your LinkedIn profile performance, engagement, and growth at a glance.
         </p>
       </div>
 
       <!-- Overview gradient cards -->
       <div class="overview-row">
-        <div class="overview-gradient" >
+        <div class="overview-gradient">
           <div class="ov-label">LinkedIn Followers</div>
           <div class="ov-number">12,847</div>
           <div class="ov-change">+8.3% from last month</div>
         </div>
-        <div class="overview-gradient" >
+        <div class="overview-gradient">
           <div class="ov-label">Total Engagement</div>
           <div class="ov-number">3,241</div>
           <div class="ov-change">+12.1% from last month</div>
         </div>
-        <div class="overview-gradient" >
+        <div class="overview-gradient">
           <div class="ov-label">Content Reach</div>
           <div class="ov-number">48,920</div>
           <div class="ov-change">+5.7% from last month</div>
         </div>
       </div>
 
-      <!-- Platform tabs + sync -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-        <div class="tabs" id="platform-tabs">
-          <button class="tab-btn active" onclick="switchPlatform('linkedin',this)">LinkedIn</button>
-          <button class="tab-btn" onclick="switchPlatform('facebook',this)">Facebook</button>
-          <button class="tab-btn" onclick="switchPlatform('threads',this)">Threads</button>
-        </div>
+      <!-- Sync -->
+      <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:16px">
         <button class="btn btn-blue" onclick="syncAnalytics()">Sync Data</button>
       </div>
 
       <!-- Metrics -->
       <div class="metrics-row">
         <div class="card metric-card">
-          <div class="metric-val" id="m-followers">12,847</div>
+          <div class="metric-val">12,847</div>
           <div class="metric-label">Followers</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-val" id="m-engagement">3,241</div>
+          <div class="metric-val">3,241</div>
           <div class="metric-label">Engagement</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-val" id="m-posts">142</div>
+          <div class="metric-val">142</div>
           <div class="metric-label">Posts</div>
         </div>
         <div class="card metric-card">
-          <div class="metric-val" id="m-reach">48.9K</div>
+          <div class="metric-val">48.9K</div>
           <div class="metric-label">Reach</div>
         </div>
       </div>
@@ -1655,100 +1590,6 @@ tbody tr:hover .delete-btn {
       </div>
     </div>
 
-    <!-- ==================== ACCOUNTS PAGE ==================== -->
-    <div class="page" id="page-accounts">
-      <div class="page-header">
-        <h1>Accounts</h1>
-        <p class="page-desc">
-          Add and manage the email accounts used for automation.
-          <span class="toggle-more" onclick="toggleDescription('accounts-more')">more</span>
-          <span class="more-text" id="accounts-more">
-            Each account can be used for liking, commenting, and connecting on LinkedIn. Keep track of credentials, recovery emails, and 2FA codes all in one place.
-            <span class="toggle-more" onclick="toggleDescription('accounts-more')">less</span>
-          </span>
-        </p>
-      </div>
-      <div class="table-container">
-        <div class="table-toolbar">
-          <button class="btn btn-blue" onclick="addTableRow()">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Row
-          </button>
-          <div class="more-menu-wrap" style="margin-left:auto">
-            <button class="btn" onclick="toggleMoreMenu('accounts-more-menu')">More &#9662;</button>
-            <div class="more-menu" id="accounts-more-menu">
-              <button onclick="document.getElementById('csvImportInput').click()">Import CSV</button>
-              <button onclick="exportLog('accounts')">Export CSV</button>
-              <button class="danger" onclick="showConfirm('Clear All','Remove all accounts?',function(){accounts.length=0;renderAccountsTable()})">Clear All</button>
-            </div>
-          </div>
-        </div>
-        <input type="file" id="csvImportInput" accept=".csv" style="display:none" onchange="importCSV(this)">
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>X</th>
-                <th>LinkedIn</th>
-                <th>Recovery</th>
-                <th>Password</th>
-                <th>Note</th>
-                <th>2FA</th>
-                <th style="width:40px"></th>
-              </tr>
-            </thead>
-            <tbody id="accounts-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== GROUPS PAGE ==================== -->
-    <div class="page" id="page-groups">
-      <div class="page-header">
-        <h1>Groups</h1>
-        <p class="page-desc">
-          Choose which LinkedIn groups to target for engagement.
-          <span class="toggle-more" onclick="toggleDescription('groups-more')">more</span>
-          <span class="more-text" id="groups-more">
-            Add groups by URL, enable or disable them, and manage your targeting list. Active groups will be used when you run engagement in Groups mode.
-            <span class="toggle-more" onclick="toggleDescription('groups-more')">less</span>
-          </span>
-        </p>
-      </div>
-      <div class="table-container">
-        <div class="table-toolbar">
-          <button class="btn btn-blue" onclick="addGroupRow()">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Row
-          </button>
-          <div class="more-menu-wrap" style="margin-left:auto">
-            <button class="btn" onclick="toggleMoreMenu('groups-more-menu')">More &#9662;</button>
-            <div class="more-menu" id="groups-more-menu">
-              <button onclick="document.getElementById('groupsCsvImport').click()">Import CSV</button>
-              <button onclick="exportLog('groups')">Export CSV</button>
-              <button class="danger" onclick="showConfirm('Clear All','Remove all groups?',function(){groups.length=0;renderGroupsTable()})">Clear All</button>
-            </div>
-          </div>
-        </div>
-        <input type="file" id="groupsCsvImport" accept=".csv" style="display:none" onchange="importGroupsCSV(this)">
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>URL</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th style="width:40px"></th>
-              </tr>
-            </thead>
-            <tbody id="groups-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
   </div><!-- /main-content -->
 </div><!-- /main-wrapper -->
 
@@ -1775,67 +1616,177 @@ tbody tr:hover .delete-btn {
   </div>
 </div>
 
+<!-- ========== PROFILE MODAL ========== -->
+<div class="modal-overlay" id="modal-profile">
+  <div class="modal profile-panel">
+    <div class="profile-header">
+      <div class="profile-avatar-lg" id="profile-avatar-lg">TB</div>
+      <div class="profile-info">
+        <h4 id="profile-name">Tomas Bucek</h4>
+        <p id="profile-email">tomas.bucek@8seneca.com</p>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h5>Connection Limit</h5>
+      <div class="profile-limit-row">
+        <span>Weekly limit</span>
+        <span style="font-weight:600">100 connections/week</span>
+      </div>
+      <div class="profile-limit-row">
+        <span>Used this week</span>
+        <span>47/100</span>
+      </div>
+      <div class="progress-track" style="margin-top:6px">
+        <div class="progress-fill" style="width:47%"></div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h5>Invitation Limit</h5>
+      <div class="profile-limit-row">
+        <span>Monthly limit</span>
+        <span style="font-weight:600">250 invitations/month</span>
+      </div>
+      <div class="profile-limit-row">
+        <span>Used this month</span>
+        <span>112/250</span>
+      </div>
+      <div class="progress-track" style="margin-top:6px">
+        <div class="progress-fill" style="width:44.8%"></div>
+      </div>
+    </div>
+
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="btn" onclick="closeModal('modal-profile')">Close</button>
+      <button class="btn btn-red" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </div>
+</div>
+
 <!-- ========================================================================== -->
 <!-- JAVASCRIPT -->
 <!-- ========================================================================== -->
 <script>
-/* ========== DATA ========== */
-const MOCK_ACCOUNTS = [
-  { email:'marketing01@8seneca.com', x:'ok', linkedin:'ok', recovery:'backup01@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Main account', code2fa:'JBSWY3DPEHPK3PXP' },
-  { email:'marketing02@8seneca.com', x:'ok', linkedin:'ok', recovery:'backup02@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'K4YDG5RDMNSWE3JR' },
-  { email:'marketing03@8seneca.com', x:'', linkedin:'ok', recovery:'backup03@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Banned Mar 2025', code2fa:'' },
-  { email:'seeder.alpha@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Connection bot', code2fa:'MFXHS33V' },
-  { email:'seeder.beta@gmail.com', x:'', linkedin:'ok', recovery:'recovery.beta@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'' },
-  { email:'seeder.gamma@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Groups only', code2fa:'N5ZHKZLQOBWXE' },
-  { email:'engage.user01@gmail.com', x:'', linkedin:'ok', recovery:'engage.recovery@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'', code2fa:'' },
-  { email:'engage.user02@gmail.com', x:'ok', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'High engagement', code2fa:'JVSXG43DN5SQ' },
-  { email:'engage.user03@gmail.com', x:'', linkedin:'', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Setup pending', code2fa:'' },
-  { email:'publisher@8seneca.com', x:'ok', linkedin:'ok', recovery:'pub.backup@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Company page', code2fa:'PB4WK3TUHE' },
-  { email:'analytics@8seneca.com', x:'', linkedin:'ok', recovery:'', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Read-only', code2fa:'' },
-  { email:'reserve.acct@gmail.com', x:'', linkedin:'', recovery:'reserve.backup@gmail.com', password:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022', note:'Reserve', code2fa:'' },
-];
+/* ========== PROFILE DATA ========== */
+var currentProfile = {
+  name: 'Tomas Bucek',
+  email: 'tomas.bucek@8seneca.com',
+  initials: 'TB',
+  connectionLimit: 100,
+  connectionsUsed: 47,
+  invitationLimit: 250,
+  invitationsUsed: 112
+};
 
-const MOCK_GROUPS = [
-  { url:'https://www.linkedin.com/groups/12345678', name:'IT Leaders Slovakia', enabled:true },
-  { url:'https://www.linkedin.com/groups/23456789', name:'Digital Marketing Bratislava', enabled:true },
-  { url:'https://www.linkedin.com/groups/34567890', name:'Tech Professionals CEE', enabled:true },
-  { url:'https://www.linkedin.com/groups/45678901', name:'Startup Founders Network', enabled:false },
-  { url:'https://www.linkedin.com/groups/56789012', name:'AI & Machine Learning Europe', enabled:false },
-];
+var isLoggedIn = false;
+var publishTags = ['#8seneca'];
 
-const MOCK_SESSIONS = [
-  { email:'marketing01@8seneca.com', saved:'2h ago', cookies:42 },
-  { email:'marketing02@8seneca.com', saved:'2h ago', cookies:38 },
-  { email:'seeder.alpha@gmail.com', saved:'5h ago', cookies:41 },
-  { email:'seeder.beta@gmail.com', saved:'1d ago', cookies:39 },
-  { email:'seeder.gamma@gmail.com', saved:'1d ago', cookies:44 },
-  { email:'engage.user01@gmail.com', saved:'3d ago', cookies:36 },
-  { email:'engage.user02@gmail.com', saved:'3d ago', cookies:40 },
-  { email:'publisher@8seneca.com', saved:'12h ago', cookies:45 },
-];
+/* ========== PUBLISH TAGS ========== */
+function renderPublishTags() {
+  var container = document.getElementById('publish-tags');
+  if (!container) return;
+  container.innerHTML = '';
+  publishTags.forEach(function(tag, i) {
+    var chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.innerHTML = escapeHtml(tag) + '<button class="tag-remove" onclick="removePublishTag(' + i + ')" title="Remove">&times;</button>';
+    container.appendChild(chip);
+  });
+}
 
-let accounts = JSON.parse(JSON.stringify(MOCK_ACCOUNTS));
-let groups = JSON.parse(JSON.stringify(MOCK_GROUPS));
-let automationInterval = null;
-let automationRunning = false;
-let currentAutomationSource = null;
-let logCounters = { engage: 0, connections: 0, publish: 0 };
+function addPublishTag() {
+  var input = document.getElementById('new-tag-input');
+  var val = input.value.trim();
+  if (!val) return;
+  if (!val.startsWith('#')) val = '#' + val;
+  if (publishTags.indexOf(val) === -1) {
+    publishTags.push(val);
+    renderPublishTags();
+  }
+  input.value = '';
+}
 
-/* ========== 1. switchPage ========== */
+function removePublishTag(i) {
+  publishTags.splice(i, 1);
+  renderPublishTags();
+}
+
+function getTagsString() {
+  return publishTags.length ? '\n\n' + publishTags.join(' ') : '';
+}
+
+/* ========== AUTOMATION STATE ========== */
+var engageInterval = null;
+var engageRunning = false;
+var connectInterval = null;
+var connectRunning = false;
+var inviteInterval = null;
+var inviteRunning = false;
+
+/* ========== LOGIN / LOGOUT ========== */
+function handleLogin() {
+  var email = document.getElementById('login-email').value;
+  var password = document.getElementById('login-password').value;
+  if (!email || !password) {
+    showWarning('Login Error', 'Please enter both email and password.');
+    return;
+  }
+  // Extract initials from email or use defaults
+  var nameParts = email.split('@')[0].split('.');
+  var initials = '';
+  if (nameParts.length >= 2) {
+    initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+  } else {
+    initials = nameParts[0].substring(0, 2).toUpperCase();
+  }
+
+  // Derive a display name
+  var displayName = nameParts.map(function(p) {
+    return p.charAt(0).toUpperCase() + p.slice(1);
+  }).join(' ');
+
+  currentProfile.email = email;
+  currentProfile.name = displayName;
+  currentProfile.initials = initials;
+
+  // Update UI
+  document.getElementById('user-avatar').textContent = initials;
+  document.getElementById('profile-avatar-lg').textContent = initials;
+  document.getElementById('profile-name').textContent = displayName;
+  document.getElementById('profile-email').textContent = email;
+
+  // Hide login screen
+  document.getElementById('login-screen').classList.add('hidden');
+  isLoggedIn = true;
+}
+
+function handleLogout() {
+  closeModal('modal-profile');
+  isLoggedIn = false;
+  document.getElementById('login-screen').classList.remove('hidden');
+  // Reset password field
+  document.getElementById('login-password').value = '';
+}
+
+/* ========== PROFILE PANEL ========== */
+function showProfilePanel() {
+  document.getElementById('modal-profile').classList.add('show');
+}
+
+/* ========== switchPage ========== */
 function switchPage(name) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   var el = document.getElementById('page-' + name);
   if (el) el.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-  var pages = ['engage','connections','publish','analytics','accounts','groups'];
+  var pages = ['engage','connect','invite','publish','analytics'];
   var idx = pages.indexOf(name);
   var navItems = document.querySelectorAll('.nav-item');
   if (idx >= 0 && navItems[idx]) navItems[idx].classList.add('active');
-  // close any open more menus
-  document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
 }
 
-/* ========== 2. toggleSidebar ========== */
+/* ========== toggleSidebar ========== */
 function toggleSidebar() {
   var sb = document.getElementById('sidebar');
   sb.classList.toggle('collapsed');
@@ -1847,7 +1798,7 @@ function toggleSidebar() {
   }
 }
 
-/* ========== 3. toggleTheme ========== */
+/* ========== toggleTheme ========== */
 function toggleTheme() {
   var html = document.documentElement;
   var current = html.getAttribute('data-theme');
@@ -1859,293 +1810,21 @@ function toggleTheme() {
   } else {
     icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
   }
-  // Re-render chart for theme colors
   renderBarChart();
 }
 
-/* ========== 4. toggleDescription ========== */
-function toggleDescription(id) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var isShown = el.classList.toggle('show');
-  var moreBtn = el.previousElementSibling;
-  if (moreBtn && moreBtn.classList.contains('toggle-more')) {
-    moreBtn.style.display = isShown ? 'none' : '';
-  }
-}
-
-/* ========== 5. setRadioCard ========== */
-function setRadioCard(el, containerId) {
-  var container = document.getElementById(containerId);
-  container.querySelectorAll('.radio-card').forEach(function(c) { c.classList.remove('selected'); });
-  el.classList.add('selected');
-}
-
-/* ========== 6. toggleSource ========== */
-function toggleSource(mode) {
-  document.getElementById('engage-company-field').classList.toggle('hidden', mode === 'groups');
-  document.getElementById('engage-groups-field').classList.toggle('hidden', mode === 'company');
-  if (mode === 'groups') renderEngageGroups();
-}
-
-/* ========== 7. renderEngageGroups, toggleAllGroups, updateGroupsCount, reloadGroups ========== */
-function renderEngageGroups() {
-  var list = document.getElementById('engage-groups-list');
-  list.innerHTML = '';
-  groups.forEach(function(g, i) {
-    var div = document.createElement('div');
-    div.className = 'group-check';
-    div.innerHTML = '<input type="checkbox" ' + (g.enabled ? 'checked' : '') + ' onchange="groups[' + i + '].enabled=this.checked;updateGroupsCount()"><span>' + escapeHtml(g.name) + '</span>';
-    list.appendChild(div);
-  });
-  updateGroupsCount();
-}
-
-function toggleAllGroups(checked) {
-  groups.forEach(function(g) { g.enabled = checked; });
-  renderEngageGroups();
-  var selAll = document.querySelector('#engage-groups-field > .group-check input[type=checkbox]');
-  if (selAll) selAll.checked = checked;
-}
-
-function updateGroupsCount() {
-  var count = groups.filter(function(g) { return g.enabled; }).length;
-  document.getElementById('engage-groups-count').textContent = count + ' selected';
-}
-
-function reloadGroups() {
-  groups = JSON.parse(JSON.stringify(MOCK_GROUPS));
-  renderEngageGroups();
-  renderGroupsTable();
-}
-
-/* ========== 8. toggleEmailField ========== */
-function toggleEmailField(prefix, mode) {
-  var field = document.getElementById(prefix + '-email-field');
-  var label = document.getElementById(prefix + '-email-label');
-  if (mode === 'all') {
-    field.classList.add('hidden');
+/* ========== toggleCommentStyle ========== */
+function toggleCommentStyle() {
+  var toggle = document.getElementById('engage-comment-toggle');
+  var card = document.getElementById('engage-comment-style');
+  if (toggle.classList.contains('on')) {
+    card.style.display = '';
   } else {
-    field.classList.remove('hidden');
-    label.textContent = mode === 'single' ? 'Email' : 'Start from email';
+    card.style.display = 'none';
   }
 }
 
-/* ========== 9. toggleDebugSession ========== */
-function toggleDebugSession() {
-  // Visual toggle only in prototype
-}
-
-/* ========== 10. startAutomation ========== */
-function startAutomation(source) {
-  if (automationRunning) return;
-  automationRunning = true;
-  currentAutomationSource = source;
-  var prefix = source === 'connections' ? 'conn' : 'engage';
-  var totalAccounts = accounts.length;
-  var processed = 0, success = 0, failed = 0;
-
-  document.getElementById(prefix + '-start-btn').disabled = true;
-  autoExpandLogPanel(prefix);
-  addLog('Starting automation with ' + totalAccounts + ' accounts...', 'info', source);
-
-  automationInterval = setInterval(function() {
-    if (processed >= totalAccounts || !automationRunning) {
-      clearInterval(automationInterval);
-      automationInterval = null;
-      automationRunning = false;
-      currentAutomationSource = null;
-      document.getElementById(prefix + '-start-btn').disabled = false;
-      addLog('Automation completed. ' + success + '/' + totalAccounts + ' successful.', 'info', source);
-      return;
-    }
-    var acc = accounts[processed];
-    var isSuccess = Math.random() < 0.8;
-    if (isSuccess) {
-      success++;
-      addLog('[OK] ' + escapeHtml(acc.email) + ' \u2014 liked 3 posts', 'success', source);
-    } else {
-      failed++;
-      addLog('[FAIL] ' + escapeHtml(acc.email) + ' \u2014 session expired', 'error', source);
-    }
-    processed++;
-    document.getElementById(prefix + '-total').textContent = processed;
-    document.getElementById(prefix + '-success').textContent = success;
-    document.getElementById(prefix + '-failed').textContent = failed;
-    document.getElementById(prefix + '-progress').style.width = Math.round(processed / totalAccounts * 100) + '%';
-  }, 800);
-}
-
-/* ========== 11. stopAutomation, skipCurrent, clearData, exportLog ========== */
-function stopAutomation() {
-  automationRunning = false;
-  if (automationInterval) {
-    clearInterval(automationInterval);
-    automationInterval = null;
-  }
-  if (currentAutomationSource) {
-    addLog('Automation stopped by user.', 'warn', currentAutomationSource);
-  }
-  currentAutomationSource = null;
-  document.getElementById('engage-start-btn').disabled = false;
-  document.getElementById('conn-start-btn').disabled = false;
-}
-
-function skipCurrent() {
-  if (currentAutomationSource) {
-    addLog('Skipping current account...', 'warn', currentAutomationSource);
-  }
-}
-
-function clearData() {
-  showConfirm('Clear Data', 'This will clear all logs and reset counters. Continue?', function() {
-    ['engage','conn'].forEach(function(p) {
-      document.getElementById(p + '-total').textContent = '0';
-      document.getElementById(p + '-success').textContent = '0';
-      document.getElementById(p + '-failed').textContent = '0';
-      document.getElementById(p + '-progress').style.width = '0%';
-    });
-    document.getElementById('engage-log').innerHTML = '';
-    document.getElementById('conn-log').innerHTML = '';
-    logCounters.engage = 0;
-    logCounters.connections = 0;
-    document.getElementById('engage-log-count').textContent = '0 entries';
-    document.getElementById('conn-log-count').textContent = '0 entries';
-  });
-}
-
-function exportLog(source) {
-  var logId;
-  if (source === 'connections') logId = 'conn-log';
-  else if (source === 'accounts') {
-    // export accounts as CSV
-    var csv = 'Email,X,LinkedIn,Recovery,Password,Note,2FA\n';
-    accounts.forEach(function(a) {
-      csv += [a.email, a.x, a.linkedin, a.recovery, a.password, a.note, a.code2fa].map(function(v) {
-        return '"' + (v || '').replace(/"/g, '""') + '"';
-      }).join(',') + '\n';
-    });
-    downloadText(csv, 'accounts.csv', 'text/csv');
-    return;
-  } else if (source === 'groups') {
-    var csv2 = 'URL,Name,Enabled\n';
-    groups.forEach(function(g) {
-      csv2 += [g.url, g.name, g.enabled ? 'yes' : 'no'].map(function(v) {
-        return '"' + (v || '').replace(/"/g, '""') + '"';
-      }).join(',') + '\n';
-    });
-    downloadText(csv2, 'groups.csv', 'text/csv');
-    return;
-  } else {
-    logId = source + '-log';
-  }
-  var logEl = document.getElementById(logId);
-  if (!logEl) { showWarning('Export', 'No log to export.'); return; }
-  var text = logEl.innerText;
-  downloadText(text, source + '-log.txt', 'text/plain');
-}
-
-function importCSV(input) {
-  var file = input.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var lines = e.target.result.split('\n').filter(function(l) { return l.trim(); });
-    if (lines.length < 2) { showWarning('Import', 'CSV file is empty or has no data rows.'); return; }
-    var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/"/g, '').toLowerCase(); });
-    var imported = 0;
-    for (var i = 1; i < lines.length; i++) {
-      var vals = lines[i].match(/(".*?"|[^,]+)/g) || [];
-      vals = vals.map(function(v) { return v.replace(/^"|"$/g, '').replace(/""/g, '"').trim(); });
-      var row = { email: '', x: '', linkedin: '', recovery: '', password: '', note: '', code2fa: '' };
-      headers.forEach(function(h, idx) {
-        if (h === 'email') row.email = vals[idx] || '';
-        else if (h === 'x') row.x = vals[idx] || '';
-        else if (h === 'linkedin') row.linkedin = vals[idx] || '';
-        else if (h === 'recovery') row.recovery = vals[idx] || '';
-        else if (h === 'password') row.password = vals[idx] || '';
-        else if (h === 'note') row.note = vals[idx] || '';
-        else if (h === '2fa' || h === 'code2fa') row.code2fa = vals[idx] || '';
-      });
-      if (row.email) { accounts.push(row); imported++; }
-    }
-    renderAccountsTable();
-    showWarning('Import Complete', 'Imported ' + imported + ' account(s) from CSV.');
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
-
-function importGroupsCSV(input) {
-  var file = input.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var lines = e.target.result.split('\n').filter(function(l) { return l.trim(); });
-    if (lines.length < 2) { showWarning('Import', 'CSV file is empty or has no data rows.'); return; }
-    var headers = lines[0].split(',').map(function(h) { return h.trim().replace(/"/g, '').toLowerCase(); });
-    var imported = 0;
-    for (var i = 1; i < lines.length; i++) {
-      var vals = lines[i].match(/(".*?"|[^,]+)/g) || [];
-      vals = vals.map(function(v) { return v.replace(/^"|"$/g, '').replace(/""/g, '"').trim(); });
-      var row = { url: '', name: '', enabled: true };
-      headers.forEach(function(h, idx) {
-        if (h === 'url') row.url = vals[idx] || '';
-        else if (h === 'name') row.name = vals[idx] || '';
-        else if (h === 'enabled' || h === 'status') row.enabled = (vals[idx] || '').toLowerCase() !== 'no' && (vals[idx] || '').toLowerCase() !== 'false';
-      });
-      if (row.url) { groups.push(row); imported++; }
-    }
-    renderGroupsTable();
-    renderEngageGroups();
-    showWarning('Import Complete', 'Imported ' + imported + ' group(s) from CSV.');
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
-
-function downloadText(content, filename, type) {
-  var blob = new Blob([content], { type: type });
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-/* ========== 13. addLog, addPublishLog, escapeHtml ========== */
-function addLog(msg, cls, source) {
-  var prefix = source === 'connections' ? 'conn' : source;
-  var logEl = document.getElementById(prefix + '-log');
-  if (!logEl) return;
-  var time = new Date().toLocaleTimeString();
-  var entry = document.createElement('div');
-  entry.className = 'log-entry ' + (cls || '');
-  entry.textContent = '[' + time + '] ' + msg;
-  logEl.appendChild(entry);
-  logEl.scrollTop = logEl.scrollHeight;
-  if (!logCounters[source]) logCounters[source] = 0;
-  logCounters[source]++;
-  var badge = document.getElementById(prefix + '-log-count');
-  if (badge) badge.textContent = logCounters[source] + ' entries';
-}
-
-function addPublishLog(msg, cls) {
-  var logEl = document.getElementById('publish-log');
-  var time = new Date().toLocaleTimeString();
-  var entry = document.createElement('div');
-  entry.className = 'log-entry ' + (cls || '');
-  entry.textContent = '[' + time + '] ' + msg;
-  logEl.appendChild(entry);
-  logEl.scrollTop = logEl.scrollHeight;
-  logCounters.publish++;
-  document.getElementById('publish-log-count').textContent = logCounters.publish + ' entries';
-  // Auto-expand publish log when publishing actions happen
-  if (cls === 'info' && (msg.indexOf('Publishing') >= 0 || msg.indexOf('Searching') >= 0 || msg.indexOf('Generating') >= 0)) {
-    autoExpandLogPanel('publish');
-  }
-}
-
+/* ========== escapeHtml ========== */
 function escapeHtml(s) {
   if (!s) return '';
   var d = document.createElement('div');
@@ -2153,75 +1832,206 @@ function escapeHtml(s) {
   return d.innerHTML;
 }
 
-/* ========== 12. simulateFindTopic, simulateWriteCaption, simulatePost, updateCharCount ========== */
+/* ========== ENGAGE AUTOMATION ========== */
+function startEngagement() {
+  if (engageRunning) return;
+  engageRunning = true;
+  var targetCount = 120 + Math.floor(Math.random() * 30); // 120-150
+  var processed = 0, success = 0, failed = 0;
+
+  document.getElementById('engage-start-btn').disabled = true;
+
+  engageInterval = setInterval(function() {
+    if (processed >= targetCount || !engageRunning) {
+      clearInterval(engageInterval);
+      engageInterval = null;
+      engageRunning = false;
+      document.getElementById('engage-start-btn').disabled = false;
+      return;
+    }
+    var isSuccess = Math.random() < 0.92;
+    if (isSuccess) {
+      success++;
+    } else {
+      failed++;
+    }
+    processed++;
+    document.getElementById('engage-total').textContent = processed;
+    document.getElementById('engage-success').textContent = success;
+    document.getElementById('engage-failed').textContent = failed;
+    document.getElementById('engage-progress').style.width = Math.round(processed / targetCount * 100) + '%';
+  }, 400);
+}
+
+function stopEngagement() {
+  engageRunning = false;
+  if (engageInterval) {
+    clearInterval(engageInterval);
+    engageInterval = null;
+  }
+  document.getElementById('engage-start-btn').disabled = false;
+}
+
+function skipEngagement() {
+  // In prototype, just increment the counter by a few
+  if (engageRunning) {
+    var curr = parseInt(document.getElementById('engage-total').textContent) || 0;
+    document.getElementById('engage-total').textContent = curr + 5;
+    var s = parseInt(document.getElementById('engage-success').textContent) || 0;
+    document.getElementById('engage-success').textContent = s + 4;
+    var f = parseInt(document.getElementById('engage-failed').textContent) || 0;
+    document.getElementById('engage-failed').textContent = f + 1;
+  }
+}
+
+/* ========== CONNECT AUTOMATION ========== */
+function startConnect() {
+  if (connectRunning) return;
+  connectRunning = true;
+  var remaining = currentProfile.connectionLimit - currentProfile.connectionsUsed;
+  var targetCount = Math.min(remaining, 20 + Math.floor(Math.random() * 15));
+  var processed = 0, sent = 0, failed = 0;
+
+  document.getElementById('connect-start-btn').disabled = true;
+
+  connectInterval = setInterval(function() {
+    if (processed >= targetCount || !connectRunning) {
+      clearInterval(connectInterval);
+      connectInterval = null;
+      connectRunning = false;
+      document.getElementById('connect-start-btn').disabled = false;
+      // Update usage
+      currentProfile.connectionsUsed += sent;
+      var pct = Math.round(currentProfile.connectionsUsed / currentProfile.connectionLimit * 100);
+      document.getElementById('connect-limit-usage').textContent = currentProfile.connectionsUsed + '/' + currentProfile.connectionLimit + ' used this week';
+      document.getElementById('connect-limit-bar').style.width = pct + '%';
+      return;
+    }
+    var isSuccess = Math.random() < 0.88;
+    if (isSuccess) {
+      sent++;
+    } else {
+      failed++;
+    }
+    processed++;
+    document.getElementById('connect-total').textContent = processed;
+    document.getElementById('connect-sent').textContent = sent;
+    document.getElementById('connect-failed').textContent = failed;
+    document.getElementById('connect-progress').style.width = Math.round(processed / targetCount * 100) + '%';
+  }, 600);
+}
+
+function stopConnect() {
+  connectRunning = false;
+  if (connectInterval) {
+    clearInterval(connectInterval);
+    connectInterval = null;
+  }
+  document.getElementById('connect-start-btn').disabled = false;
+}
+
+/* ========== INVITE AUTOMATION ========== */
+function startInvite() {
+  if (inviteRunning) return;
+  var companyUrl = document.getElementById('invite-company-url').value;
+  if (!companyUrl) {
+    showWarning('Missing URL', 'Please enter your company LinkedIn page URL.');
+    return;
+  }
+  inviteRunning = true;
+  var remaining = currentProfile.invitationLimit - currentProfile.invitationsUsed;
+  var targetCount = Math.min(remaining, 30 + Math.floor(Math.random() * 20));
+  var processed = 0, sent = 0, declined = 0;
+
+  document.getElementById('invite-start-btn').disabled = true;
+
+  inviteInterval = setInterval(function() {
+    if (processed >= targetCount || !inviteRunning) {
+      clearInterval(inviteInterval);
+      inviteInterval = null;
+      inviteRunning = false;
+      document.getElementById('invite-start-btn').disabled = false;
+      // Update usage
+      currentProfile.invitationsUsed += sent;
+      var pct = Math.round(currentProfile.invitationsUsed / currentProfile.invitationLimit * 100);
+      document.getElementById('invite-limit-usage').textContent = currentProfile.invitationsUsed + '/' + currentProfile.invitationLimit + ' used this month';
+      document.getElementById('invite-limit-bar').style.width = pct + '%';
+      return;
+    }
+    var isSuccess = Math.random() < 0.85;
+    if (isSuccess) {
+      sent++;
+    } else {
+      declined++;
+    }
+    processed++;
+    document.getElementById('invite-total').textContent = processed;
+    document.getElementById('invite-sent').textContent = sent;
+    document.getElementById('invite-declined').textContent = declined;
+    document.getElementById('invite-progress').style.width = Math.round(processed / targetCount * 100) + '%';
+  }, 500);
+}
+
+function stopInvite() {
+  inviteRunning = false;
+  if (inviteInterval) {
+    clearInterval(inviteInterval);
+    inviteInterval = null;
+  }
+  document.getElementById('invite-start-btn').disabled = false;
+}
+
+/* ========== PUBLISH FUNCTIONS ========== */
 function setPublishStatus(text, cls) {
   var bar = document.getElementById('publish-status');
   bar.className = 'status-bar ' + cls;
   bar.textContent = text;
 }
 
-function simulateFindTopic() {
-  var btn = document.getElementById('find-topic-btn');
+function simulateFindNews() {
+  var btn = document.getElementById('find-news-btn');
   btn.disabled = true;
   btn.textContent = 'Searching...';
-  setPublishStatus('Finding trending topics...', 'working');
-  autoExpandLogPanel('publish');
-  addPublishLog('Searching for trending topics...', 'info');
+  setPublishStatus('Scraping trending news from Twitter/X...', 'working');
   setTimeout(function() {
     var topics = [
-      'AI in B2B Marketing',
-      'Remote Team Productivity',
-      'SaaS Growth Hacks 2026',
-      'LinkedIn Algorithm Changes',
-      'Personal Branding Tips'
+      'OpenAI Launches GPT-5 with Real-Time Reasoning',
+      'Kubernetes 2.0 Announced with AI-Native Orchestration',
+      'EU Passes Landmark AI Regulation Framework',
+      'GitHub Copilot Now Writes Full Applications',
+      'Cloudflare Introduces Zero-Trust AI Gateway'
     ];
-    var topic = topics[Math.floor(Math.random() * topics.length)];
-    document.getElementById('publish-topic').value = topic;
-    btn.disabled = false;
-    btn.textContent = 'Find Trending Topic';
-    setPublishStatus('Topic found', 'done');
-    addPublishLog('Found topic: ' + topic, 'success');
-  }, 2000);
-}
-
-function simulateWriteCaption() {
-  var topic = document.getElementById('publish-topic').value;
-  if (!topic) {
-    showWarning('Missing Topic', 'Please enter or find a topic first.');
-    return;
-  }
-  var btn = document.getElementById('write-caption-btn');
-  btn.disabled = true;
-  btn.textContent = 'Generating...';
-  setPublishStatus('Generating caption with AI...', 'working');
-  autoExpandLogPanel('publish');
-  addPublishLog('Generating caption for: ' + topic, 'info');
-  setTimeout(function() {
-    var caption = topic + ' is reshaping how we think about growth.\n\nHere are 3 things I learned this week:\n\n1. Authenticity beats perfection every time\n2. Consistency compounds faster than you think\n3. Your network is your net worth\n\nWhat would you add to this list?\n\n#Marketing #Growth #LinkedIn #AI';
-    document.getElementById('publish-caption').value = caption;
+    var captions = [
+      'Big news in AI today. GPT-5 just dropped and the reasoning capabilities are genuinely impressive. If you work in tech, this changes your workflow starting now.',
+      'Kubernetes 2.0 is here and it is a game changer for infrastructure teams. AI-native orchestration means less YAML, more results.',
+      'The EU just set the rules for AI in business. Whether you agree or not, this affects every tech company operating in Europe. Worth reading the details.',
+      'GitHub Copilot can now build full apps from a description. We tested it this morning. The results are surprisingly usable for MVPs.',
+      'Cloudflare just launched a zero-trust AI gateway. For anyone running AI workloads in production, this solves a real security gap.'
+    ];
+    var idx = Math.floor(Math.random() * topics.length);
+    document.getElementById('publish-topic').value = topics[idx];
+    document.getElementById('publish-caption').value = captions[idx] + getTagsString();
     updateCharCount();
+    // Show image preview
+    document.getElementById('image-preview').innerHTML = '<div style="text-align:center"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="var(--green)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><div style="margin-top:8px;color:var(--green);font-weight:600;font-size:12px">AI image generated</div></div>';
     btn.disabled = false;
-    btn.textContent = 'Generate Caption';
-    setPublishStatus('Caption generated', 'done');
-    addPublishLog('Caption generated (' + caption.length + ' chars)', 'success');
+    btn.textContent = 'Find Trending News';
+    setPublishStatus('News found and post prepared', 'done');
   }, 2500);
 }
 
 function simulatePost() {
   var caption = document.getElementById('publish-caption').value;
   if (!caption) {
-    showWarning('Missing Caption', 'Please write or generate a caption first.');
+    showWarning('Missing Caption', 'Please find trending news first to generate a post.');
     return;
   }
   var btn = document.getElementById('post-btn');
   btn.disabled = true;
-  setPublishStatus('Publishing post...', 'working');
-  autoExpandLogPanel('publish');
-  addPublishLog('Publishing post...', 'info');
+  setPublishStatus('Publishing post to LinkedIn...', 'working');
   setTimeout(function() {
     btn.disabled = false;
     setPublishStatus('Post published successfully!', 'done');
-    addPublishLog('Post published successfully!', 'success');
   }, 3000);
 }
 
@@ -2230,116 +2040,7 @@ function updateCharCount() {
   document.getElementById('char-count').textContent = count;
 }
 
-/* ========== 14. renderAccountsTable, addTableRow, deleteAccount ========== */
-function renderAccountsTable() {
-  var tbody = document.getElementById('accounts-tbody');
-  tbody.innerHTML = '';
-  accounts.forEach(function(a, i) {
-    var tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td style="font-weight:500">' + escapeHtml(a.email) + '</td>' +
-      '<td>' + (a.x ? '<span class="badge badge-ok">ok</span>' : '<span class="badge badge-empty">&mdash;</span>') + '</td>' +
-      '<td>' + (a.linkedin ? '<span class="badge badge-ok">ok</span>' : '<span class="badge badge-empty">&mdash;</span>') + '</td>' +
-      '<td style="font-size:12px;color:var(--text-secondary)">' + (escapeHtml(a.recovery) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
-      '<td style="font-size:12px;color:var(--text-muted)">' + escapeHtml(a.password) + '</td>' +
-      '<td style="font-size:12px;color:var(--text-secondary)">' + (escapeHtml(a.note) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
-      '<td style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:var(--text-muted)">' + (escapeHtml(a.code2fa) || '<span style="color:var(--text-muted)">&mdash;</span>') + '</td>' +
-      '<td><button class="delete-btn" onclick="deleteAccount(' + i + ')">&times;</button></td>';
-    tbody.appendChild(tr);
-  });
-}
-
-function addTableRow() {
-  var newAcc = { email:'', x:'', linkedin:'', recovery:'', password:'', note:'New account', code2fa:'' };
-  accounts.unshift(newAcc);
-  renderAccountsTable();
-  var firstRow = document.querySelector('#accounts-tbody tr');
-  if (firstRow) {
-    firstRow.classList.add('new-row');
-    var td = firstRow.querySelector('td');
-    td.setAttribute('contenteditable', 'true');
-    td.style.outline = 'none';
-    td.style.borderBottom = '2px solid var(--blue)';
-    td.textContent = '';
-    td.focus();
-    td.addEventListener('blur', function() {
-      accounts[0].email = td.textContent;
-      td.removeAttribute('contenteditable');
-      td.style.borderBottom = '';
-      if (!td.textContent) {
-        renderAccountsTable();
-      }
-    });
-    td.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        td.blur();
-      }
-    });
-  }
-}
-
-function deleteAccount(i) {
-  showConfirm('Delete Account', 'Remove ' + (accounts[i].email || 'this account') + '?', function() {
-    accounts.splice(i, 1);
-    renderAccountsTable();
-  });
-}
-
-/* ========== 15. renderGroupsTable, addGroupRow, deleteGroup ========== */
-function renderGroupsTable() {
-  var tbody = document.getElementById('groups-tbody');
-  tbody.innerHTML = '';
-  groups.forEach(function(g, i) {
-    var tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td style="font-size:12px;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><a href="' + escapeHtml(g.url) + '" target="_blank" style="color:var(--blue);text-decoration:none">' + escapeHtml(g.url) + '</a></td>' +
-      '<td style="font-weight:500">' + escapeHtml(g.name) + '</td>' +
-      '<td>' + (g.enabled ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-inactive">Inactive</span>') + '</td>' +
-      '<td><button class="delete-btn" onclick="deleteGroup(' + i + ')">&times;</button></td>';
-    tbody.appendChild(tr);
-  });
-}
-
-function addGroupRow() {
-  var newGroup = { url:'', name:'New Group', enabled:true };
-  groups.unshift(newGroup);
-  renderGroupsTable();
-  var firstRow = document.querySelector('#groups-tbody tr');
-  if (firstRow) {
-    firstRow.classList.add('new-row');
-    var td = firstRow.querySelector('td');
-    td.setAttribute('contenteditable', 'true');
-    td.style.outline = 'none';
-    td.style.borderBottom = '2px solid var(--blue)';
-    td.textContent = '';
-    td.focus();
-    td.addEventListener('blur', function() {
-      groups[0].url = td.textContent;
-      td.removeAttribute('contenteditable');
-      td.style.borderBottom = '';
-      if (!td.textContent) {
-        renderGroupsTable();
-      }
-    });
-    td.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        td.blur();
-      }
-    });
-  }
-}
-
-function deleteGroup(i) {
-  showConfirm('Delete Group', 'Remove ' + (groups[i].name || 'this group') + '?', function() {
-    groups.splice(i, 1);
-    renderGroupsTable();
-    renderEngageGroups();
-  });
-}
-
-/* ========== 16. renderBarChart, setRange, switchPlatform, syncAnalytics ========== */
+/* ========== ANALYTICS ========== */
 function renderBarChart() {
   var area = document.getElementById('chart-area');
   if (!area) return;
@@ -2367,7 +2068,6 @@ function renderBarChart() {
     wrap.appendChild(bar);
     wrap.appendChild(lbl);
     area.appendChild(wrap);
-    // Animate
     setTimeout(function() {
       bar.style.height = Math.round(vals[idx] / max * 180) + 'px';
     }, idx * 30);
@@ -2381,28 +2081,11 @@ function setRange(days, btn) {
   renderBarChart();
 }
 
-var platformData = {
-  linkedin: { followers: '12,847', engagement: '3,241', posts: '142', reach: '48.9K' },
-  facebook: { followers: '8,312', engagement: '1,892', posts: '98', reach: '32.1K' },
-  threads: { followers: '2,156', engagement: '678', posts: '45', reach: '11.2K' },
-};
-
-function switchPlatform(platform, btn) {
-  document.querySelectorAll('#platform-tabs .tab-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  var d = platformData[platform];
-  document.getElementById('m-followers').textContent = d.followers;
-  document.getElementById('m-engagement').textContent = d.engagement;
-  document.getElementById('m-posts').textContent = d.posts;
-  document.getElementById('m-reach').textContent = d.reach;
-  renderBarChart();
-}
-
 function syncAnalytics() {
   showWarning('Sync Complete', 'Analytics data synced successfully.');
 }
 
-/* ========== 17. showWarning, showConfirm, closeModal ========== */
+/* ========== MODALS ========== */
 function showWarning(title, body) {
   document.getElementById('modal-warning-title').textContent = title;
   document.getElementById('modal-warning-body').textContent = body;
@@ -2433,80 +2116,10 @@ document.addEventListener('click', function(e) {
   }
 });
 
-/* ========== 18. toggleMoreMenu ========== */
-function toggleMoreMenu(id) {
-  var menu = document.getElementById(id);
-  var wasShown = menu.classList.contains('show');
-  document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
-  if (!wasShown) menu.classList.add('show');
-}
-
-// Close more menus on click outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.more-menu-wrap')) {
-    document.querySelectorAll('.more-menu.show').forEach(function(m) { m.classList.remove('show'); });
-  }
-});
-
-/* ========== PUBLISH SESSIONS ========== */
-function renderPublishSessions() {
-  var container = document.getElementById('publish-sessions');
-  if (!container) return;
-  container.innerHTML = '';
-  MOCK_SESSIONS.forEach(function(s) {
-    var div = document.createElement('div');
-    div.className = 'session-item';
-    div.innerHTML = '<span class="session-email">' + escapeHtml(s.email) + '</span><span class="session-meta">' + s.saved + ' \u00b7 ' + s.cookies + ' cookies</span>';
-    container.appendChild(div);
-  });
-}
-
-/* ========== 19a. toggleLogPanel ========== */
-function toggleLogPanel(page) {
-  var body = document.getElementById(page + '-log-body');
-  if (!body) return;
-  var panel = body.closest('.log-panel');
-  if (!panel) return;
-  panel.classList.toggle('open');
-  body.style.display = body.style.display === 'none' ? 'block' : 'none';
-}
-
-function autoExpandLogPanel(page) {
-  var body = document.getElementById(page + '-log-body');
-  if (!body) return;
-  var panel = body.closest('.log-panel');
-  if (!panel) return;
-  if (!panel.classList.contains('open')) {
-    panel.classList.add('open');
-    body.style.display = 'block';
-  }
-}
-
-/* ========== 19. BOOT ========== */
+/* ========== BOOT ========== */
 document.addEventListener('DOMContentLoaded', function() {
-  renderAccountsTable();
-  renderGroupsTable();
   renderBarChart();
-  renderEngageGroups();
-  renderPublishSessions();
-
-  // Boot log messages
-  var bootMessages = [
-    ['System initialized', 'info'],
-    ['Loading accounts... 12 found', 'success'],
-    ['Loading groups... 5 found', 'success'],
-    ['Sessions loaded: 8 active', 'success'],
-    ['Ready.', 'info'],
-  ];
-  bootMessages.forEach(function(m, i) {
-    setTimeout(function() {
-      addLog(m[0], m[1], 'engage');
-      addLog(m[0], m[1], 'connections');
-    }, (i + 1) * 300);
-  });
-  setTimeout(function() {
-    addPublishLog('Publisher ready.', 'info');
-  }, 500);
+  renderPublishTags();
 });
 </script>
 </body>
