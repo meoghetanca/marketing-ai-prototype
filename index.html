@@ -3,63 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLPA</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>PLPA Console</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root, [data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --foreground: #000000;
-  --text-secondary: #555555;
-  --text-muted: #999999;
-  --border: #e8e8e8;
-  --hover: #f6f6f6;
-  --accent: #000000;
-  --accent-light: #f0f0f0;
-  --green: #000000;
-  --green-light: #f0f0f0;
-  --red: #000000;
-  --red-light: #f0f0f0;
-  --blue: #000000;
-  --blue-light: #f0f0f0;
-  --orange: #000000;
-  --orange-light: #f0f0f0;
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: 0 24px 48px rgba(0,0,0,0.08);
+  --bg: #F5F5F5;
+  --surface: #FFFFFF;
+  --foreground: #0A0A0A;
+  --text-secondary: #525252;
+  --text-muted: #A3A3A3;
+  --border: #E5E5E5;
+  --hover: #EFEFEF;
+  --accent: #0A0A0A;
 }
 [data-theme="dark"] {
-  --bg: #0a0a0a;
-  --surface: #0a0a0a;
-  --foreground: #e8e8e8;
-  --text-secondary: #888888;
-  --text-muted: #555555;
-  --border: #1e1e1e;
-  --hover: #141414;
-  --accent: #e8e8e8;
-  --accent-light: #1a1a1a;
-  --green: #e8e8e8;
-  --green-light: #141414;
-  --red: #e8e8e8;
-  --red-light: #141414;
-  --blue: #e8e8e8;
-  --blue-light: #141414;
-  --orange: #e8e8e8;
-  --orange-light: #141414;
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: 0 24px 48px rgba(0,0,0,0.3);
+  --bg: #0A0A0A;
+  --surface: #171717;
+  --foreground: #FAFAFA;
+  --text-secondary: #A3A3A3;
+  --text-muted: #737373;
+  --border: #2A2A2A;
+  --hover: #1E1E1E;
+  --accent: #FAFAFA;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--foreground);
-  display: flex;
   min-height: 100vh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.01em;
 }
 
 /* ========== LOGIN SCREEN ========== */
@@ -75,8 +49,8 @@ body {
 .login-screen.hidden { display: none; }
 .login-card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
   padding: 48px 40px;
   width: 100%;
   max-width: 380px;
@@ -91,11 +65,15 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto 28px;
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
 }
 .login-card h2 {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   letter-spacing: -0.02em;
 }
 .login-card .login-sub {
@@ -103,23 +81,39 @@ body {
   color: var(--text-muted);
   margin-bottom: 32px;
   font-weight: 400;
+  line-height: 1.5;
 }
 .login-card .form-group {
   text-align: left;
   margin-bottom: 16px;
 }
 .login-card .form-group label {
-  font-size: 11px;
+  display: block;
+  font-size: 12px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+}
+.login-card .form-group input {
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  padding: 0 14px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 150ms;
+}
+.login-card .form-group input:focus {
+  border-color: var(--foreground);
 }
 .login-btn {
   width: 100%;
   height: 44px;
-  border-radius: 12px;
+  border-radius: 999px;
   background: var(--foreground);
   color: var(--bg);
   font-size: 13px;
@@ -132,280 +126,60 @@ body {
   justify-content: center;
   gap: 8px;
   transition: opacity 200ms;
-  margin-top: 12px;
-  letter-spacing: 0.02em;
+  margin-top: 20px;
 }
 .login-btn:hover { opacity: 0.8; }
-.login-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 20px 0;
-  color: var(--text-muted);
-  font-size: 11px;
-}
-.login-divider::before, .login-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
 
-/* ========== SIDEBAR ========== */
-.sidebar {
-  width: 220px;
-  min-width: 220px;
-  height: 100vh;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+/* ========== APP SHELL ========== */
+.app-shell {
   display: flex;
   flex-direction: column;
-  padding: 20px 12px;
-  transition: width 200ms ease, min-width 200ms ease;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 100;
-}
-.sidebar.collapsed {
-  width: 56px;
-  min-width: 56px;
-}
-.sidebar.collapsed .sidebar-label,
-.sidebar.collapsed .nav-text,
-.sidebar.collapsed .logo-text,
-.sidebar.collapsed .promo-card,
-.sidebar.collapsed .pro-badge {
-  display: none;
-}
-.sidebar.collapsed .nav-item {
-  justify-content: center;
-  padding: 10px;
-}
-.sidebar.collapsed .logo-area {
-  display: none;
-}
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 8px;
-}
-.logo-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: var(--foreground);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--bg);
-  font-weight: 600;
-  font-size: 11px;
-  flex-shrink: 0;
-}
-.logo-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--foreground);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: 0.04em;
-}
-.pro-badge {
-  font-size: 9px;
-  font-weight: 600;
-  background: var(--foreground);
-  color: var(--bg);
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.sidebar-label {
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding: 8px 12px 6px;
-  letter-spacing: 0.08em;
-}
-.sidebar-separator {
-  height: 1px;
-  background: var(--border);
-  margin: 8px 6px;
-}
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 120ms;
-  user-select: none;
-  white-space: nowrap;
-}
-.nav-item.active {
-  background: var(--foreground);
-  color: var(--bg);
-}
-.nav-item:hover:not(.active) {
-  background: var(--hover);
-}
-.nav-item svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-.nav-item.active svg {
-  stroke: var(--bg);
-}
-.nav-text {
-  flex: 1;
-}
-.sidebar-bottom {
-  margin-top: auto;
-}
-.promo-card {
-  background: var(--foreground);
-  border-radius: 14px;
-  padding: 16px;
-  color: var(--bg);
-  margin-top: 12px;
-}
-.promo-card h4 {
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  letter-spacing: 0.02em;
-}
-.promo-card p {
-  font-size: 11px;
-  opacity: 0.6;
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-.promo-btn {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.15);
-  color: inherit;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.2);
-  font-family: inherit;
-  transition: background 150ms;
-}
-.promo-btn:hover {
-  background: rgba(255,255,255,0.25);
-}
-
-/* ========== MAIN WRAPPER ========== */
-.main-wrapper {
-  flex: 1;
-  margin-left: 220px;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 200ms ease;
-}
-.sidebar.collapsed ~ .main-wrapper {
-  margin-left: 56px;
 }
 
 /* ========== TOP BAR ========== */
 .top-bar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 16px 32px;
+  gap: 0;
+  padding: 0 24px;
+  height: 56px;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--border);
-}
-.sidebar-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-.sidebar-toggle {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: all 120ms;
-  padding: 0;
-}
-.sidebar-toggle:hover {
-  color: var(--foreground);
-}
-.sidebar-toggle svg {
-  width: 16px;
-  height: 16px;
-}
-.sidebar.collapsed .sidebar-toggle {
-  margin: 0 auto;
-}
-.sidebar.collapsed .sidebar-top {
-  justify-content: center;
-}
-.search-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
   background: var(--surface);
-  font-size: 12px;
-  width: 200px;
 }
-.search-bar svg {
-  width: 14px;
-  height: 14px;
-  color: var(--text-muted);
+.top-bar-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.top-bar-sep {
+  width: 1.5px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 16px;
   flex-shrink: 0;
 }
-.search-bar input {
-  border: none;
-  background: none;
-  outline: none;
-  font-size: 12px;
-  font-family: inherit;
-  color: var(--foreground);
-  width: 100%;
-  height: auto;
-  padding: 0;
-  box-shadow: none;
+.top-bar-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
 }
-.search-bar input::placeholder {
-  color: var(--text-muted);
+.top-bar-spacer { flex: 1; }
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.search-bar input:focus {
-  border: none;
-  box-shadow: none;
-}
-.top-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
   background: var(--surface);
   display: flex;
   align-items: center;
@@ -413,41 +187,141 @@ body {
   cursor: pointer;
   color: var(--text-secondary);
   transition: all 120ms;
-  position: relative;
+  flex-shrink: 0;
 }
-.top-icon:hover {
+.theme-toggle:hover {
   background: var(--foreground);
   color: var(--bg);
   border-color: var(--foreground);
 }
-.top-icon svg {
-  width: 16px;
-  height: 16px;
+.theme-toggle svg { width: 16px; height: 16px; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* ========== PROFILE PILL ========== */
+.profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 120ms;
+  position: relative;
+  user-select: none;
 }
-.notif-dot {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 5px;
-  height: 5px;
+.profile-pill:hover { background: var(--hover); }
+.profile-pill .avatar {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--foreground);
-}
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--foreground);
+  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--bg);
   font-size: 11px;
   font-weight: 600;
-  cursor: pointer;
-  flex-shrink: 0;
   letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
+.profile-pill .pill-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.profile-pill .pill-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+.profile-pill .pill-status {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.profile-pill .pill-status .green-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22C55E;
+  flex-shrink: 0;
+}
+.profile-pill .pill-chevron {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+.profile-pill .pill-chevron svg { width: 14px; height: 14px; }
+
+/* ========== PROFILE DROPDOWN ========== */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  z-index: 200;
+  display: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+.profile-dropdown.open { display: block; }
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.dropdown-header .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--foreground);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.dropdown-header-info { line-height: 1.4; }
+.dropdown-header-info .name { font-size: 13px; font-weight: 600; }
+.dropdown-header-info .email { font-size: 12px; color: var(--text-muted); }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 120ms;
+}
+.dropdown-item:hover { background: var(--hover); }
+.dropdown-item .badge-connected {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--hover);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: auto;
+}
+.dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+.dropdown-item.signout { color: var(--text-secondary); }
 
 /* ========== MAIN CONTENT ========== */
 .main-content {
@@ -455,1939 +329,961 @@ body {
   overflow-y: auto;
   padding: 32px;
 }
-.page {
-  display: none;
-}
-.page.active {
-  display: block;
-}
-.page-header {
-  margin-bottom: 32px;
-}
-.page-header h1 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  letter-spacing: -0.03em;
-}
-.page-desc {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 100%;
-}
+.main-content::-webkit-scrollbar { width: 4px; }
+.main-content::-webkit-scrollbar-track { background: transparent; }
+.main-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-/* ========== CARDS ========== */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 18px;
-}
-.col-left .card {
-  padding: 14px 16px;
-}
-.card-title {
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.col-left .card + .card {
-  margin-top: 0;
-}
+.page { display: none; }
+.page.active { display: block; }
 
-/* ========== LAYOUT ========== */
-.two-col {
-  display: flex;
-  gap: 20px;
-  height: calc(100vh - 140px);
-  min-height: 500px;
-}
-.col-left {
-  width: 380px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-.col-right {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ========== TOGGLE SWITCH ========== */
-.toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 0;
-}
-.toggle-row + .toggle-row {
-  border-top: 1px solid var(--border);
-  margin-top: 6px;
-  padding-top: 10px;
-}
-.toggle-label {
-  font-size: 13px;
-  color: var(--foreground);
-  font-weight: 400;
-}
-.toggle-switch {
-  width: 36px;
-  height: 20px;
-  border-radius: 10px;
-  background: var(--border);
-  cursor: pointer;
-  position: relative;
-  transition: background 200ms;
-  flex-shrink: 0;
-}
-.toggle-switch.on {
-  background: var(--foreground);
-}
-.toggle-switch .knob {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: white;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  transition: left 200ms;
-}
-.toggle-switch.on .knob {
-  left: 19px;
-}
-
-/* ========== STAT CARDS ========== */
-.stats-row {
-  display: flex;
-  gap: 1px;
-  background: var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.stat-card {
-  flex: 1;
-  padding: 12px 8px;
-  text-align: center;
-  background: var(--surface) !important;
-  color: var(--foreground) !important;
-}
-.stat-number {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  font-family: 'JetBrains Mono', monospace;
-}
-.stat-label {
-  font-size: 9px;
-  font-weight: 500;
-  color: var(--text-muted);
-  margin-top: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-/* ========== PROGRESS BAR ========== */
-.progress-track {
-  height: 3px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-.progress-fill {
-  border-radius: 2px;
-}
-.progress-fill {
-  height: 100%;
-  background: var(--foreground);
-  transition: width 300ms;
-  width: 0%;
-}
-
-/* ========== BUTTONS ========== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--foreground);
-  transition: all 120ms;
-  white-space: nowrap;
-}
-.btn:hover {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.btn-start {
-  width: 100%;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--foreground);
-  color: var(--bg);
-  font-size: 12px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  transition: opacity 200ms;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.btn-start:hover {
-  opacity: 0.8;
-}
-.btn-start:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-.btn-red {
-  background: transparent;
-  color: var(--text-secondary);
-  border-color: var(--border);
-}
-.btn-red:hover {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.btn-blue {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.btn-blue:hover {
-  opacity: 0.8;
-  background: var(--foreground);
-  color: var(--bg);
-}
-.action-row {
-  display: flex;
-  gap: 8px;
-}
-.action-row .btn {
-  flex: 1;
-}
-
-/* ========== INPUTS ========== */
-input, textarea, select {
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-size: 13px;
-  color: var(--foreground);
-  font-family: inherit;
-  transition: border-color 120ms;
-  width: 100%;
-}
-input:focus, textarea:focus, select:focus {
-  border-color: var(--foreground);
-  box-shadow: none;
-  outline: none;
-}
-textarea {
-  height: auto;
-  padding: 10px 12px;
-  resize: vertical;
-  min-height: 100px;
-}
-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.form-group {
-  margin-bottom: 14px;
-}
-.char-count {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-align: right;
-  margin-top: 4px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ========== BADGE ========== */
-.badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border: 1px solid var(--border);
-}
-.badge-ok {
-  background: var(--surface);
-  color: var(--foreground);
-}
-.badge-empty {
-  background: var(--surface);
-  color: var(--text-muted);
-}
-.badge-active {
-  background: var(--foreground);
-  color: var(--bg);
-}
-.badge-inactive {
-  background: var(--surface);
-  color: var(--text-muted);
-}
-.badge-blue {
-  background: var(--surface);
-  color: var(--foreground);
-}
-
-/* ========== ANALYTICS ========== */
-.overview-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-.overview-gradient {
-  padding: 24px;
-  color: var(--foreground) !important;
-  background: var(--surface) !important;
-  border: none;
-  position: relative;
-  overflow: hidden;
-}
-.overview-gradient::after, .overview-gradient::before { display: none; }
-.overview-gradient .ov-label {
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.overview-gradient .ov-number {
-  font-size: 32px;
-  font-weight: 600;
-  margin: 8px 0 4px;
-  color: var(--foreground);
-  letter-spacing: -0.03em;
-  font-family: 'JetBrains Mono', monospace;
-}
-.overview-gradient .ov-change {
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-.tabs {
-  display: flex;
-  gap: 0;
-}
-.tab-btn {
-  padding: 8px 18px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  color: var(--text-secondary);
-  transition: all 120ms;
-}
-.tab-btn.active {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.tab-btn:hover:not(.active) {
-  background: var(--hover);
-}
-.metrics-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-.metric-card {
-  padding: 20px;
-  background: var(--surface);
-  border: none;
-}
-.metric-card .metric-val {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  letter-spacing: -0.02em;
-  font-family: 'JetBrains Mono', monospace;
-}
-.metric-card .metric-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.chart-card {
-  padding: 24px;
-  margin-bottom: 24px;
-}
-.chart-card h3 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 2px;
-  letter-spacing: -0.01em;
-}
-.chart-subtitle {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-.chart-area {
-  height: 200px;
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  padding-top: 10px;
-}
-.chart-bar-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.chart-bar {
-  width: 100%;
-  border-radius: 4px 4px 0 0;
-  background: var(--foreground);
-  opacity: 0.15;
-  transition: height 400ms, opacity 200ms;
-  min-height: 2px;
-}
-.chart-bar:hover {
-  opacity: 0.6;
-}
-.chart-bar-label {
-  font-size: 9px;
-  color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-}
-.range-btns {
-  display: flex;
-  gap: 0;
-}
-.range-btn {
-  padding: 4px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-size: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-muted);
-  transition: all 120ms;
-}
-.range-btn.active {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.range-btn:hover:not(.active) {
-  color: var(--foreground);
-}
-.data-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.data-grid .card {
-  border: none;
-}
-
-/* ========== PUBLISH ========== */
-.status-bar {
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  letter-spacing: 0.02em;
-}
-.status-bar.idle {
-  background: var(--hover);
-  color: var(--text-muted);
-}
-.status-bar.working {
-  background: var(--foreground);
-  color: var(--bg);
-}
-.status-bar.done {
-  background: var(--foreground);
-  color: var(--bg);
-}
-.status-bar.error {
-  background: var(--foreground);
-  color: var(--bg);
-}
-
-/* ========== MODAL ========== */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-}
-.modal-overlay.show {
-  display: flex;
-}
-.modal {
-  padding: 28px;
-  border-radius: 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  max-width: 400px;
-  width: 90%;
-  animation: modalIn 150ms ease;
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.modal h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.01em;
-}
-.modal p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-.modal-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-/* ========== COMMENT STYLE ========== */
-.comment-dist {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.comment-dist-row {
+/* ========== SUB-PAGE BAR (back + title + action) ========== */
+.sub-bar {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 13px;
-  padding: 8px 0;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--border);
 }
-.comment-dist-pct {
-  font-weight: 600;
-  min-width: 36px;
-  color: var(--foreground);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
-.comment-dist-desc {
-  color: var(--text-secondary);
-}
-
-/* ========== LIMIT CARD ========== */
-.limit-info {
+.sub-bar .back-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 0;
+  transition: color 120ms;
 }
-.limit-value {
-  font-size: 16px;
+.sub-bar .back-btn:hover { color: var(--foreground); }
+.sub-bar .back-btn svg { width: 16px; height: 16px; }
+.sub-bar .sub-title {
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  flex: 1;
 }
-.limit-usage {
+.sub-bar .sub-action { margin-left: auto; }
+
+/* ========== DASHBOARD ========== */
+.dash-label {
   font-size: 12px;
   color: var(--text-muted);
   margin-bottom: 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+}
+.dash-heading {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
 
-/* ========== TAG CHIPS ========== */
-.tag-chip {
+/* ========== FEATURE CARDS ========== */
+.feature-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  transition: all 150ms;
+}
+.feature-card.running {
+  background: var(--hover);
+  border-left: 3.5px solid var(--foreground);
+}
+.feature-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  flex-shrink: 0;
+}
+.feature-card.running .feature-dot {
+  background: var(--foreground);
+  border-color: var(--foreground);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+.feature-info { flex: 1; }
+.feature-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.feature-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+.feature-progress {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  border-radius: 20px;
+  padding: 2px 10px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 500;
+}
+.chip-muted {
+  background: var(--border);
+  color: var(--text-secondary);
+}
+.chip-dark {
   background: var(--foreground);
   color: var(--bg);
-  font-family: 'JetBrains Mono', monospace;
 }
-.tag-chip .tag-remove {
-  width: 14px;
-  height: 14px;
-  border: none;
-  background: transparent;
-  color: var(--bg);
-  font-size: 13px;
-  line-height: 1;
+.feature-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ========== BUTTONS ========== */
+.btn-pill {
+  height: 32px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  opacity: 0.5;
-  transition: opacity 120ms;
-}
-.tag-chip .tag-remove:hover {
-  opacity: 1;
-}
-.tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-}
-.tag-input-wrap {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.tag-input-wrap input {
-  width: 120px;
-  height: 28px;
-  padding: 0 8px;
-  font-size: 11px;
-  border-radius: 14px;
-}
-.tag-input-wrap .tag-add-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   background: var(--surface);
-  color: var(--text-secondary);
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
+  color: var(--foreground);
+  transition: all 150ms;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
-  transition: all 120ms;
+  gap: 6px;
+  white-space: nowrap;
 }
-.tag-input-wrap .tag-add-btn:hover {
+.btn-pill:hover { background: var(--hover); }
+.btn-pill.primary {
   background: var(--foreground);
   color: var(--bg);
   border-color: var(--foreground);
 }
-
-/* ========== IMAGE PREVIEW ========== */
-.image-preview-area {
-  width: 100%;
-  height: 160px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 12px;
-  margin-top: 10px;
-  background: var(--hover);
+.btn-pill.primary:hover { opacity: 0.85; }
+.btn-pill.outline-dark {
+  background: var(--surface);
+  color: var(--foreground);
+  border-color: var(--foreground);
 }
-
-/* ========== PROFILE PANEL ========== */
-.profile-panel {
-  max-width: 420px;
+.btn-pill.outline-dark:hover { background: var(--hover); }
+.btn-pill:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
 }
-.profile-panel .profile-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-.profile-avatar-lg {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--foreground);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--bg);
-  font-size: 16px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.profile-info h4 {
-  font-size: 15px;
-  font-weight: 600;
-}
-.profile-info p {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 0;
-}
-.profile-section {
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
-  margin-top: 14px;
-}
-.profile-section h5 {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.profile-limit-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  padding: 4px 0;
-}
-
-/* ========== SINGLE-COL PAGE ========== */
-.page-single-col {
-  width: 100%;
-}
-.page-single-col .card + .card {
-  margin-top: 8px;
-}
-
-/* ========== CENTER ANALYTICS ========== */
-#page-analytics {
-  width: 100%;
-}
-
-/* ========== RESPONSIVE / MOBILE ========== */
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    z-index: 200;
-    box-shadow: var(--shadow-lg);
-  }
-  .sidebar.mobile-open {
-    transform: translateX(0);
-  }
-  .sidebar.collapsed {
-    transform: translateX(-100%);
-  }
-  .main-wrapper {
-    margin-left: 0 !important;
-  }
-  .sidebar.collapsed ~ .main-wrapper {
-    margin-left: 0;
-  }
-  .top-bar {
-    padding: 12px 16px;
-  }
-  .mobile-menu-btn {
-    display: flex;
-  }
-  .main-content {
-    padding: 20px 16px;
-  }
-  .page-header h1 {
-    font-size: 20px;
-  }
-  .page-desc {
-    max-width: 100%;
-  }
-  .overview-row {
-    grid-template-columns: 1fr;
-    border-radius: 14px;
-  }
-  .metrics-row {
-    grid-template-columns: repeat(2, 1fr);
-    border-radius: 14px;
-  }
-  .data-grid {
-    grid-template-columns: 1fr;
-    border-radius: 14px;
-  }
-  .two-col {
-    flex-direction: column;
-    height: auto;
-  }
-  .col-left {
-    width: 100%;
-  }
-  .search-bar {
-    width: 140px;
-  }
-  .page-single-col {
-    max-width: 100%;
-  }
-  .modal {
-    width: 94%;
-    margin: 0 12px;
-  }
-}
-
-/* Mobile menu button - hidden on desktop */
-.mobile-menu-btn {
-  display: none;
+.btn-icon {
   width: 32px;
   height: 32px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
   background: var(--surface);
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--text-secondary);
-  margin-right: auto;
+  transition: all 120ms;
+  flex-shrink: 0;
 }
-.mobile-menu-btn svg {
-  width: 16px;
-  height: 16px;
+.btn-icon:hover { background: var(--hover); color: var(--foreground); }
+.btn-icon svg { width: 14px; height: 14px; }
+
+/* ========== STATS ROW ========== */
+.stats-row {
+  display: flex;
+  gap: 12px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  flex: 1;
+}
+.stat-value {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
-/* Mobile overlay */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 199;
-  backdrop-filter: blur(2px);
+/* ========== SETTINGS PAGE ========== */
+.settings-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
 }
-.sidebar-overlay.show {
+.settings-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.settings-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.settings-row:first-of-type { border-top: none; }
+.settings-row-label {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 120px;
+  padding-top: 6px;
+}
+.settings-row-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.settings-row-control input[type="number"] {
+  width: 80px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  padding: 0 12px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 150ms;
+}
+.settings-row-control input[type="number"]:focus { border-color: var(--foreground); }
+.settings-row-control .unit {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.settings-row-control input[type="time"] {
+  width: 110px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  padding: 0 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 150ms;
+}
+.settings-row-control input[type="time"]:focus { border-color: var(--foreground); }
+.settings-row-control .time-sep {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.day-toggles {
+  display: flex;
+  gap: 6px;
+}
+.day-toggle {
+  width: 38px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 150ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.day-toggle.active {
+  background: var(--foreground);
+  color: var(--bg);
+  border-color: var(--foreground);
+}
+.day-toggle:hover:not(.active) {
+  background: var(--hover);
+  color: var(--foreground);
+}
+.hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+.disable-btn {
+  margin-top: 12px;
+}
+
+/* ========== FOOTER BAR ========== */
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1.5px solid var(--border);
+  margin-top: 24px;
+}
+.footer-bar .left { margin-right: auto; }
+
+/* ========== ACCOUNT PAGE ========== */
+.account-section {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.account-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.account-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.account-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--foreground);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.account-profile-info { flex: 1; }
+.account-profile-info .name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.account-profile-info .meta { font-size: 12px; color: var(--text-muted); }
+.account-field {
+  margin-bottom: 14px;
+}
+.account-field:last-child { margin-bottom: 0; }
+.account-field label {
   display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
 }
+.account-field input {
+  width: 100%;
+  max-width: 360px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  padding: 0 12px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 150ms;
+}
+.account-field input:focus { border-color: var(--foreground); }
+.follower-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.follower-row .follower-num {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.follower-row .follower-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  flex: 1;
+}
+/* ========== MOBILE ========== */
+@media (max-width: 600px) {
+  /* top bar: compact */
+  .top-bar {
+    padding: 0 12px;
+    height: 50px;
+    gap: 0;
+  }
+  .top-bar-brand { font-size: 13px; }
+  .top-bar-sep { margin: 0 8px; height: 16px; }
+  .top-bar-title { display: none; }
+  .top-bar-right { gap: 6px; }
+  .theme-toggle { width: 32px; height: 32px; }
+  .theme-toggle svg { width: 14px; height: 14px; }
 
-/* ========== SCROLLBAR ========== */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
+  /* profile pill: avatar only on mobile */
+  .profile-pill {
+    padding: 3px;
+    gap: 0;
+  }
+  .profile-pill .pill-info,
+  .profile-pill .pill-chevron { display: none; }
+  .profile-pill .avatar { width: 28px; height: 28px; font-size: 10px; }
 
-/* ========== HELPERS ========== */
-.hidden {
-  display: none !important;
+  /* dropdown */
+  .profile-dropdown {
+    width: calc(100vw - 24px);
+    max-width: 300px;
+    right: -4px;
+  }
+
+  /* main content */
+  .main-content { padding: 16px; }
+
+  /* page header */
+  .page-header { margin-bottom: 16px; }
+  .page-header h1 { font-size: 20px; }
+  .page-header .page-label { font-size: 11px; }
+
+  /* feature cards */
+  .feature-cards { gap: 8px; margin-bottom: 16px; }
+  .feature-card {
+    padding: 12px 14px;
+    gap: 10px;
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  .feature-name { font-size: 13px; }
+  .feature-progress { font-size: 11px; }
+  .feature-actions { gap: 6px; }
+  .feature-actions .btn-pill {
+    height: 30px;
+    padding: 0 14px;
+    font-size: 11px;
+  }
+  .feature-actions .btn-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .feature-actions .btn-icon svg { width: 14px; height: 14px; }
+  .chip { font-size: 10px; padding: 1px 8px; }
+
+  /* stats */
+  .stats-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stat-card { padding: 14px 16px; border-radius: 12px; }
+  .stat-value { font-size: 18px; }
+  .stat-label { font-size: 11px; }
+
+  /* settings page */
+  .sub-bar {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sub-bar .btn-pill {
+    height: 32px;
+    font-size: 12px;
+  }
+  .sub-bar .sub-title { font-size: 13px; }
+  .settings-card { padding: 16px; }
+  .settings-title { font-size: 15px; margin-bottom: 14px; }
+  .settings-row {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+  }
+  .settings-row-label { min-width: 0; padding-top: 0; }
+  .settings-row-control { flex-wrap: wrap; }
+  .settings-row-control input[type="time"] { width: 90px; }
+  .day-toggles { gap: 4px; }
+  .day-toggle {
+    width: 36px;
+    height: 32px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+  .settings-hint { font-size: 11px; }
+  .footer-bar {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .footer-bar .btn-pill { flex: 1; justify-content: center; height: 38px; }
+
+  /* account page */
+  .account-section { padding: 16px; border-radius: 12px; }
+  .account-section-title { font-size: 13px; }
+  .account-section-sub { font-size: 11px; }
+  .account-row { flex-wrap: wrap; gap: 10px; }
+  .account-row .btn-pill { flex: none; }
+  .account-field input {
+    width: 100%;
+  }
+  .account-profile-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .follower-row { flex-wrap: wrap; gap: 8px; }
+  .follower-row .follower-num { font-size: 18px; }
+
+  /* login */
+  .login-card {
+    margin: 0 16px;
+    padding: 32px 24px;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN ========== -->
-<div class="login-screen" id="login-screen">
+<!-- ==================== LOGIN SCREEN ==================== -->
+<div class="login-screen" id="loginScreen">
   <div class="login-card">
-    <div class="login-logo">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--bg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16L8 12L12 14L20 6"/><polyline points="16 6 20 6 20 10"/><line x1="4" y1="20" x2="4" y2="14" opacity="0.4"/><line x1="8" y1="20" x2="8" y2="16" opacity="0.5"/><line x1="12" y1="20" x2="12" y2="13" opacity="0.6"/><line x1="16" y1="20" x2="16" y2="10" opacity="0.7"/><line x1="20" y1="20" x2="20" y2="8" opacity="0.8"/></svg>
-    </div>
-    <h2>Sign in to PLPA</h2>
-    <p class="login-sub">Personal LinkedIn Profile Automation</p>
+    <div class="login-logo">PL</div>
+    <h2>Sign in</h2>
+    <p class="login-sub">Use your 8SENECA credentials, not LinkedIn.</p>
     <div class="form-group">
-      <label>LinkedIn Email</label>
-      <input type="email" id="login-email" placeholder="your@email.com" value="tomas.bucek@8seneca.com">
+      <label>Email</label>
+      <input type="email" id="loginEmail" value="tomas.bucek@8seneca.com" placeholder="you@8seneca.com">
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" id="login-password" placeholder="Enter your password" value="password123">
+      <input type="password" id="loginPassword" value="password" placeholder="Enter password">
     </div>
-    <button class="login-btn" onclick="handleLogin()">Sign In</button>
+    <button class="login-btn" onclick="doLogin()">Sign in</button>
   </div>
 </div>
 
-<!-- ========== SIDEBAR ========== -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-top">
-    <div class="logo-area">
-      <div class="logo-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--bg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16L8 12L12 14L20 6"/><polyline points="16 6 20 6 20 10"/></svg></div>
-      <div class="logo-text">PLPA <span class="pro-badge">Pro</span></div>
-    </div>
-    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-    </button>
-  </div>
-
-  <div class="sidebar-label">Main</div>
-
-  <div class="nav-item active" onclick="switchPage('engage')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-    <span class="nav-text">Engage</span>
-  </div>
-
-  <div class="nav-item" onclick="switchPage('connect')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    <span class="nav-text">Connect</span>
-  </div>
-
-  <div class="nav-item" onclick="switchPage('invite')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-    <span class="nav-text">Invite</span>
-  </div>
-
-  <div class="nav-item" onclick="switchPage('publish')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-    <span class="nav-text">Publish</span>
-  </div>
-
-  <div class="nav-item" onclick="switchPage('analytics')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-    <span class="nav-text">Analytics</span>
-  </div>
-
-</aside>
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
-
-<!-- ========== MAIN WRAPPER ========== -->
-<div class="main-wrapper">
+<!-- ==================== APP SHELL ==================== -->
+<div class="app-shell">
 
   <!-- TOP BAR -->
   <div class="top-bar">
-    <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" title="Menu">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-    </button>
-    <div style="margin-right:auto"></div>
-    <button class="top-icon" onclick="toggleTheme()" title="Toggle theme">
-      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-    <button class="top-icon" style="position:relative" title="Notifications" onclick="showWarning('Notifications','No new notifications.')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span class="notif-dot"></span>
-    </button>
-    <div class="user-avatar" id="user-avatar" onclick="showProfilePanel()" style="cursor:pointer" title="Profile">TB</div>
+    <span class="top-bar-brand">PLPA</span>
+    <div class="top-bar-sep"></div>
+    <span class="top-bar-title" id="topBarTitle">Dashboard</span>
+    <div class="top-bar-spacer"></div>
+    <div class="top-bar-right">
+      <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </div>
+      <div class="profile-pill" id="profilePill" onclick="toggleDropdown(event)">
+        <div class="avatar">TB</div>
+        <div class="pill-info">
+          <span class="pill-name">Tomas Bucek</span>
+          <span class="pill-status">LinkedIn &middot; connected <span class="green-dot"></span></span>
+        </div>
+        <div class="pill-chevron">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+
+        <!-- DROPDOWN -->
+        <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
+          <div class="dropdown-header">
+            <div class="avatar">TB</div>
+            <div class="dropdown-header-info">
+              <div class="name">Tomas Bucek</div>
+              <div class="email">tomas.bucek@8seneca.com</div>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="goToAccount(); closeDropdown();">
+            LinkedIn account
+            <span class="badge-connected">connected</span>
+          </div>
+          <div class="dropdown-item" onclick="goToAccount(); closeDropdown();">
+            Settings
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item signout" onclick="doSignOut()">
+            Sign out
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- MAIN CONTENT -->
   <div class="main-content">
 
-    <!-- ==================== ENGAGE PAGE ==================== -->
-    <div class="page active" id="page-engage">
-      <div class="page-header">
-        <h1>Engage</h1>
-        <p class="page-desc">
-          Automatically like and comment on posts from your followers list. The tool processes 100-150 people per day, cycling through your followers sequentially.
-        </p>
-      </div>
-      <div class="page-single-col">
-          <!-- Options -->
-          <div class="card">
-            <div class="card-title">Options</div>
-            <div class="toggle-row">
-              <span class="toggle-label">Like posts (100-150/day)</span>
-              <div class="toggle-switch on" id="engage-like-toggle" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
-            </div>
-            <div class="toggle-row">
-              <span class="toggle-label">Comment on posts (100-150/day)</span>
-              <div class="toggle-switch on" id="engage-comment-toggle" onclick="this.classList.toggle('on');toggleCommentStyle()"><div class="knob"></div></div>
-            </div>
-            <div class="toggle-row">
-              <span class="toggle-label">Random delay</span>
-              <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
-            </div>
-          </div>
-          <!-- Comment Style -->
-          <div class="card" id="engage-comment-style">
-            <div class="card-title">Comment Style Distribution</div>
-            <div class="comment-dist">
-              <div class="comment-dist-row">
-                <span class="comment-dist-pct">30%</span>
-                <span class="comment-dist-desc">One word, positive vibe</span>
-              </div>
-              <div class="comment-dist-row" style="border-top:1px solid var(--border);padding-top:8px">
-                <span class="comment-dist-pct">40%</span>
-                <span class="comment-dist-desc">2-5 words, positive vibe</span>
-              </div>
-              <div class="comment-dist-row" style="border-top:1px solid var(--border);padding-top:8px">
-                <span class="comment-dist-pct">30%</span>
-                <span class="comment-dist-desc">Up to 3 sentences, professional &amp; relevant (max 15 words)</span>
-              </div>
-            </div>
-          </div>
-          <!-- Progress -->
-          <div class="card">
-            <div class="card-title">Progress</div>
-            <div class="stats-row">
-              <div class="stat-card">
-                <div class="stat-number" id="engage-total">0</div>
-                <div class="stat-label">Total</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="engage-success">0</div>
-                <div class="stat-label">Success</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="engage-failed">0</div>
-                <div class="stat-label">Failed</div>
-              </div>
-            </div>
-            <div class="progress-track"><div class="progress-fill" id="engage-progress"></div></div>
-          </div>
-          <!-- Actions -->
-          <button class="btn-start" id="engage-start-btn" onclick="startEngagement()" style="margin-top:8px">Start Engagement</button>
-          <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopEngagement()">Stop</button>
-            <button class="btn" onclick="skipEngagement()">Skip</button>
-          </div>
-      </div>
-    </div>
+    <!-- ========== DASHBOARD PAGE ========== -->
+    <div class="page active" id="page-dashboard">
+      <div class="dash-label">Today &middot; 26 August</div>
+      <div class="dash-heading">Dashboard</div>
 
-    <!-- ==================== CONNECT PAGE ==================== -->
-    <div class="page" id="page-connect">
-      <div class="page-header">
-        <h1>Connect</h1>
-        <p class="page-desc">
-          Search and connect with people in the IT industry. The AI automatically detects your weekly connection limit.
-        </p>
-      </div>
-      <div class="page-single-col">
-          <!-- Search Criteria -->
-          <div class="card">
-            <div class="card-title">Search Criteria</div>
-            <div class="form-group">
-              <label>Industry</label>
-              <select id="connect-industry">
-                <option value="it">Information Technology</option>
-                <option value="software">Software Development</option>
-                <option value="cybersecurity">Cybersecurity</option>
-                <option value="cloud">Cloud Computing</option>
-                <option value="data">Data Science & AI</option>
-                <option value="consulting">IT Consulting</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Location</label>
-              <input type="text" id="connect-location" placeholder="e.g. Bratislava, Slovakia" value="Bratislava, Slovakia">
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label>Keywords</label>
-              <input type="text" id="connect-keywords" placeholder="e.g. CTO, developer, engineer">
+      <div class="feature-cards">
+        <!-- Auto-like posts -->
+        <div class="feature-card running" data-feature="autolike">
+          <div class="feature-dot"></div>
+          <div class="feature-info">
+            <div class="feature-name-row">
+              <span class="feature-name">Auto-like posts</span>
+              <span class="feature-progress">93/150 today</span>
             </div>
           </div>
-          <!-- Connection Limits -->
-          <div class="card">
-            <div class="card-title">Connection Limits</div>
-            <div class="limit-info">
-              <span class="limit-value" id="connect-limit-val">100 connections/week</span>
-              <span class="badge badge-blue">Auto-detected</span>
-            </div>
-            <div class="limit-usage" id="connect-limit-usage">47/100 used this week</div>
-            <div class="progress-track">
-              <div class="progress-fill" id="connect-limit-bar" style="width:47%"></div>
-            </div>
+          <div class="feature-actions">
+            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
+            <button class="btn-icon" onclick="openSettings('autolike', 'Auto-like posts')" title="Settings">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
           </div>
-          <!-- Progress -->
-          <div class="card">
-            <div class="card-title">Progress</div>
-            <div class="stats-row">
-              <div class="stat-card">
-                <div class="stat-number" id="connect-total">0</div>
-                <div class="stat-label">Total</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="connect-sent">0</div>
-                <div class="stat-label">Sent</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="connect-failed">0</div>
-                <div class="stat-label">Failed</div>
-              </div>
-            </div>
-            <div class="progress-track"><div class="progress-fill" id="connect-progress"></div></div>
-          </div>
-          <!-- Actions -->
-          <button class="btn-start" id="connect-start-btn" onclick="startConnect()" style="margin-top:8px">Start Connecting</button>
-          <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopConnect()">Stop</button>
-          </div>
-      </div>
-    </div>
-
-    <!-- ==================== INVITE PAGE ==================== -->
-    <div class="page" id="page-invite">
-      <div class="page-header">
-        <h1>Invite</h1>
-        <p class="page-desc">
-          Invite your connections to follow your company LinkedIn page. The AI detects your monthly invitation limit.
-        </p>
-      </div>
-      <div class="page-single-col">
-          <!-- Company Page -->
-          <div class="card">
-            <div class="card-title">Company Page</div>
-            <div class="form-group" style="margin-bottom:0">
-              <label>Company LinkedIn URL</label>
-              <input type="text" id="invite-company-url" placeholder="https://linkedin.com/company/..." value="https://linkedin.com/company/8seneca">
-            </div>
-          </div>
-          <!-- Invitation Limits -->
-          <div class="card">
-            <div class="card-title">Invitation Limits</div>
-            <div class="limit-info">
-              <span class="limit-value" id="invite-limit-val">250 invitations/month</span>
-              <span class="badge badge-blue">Auto-detected</span>
-            </div>
-            <div class="limit-usage" id="invite-limit-usage">112/250 used this month</div>
-            <div class="progress-track">
-              <div class="progress-fill" id="invite-limit-bar" style="width:44.8%"></div>
-            </div>
-          </div>
-          <!-- Progress -->
-          <div class="card">
-            <div class="card-title">Progress</div>
-            <div class="stats-row">
-              <div class="stat-card">
-                <div class="stat-number" id="invite-total">0</div>
-                <div class="stat-label">Total</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="invite-sent">0</div>
-                <div class="stat-label">Sent</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="invite-declined">0</div>
-                <div class="stat-label">Declined</div>
-              </div>
-            </div>
-            <div class="progress-track"><div class="progress-fill" id="invite-progress"></div></div>
-          </div>
-          <!-- Actions -->
-          <button class="btn-start" id="invite-start-btn" onclick="startInvite()" style="margin-top:8px">Start Inviting</button>
-          <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopInvite()">Stop</button>
-          </div>
-      </div>
-    </div>
-
-    <!-- ==================== PUBLISH PAGE ==================== -->
-    <div class="page" id="page-publish">
-      <div class="page-header">
-        <h1>Publish</h1>
-        <p class="page-desc">
-          Scrape trending news from Twitter and create LinkedIn posts with AI-generated images.
-        </p>
-      </div>
-      <div class="page-single-col">
-          <div class="status-bar idle" id="publish-status">Ready to publish</div>
-          <!-- Progress -->
-          <div class="card">
-            <div class="card-title">Progress</div>
-            <div class="stats-row">
-              <div class="stat-card">
-                <div class="stat-number" id="publish-found">0</div>
-                <div class="stat-label">Found</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="publish-posted">0</div>
-                <div class="stat-label">Posted</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="publish-failed">0</div>
-                <div class="stat-label">Failed</div>
-              </div>
-            </div>
-            <div class="progress-track"><div class="progress-fill" id="publish-progress"></div></div>
-          </div>
-          <!-- Actions -->
-          <button class="btn-start" id="publish-start-btn" onclick="startPublish()" style="margin-top:8px">Start Publishing</button>
-          <div class="action-row" style="margin-top:8px">
-            <button class="btn btn-red" onclick="stopPublish()">Stop</button>
-          </div>
-          <!-- Customize Toggle -->
-          <button class="btn" onclick="togglePublishCustomize()" style="margin-top:16px;width:100%;" id="customize-toggle-btn">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            Customize Post (Optional)
-          </button>
-          <!-- Customize Panel -->
-          <div id="publish-customize" style="display:none;margin-top:8px">
-            <div class="card">
-              <div class="card-title">Custom Post</div>
-              <div class="form-group">
-                <label>Topic</label>
-                <input type="text" id="publish-topic" placeholder="Enter your own topic...">
-              </div>
-              <div class="form-group">
-                <label>Caption</label>
-                <textarea id="publish-caption" rows="5" placeholder="Write your own caption..." oninput="updateCharCount()"></textarea>
-                <div class="char-count"><span id="char-count">0</span> / 3000</div>
-              </div>
-              <div class="form-group">
-                <label>Image</label>
-                <div class="image-preview-area" id="image-preview" onclick="document.getElementById('publish-file-input').click()" style="cursor:pointer">
-                  Click to upload an image
-                </div>
-                <input type="file" id="publish-file-input" accept="image/*" style="display:none" onchange="previewPublishImage(this)">
-              </div>
-              <div class="form-group" style="margin-bottom:0">
-                <label>Hashtags</label>
-                <div class="tags-container" id="publish-tags"></div>
-                <div class="tag-input-wrap" style="margin-top:6px">
-                  <input type="text" id="new-tag-input" placeholder="Add tag..." onkeydown="if(event.key==='Enter'){event.preventDefault();addPublishTag()}">
-                  <button class="tag-add-btn" onclick="addPublishTag()" title="Add tag">+</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Hidden elements to keep JS working -->
-          <div style="display:none">
-            <button id="find-news-btn"></button>
-            <button id="post-btn"></button>
-          </div>
-      </div>
-    </div>
-
-    <!-- ==================== ANALYTICS PAGE ==================== -->
-    <div class="page" id="page-analytics">
-      <div class="page-header">
-        <h1>Analytics</h1>
-        <p class="page-desc">
-          Track your LinkedIn profile performance, engagement, and growth at a glance.
-        </p>
-      </div>
-
-      <!-- Overview gradient cards -->
-      <div class="overview-row">
-        <div class="overview-gradient">
-          <div class="ov-label">LinkedIn Followers</div>
-          <div class="ov-number">12,847</div>
-          <div class="ov-change">+8.3% from last month</div>
         </div>
-        <div class="overview-gradient">
-          <div class="ov-label">Total Engagement</div>
-          <div class="ov-number">3,241</div>
-          <div class="ov-change">+12.1% from last month</div>
+
+        <!-- Auto-comment -->
+        <div class="feature-card running" data-feature="autocomment">
+          <div class="feature-dot"></div>
+          <div class="feature-info">
+            <div class="feature-name-row">
+              <span class="feature-name">Auto-comment</span>
+              <span class="feature-progress">128/150 today</span>
+            </div>
+          </div>
+          <div class="feature-actions">
+            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
+            <button class="btn-icon" onclick="openSettings('autocomment', 'Auto-comment')" title="Settings">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="overview-gradient">
-          <div class="ov-label">Content Reach</div>
-          <div class="ov-number">48,920</div>
-          <div class="ov-change">+5.7% from last month</div>
+
+        <!-- Page invitations -->
+        <div class="feature-card" data-feature="invitations">
+          <div class="feature-dot"></div>
+          <div class="feature-info">
+            <div class="feature-name-row">
+              <span class="feature-name">Page invitations</span>
+              <span class="feature-progress">250/250 this month</span>
+              <span class="chip chip-muted">Limit reached</span>
+            </div>
+          </div>
+          <div class="feature-actions">
+            <button class="btn-pill primary" disabled>Start</button>
+            <button class="btn-icon" onclick="openSettings('invitations', 'Page invitations')" title="Settings">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Auto-connect IT -->
+        <div class="feature-card" data-feature="autoconnect">
+          <div class="feature-dot"></div>
+          <div class="feature-info">
+            <div class="feature-name-row">
+              <span class="feature-name">Auto-connect &middot; IT</span>
+            </div>
+          </div>
+          <div class="feature-actions">
+            <button class="btn-pill primary" onclick="toggleFeature(this)">Start</button>
+            <button class="btn-icon" onclick="openSettings('autoconnect', 'Auto-connect &middot; IT')" title="Settings">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Auto-post news -->
+        <div class="feature-card running" data-feature="autopost">
+          <div class="feature-dot"></div>
+          <div class="feature-info">
+            <div class="feature-name-row">
+              <span class="feature-name">Auto-post news</span>
+              <span class="feature-progress">1/1 today</span>
+              <span class="chip chip-dark">2 drafts to review</span>
+            </div>
+          </div>
+          <div class="feature-actions">
+            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
+            <button class="btn-icon" onclick="openSettings('autopost', 'Auto-post news')" title="Settings">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Sync -->
-      <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:24px">
-        <button class="btn btn-blue" onclick="syncAnalytics()">Sync Data</button>
-      </div>
-
-      <!-- Metrics -->
-      <div class="metrics-row">
-        <div class="card metric-card">
-          <div class="metric-val">12,847</div>
-          <div class="metric-label">Followers</div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">231</div>
+          <div class="stat-label">actions &middot; All features combined &middot; resets at midnight</div>
         </div>
-        <div class="card metric-card">
-          <div class="metric-val">3,241</div>
-          <div class="metric-label">Engagement</div>
-        </div>
-        <div class="card metric-card">
-          <div class="metric-val">142</div>
-          <div class="metric-label">Posts</div>
-        </div>
-        <div class="card metric-card">
-          <div class="metric-val">48.9K</div>
-          <div class="metric-label">Reach</div>
-        </div>
-      </div>
-
-      <!-- Chart -->
-      <div class="card chart-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-          <div>
-            <h3>Engagement Over Time</h3>
-            <div class="chart-subtitle">Daily engagement metrics</div>
-          </div>
-          <div class="range-btns" id="range-btns">
-            <button class="range-btn" onclick="setRange(7,this)">7d</button>
-            <button class="range-btn active" onclick="setRange(14,this)">14d</button>
-            <button class="range-btn" onclick="setRange(30,this)">30d</button>
-          </div>
-        </div>
-        <div class="chart-area" id="chart-area"></div>
-      </div>
-
-      <!-- Data grid -->
-      <div class="data-grid">
-        <div class="card">
-          <div class="card-title">Top Performing Post</div>
-          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">"5 AI trends that will transform B2B marketing in 2026..."</p>
-          <div style="margin-top:8px;font-size:11px;color:var(--text-muted);font-family:'JetBrains Mono',monospace">842 likes &middot; 156 comments &middot; 12.4K views</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Audience Demographics</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-            Marketing: 34%<br>Engineering: 28%<br>Sales: 18%<br>Other: 20%
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Best Posting Times</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-            Tuesday 9:00 AM<br>Wednesday 8:30 AM<br>Thursday 10:00 AM
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Growth Rate</div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
-            Weekly: +2.3%<br>Monthly: +8.3%<br>Quarterly: +24.1%
-          </div>
+        <div class="stat-card">
+          <div class="stat-value">3,880</div>
+          <div class="stat-label">followers &middot; Last synced 21 Aug</div>
         </div>
       </div>
     </div>
 
-  </div><!-- /main-content -->
-</div><!-- /main-wrapper -->
+    <!-- ========== SETTINGS PAGE ========== -->
+    <div class="page" id="page-settings">
+      <div class="sub-bar">
+        <button class="back-btn" onclick="goBack()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          Dashboard
+        </button>
+        <span class="sub-title" id="settingsFeatureName">Auto-like posts</span>
+        <div class="sub-action">
+          <button class="btn-pill outline-dark" id="settingsToggleBtn" onclick="toggleSettingsFeature()">Stop</button>
+        </div>
+      </div>
 
-<!-- ========== WARNING MODAL ========== -->
-<div class="modal-overlay" id="modal-warning">
-  <div class="modal">
-    <h3 id="modal-warning-title">Warning</h3>
-    <p id="modal-warning-body">Something happened.</p>
-    <div class="modal-actions">
-      <button class="btn btn-blue" onclick="closeModal('modal-warning')">OK</button>
+      <div class="settings-title" id="settingsTitle">Auto-like settings</div>
+
+      <div class="settings-card">
+        <div class="settings-row">
+          <div class="settings-row-label">Daily limit</div>
+          <div class="settings-row-control">
+            <input type="number" value="150" min="1" max="500" id="settingsLimit">
+            <span class="unit">likes</span>
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-label">Active hours</div>
+          <div class="settings-row-control">
+            <input type="time" value="09:00" id="settingsTimeFrom">
+            <span class="time-sep">to</span>
+            <input type="time" value="18:00" id="settingsTimeTo">
+          </div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-label">Active days</div>
+          <div class="settings-row-control">
+            <div class="day-toggles" id="settingsDays">
+              <button class="day-toggle active">Mon</button>
+              <button class="day-toggle active">Tue</button>
+              <button class="day-toggle active">Wed</button>
+              <button class="day-toggle active">Thu</button>
+              <button class="day-toggle active">Fri</button>
+              <button class="day-toggle">Sat</button>
+              <button class="day-toggle">Sun</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">LinkedIn allows ~120/day for this account.</div>
+      <div class="hint">Timezone: Asia/Ho_Chi_Minh</div>
+      <div class="hint">Next: 27 Aug, 09:00</div>
+
+      <div class="disable-btn">
+        <button class="btn-pill" onclick="alert('Feature disabled.')">Disable</button>
+      </div>
+
+      <div class="footer-bar">
+        <button class="btn-pill" onclick="goBack()">Cancel</button>
+        <button class="btn-pill primary" onclick="alert('Settings saved.'); goBack();">Save</button>
+      </div>
     </div>
+
+    <!-- ========== ACCOUNT PAGE ========== -->
+    <div class="page" id="page-account">
+      <div class="sub-bar">
+        <button class="back-btn" onclick="goBack()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          Dashboard
+        </button>
+        <span class="sub-title">Account</span>
+      </div>
+
+      <!-- Connected account -->
+      <div class="account-section">
+        <div class="account-section-title">Connected account</div>
+        <div class="account-profile-row">
+          <div class="account-avatar">TB</div>
+          <div class="account-profile-info">
+            <div class="name">Tomas Bucek</div>
+            <div class="meta">Last verified 4 min ago &middot; Active</div>
+          </div>
+          <button class="btn-pill" onclick="alert('Verifying...')">Verify</button>
+        </div>
+      </div>
+
+      <!-- LinkedIn credentials -->
+      <div class="account-section">
+        <div class="account-section-title">LinkedIn credentials</div>
+        <div class="account-field">
+          <label>Email</label>
+          <input type="email" value="tomas.bucek@company.com">
+        </div>
+        <div class="account-field">
+          <label>Password</label>
+          <input type="password" value="securepassword">
+        </div>
+        <div class="hint" style="margin-top:12px;">Stored securely. Enter new values to update.</div>
+      </div>
+
+      <!-- Follower list -->
+      <div class="account-section">
+        <div class="account-section-title">Follower list</div>
+        <div class="follower-row">
+          <span class="follower-num">3,880</span>
+          <span class="follower-meta">followers &middot; Last synced 21 Aug</span>
+          <button class="btn-pill" onclick="alert('Syncing followers...')">Sync now</button>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button class="btn-pill left" onclick="doSignOut()">Sign out</button>
+        <button class="btn-pill" onclick="goBack()">Cancel</button>
+        <button class="btn-pill primary" onclick="alert('Account saved.'); goBack();">Save</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- ========== CONFIRM MODAL ========== -->
-<div class="modal-overlay" id="modal-confirm">
-  <div class="modal">
-    <h3 id="modal-confirm-title">Confirm</h3>
-    <p id="modal-confirm-body">Are you sure?</p>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('modal-confirm')">Cancel</button>
-      <button class="btn btn-red" id="modal-confirm-ok">Confirm</button>
-    </div>
-  </div>
-</div>
-
-<!-- ========== PROFILE MODAL ========== -->
-<div class="modal-overlay" id="modal-profile">
-  <div class="modal profile-panel">
-    <div class="profile-header">
-      <div class="profile-avatar-lg" id="profile-avatar-lg">TB</div>
-      <div class="profile-info">
-        <h4 id="profile-name">Tomas Bucek</h4>
-        <p id="profile-email">tomas.bucek@8seneca.com</p>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h5>Connection Limit</h5>
-      <div class="profile-limit-row">
-        <span>Weekly limit</span>
-        <span style="font-weight:600">100 connections/week</span>
-      </div>
-      <div class="profile-limit-row">
-        <span>Used this week</span>
-        <span>47/100</span>
-      </div>
-      <div class="progress-track" style="margin-top:6px">
-        <div class="progress-fill" style="width:47%"></div>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h5>Invitation Limit</h5>
-      <div class="profile-limit-row">
-        <span>Monthly limit</span>
-        <span style="font-weight:600">250 invitations/month</span>
-      </div>
-      <div class="profile-limit-row">
-        <span>Used this month</span>
-        <span>112/250</span>
-      </div>
-      <div class="progress-track" style="margin-top:6px">
-        <div class="progress-fill" style="width:44.8%"></div>
-      </div>
-    </div>
-
-    <div class="modal-actions" style="margin-top:20px">
-      <button class="btn" onclick="closeModal('modal-profile')">Close</button>
-      <button class="btn btn-red" onclick="handleLogout()">Sign Out</button>
-    </div>
-  </div>
-</div>
-
-<!-- ========================================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ========================================================================== -->
 <script>
-/* ========== PROFILE DATA ========== */
-var currentProfile = {
-  name: 'Tomas Bucek',
-  email: 'tomas.bucek@8seneca.com',
-  initials: 'TB',
-  connectionLimit: 100,
-  connectionsUsed: 47,
-  invitationLimit: 250,
-  invitationsUsed: 112
-};
+// ==================== STATE ====================
+var currentSettingsFeature = null;
+var settingsFeatureRunning = false;
 
-var isLoggedIn = false;
-var publishTags = ['#8seneca'];
-
-/* ========== PUBLISH TAGS ========== */
-function renderPublishTags() {
-  var container = document.getElementById('publish-tags');
-  if (!container) return;
-  container.innerHTML = '';
-  publishTags.forEach(function(tag, i) {
-    var chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.innerHTML = escapeHtml(tag) + '<button class="tag-remove" onclick="removePublishTag(' + i + ')" title="Remove">&times;</button>';
-    container.appendChild(chip);
-  });
+// ==================== LOGIN ====================
+function doLogin() {
+  document.getElementById('loginScreen').classList.add('hidden');
 }
 
-function addPublishTag() {
-  var input = document.getElementById('new-tag-input');
-  var val = input.value.trim();
-  if (!val) return;
-  if (!val.startsWith('#')) val = '#' + val;
-  if (publishTags.indexOf(val) === -1) {
-    publishTags.push(val);
-    renderPublishTags();
-  }
-  input.value = '';
+function doSignOut() {
+  closeDropdown();
+  document.getElementById('loginScreen').classList.remove('hidden');
+  showPage('dashboard');
 }
 
-function removePublishTag(i) {
-  publishTags.splice(i, 1);
-  renderPublishTags();
-}
-
-function getTagsString() {
-  return publishTags.length ? '\n\n' + publishTags.join(' ') : '';
-}
-
-/* ========== AUTOMATION STATE ========== */
-var engageInterval = null;
-var engageRunning = false;
-var connectInterval = null;
-var connectRunning = false;
-var inviteInterval = null;
-var inviteRunning = false;
-var publishInterval = null;
-var publishRunning = false;
-
-/* ========== LOGIN / LOGOUT ========== */
-function handleLogin() {
-  var email = document.getElementById('login-email').value;
-  var password = document.getElementById('login-password').value;
-  if (!email || !password) {
-    showWarning('Login Error', 'Please enter both email and password.');
-    return;
-  }
-  // Extract initials from email or use defaults
-  var nameParts = email.split('@')[0].split('.');
-  var initials = '';
-  if (nameParts.length >= 2) {
-    initials = (nameParts[0][0] + nameParts[1][0]).toUpperCase();
-  } else {
-    initials = nameParts[0].substring(0, 2).toUpperCase();
-  }
-
-  // Derive a display name
-  var displayName = nameParts.map(function(p) {
-    return p.charAt(0).toUpperCase() + p.slice(1);
-  }).join(' ');
-
-  currentProfile.email = email;
-  currentProfile.name = displayName;
-  currentProfile.initials = initials;
-
-  // Update UI
-  document.getElementById('user-avatar').textContent = initials;
-  document.getElementById('profile-avatar-lg').textContent = initials;
-  document.getElementById('profile-name').textContent = displayName;
-  document.getElementById('profile-email').textContent = email;
-
-  // Hide login screen
-  document.getElementById('login-screen').classList.add('hidden');
-  isLoggedIn = true;
-}
-
-function handleLogout() {
-  closeModal('modal-profile');
-  isLoggedIn = false;
-  document.getElementById('login-screen').classList.remove('hidden');
-  // Reset password field
-  document.getElementById('login-password').value = '';
-}
-
-/* ========== PROFILE PANEL ========== */
-function showProfilePanel() {
-  document.getElementById('modal-profile').classList.add('show');
-}
-
-/* ========== switchPage ========== */
-function switchPage(name) {
+// ==================== PAGE NAVIGATION ====================
+function showPage(page) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  var el = document.getElementById('page-' + name);
-  if (el) el.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-  var pages = ['engage','connect','invite','publish','analytics'];
-  var idx = pages.indexOf(name);
-  var navItems = document.querySelectorAll('.nav-item');
-  if (idx >= 0 && navItems[idx]) navItems[idx].classList.add('active');
-  // Close mobile sidebar
-  var sb = document.getElementById('sidebar');
-  var overlay = document.getElementById('sidebar-overlay');
-  if (sb.classList.contains('mobile-open')) {
-    sb.classList.remove('mobile-open');
-    overlay.classList.remove('show');
-  }
+  document.getElementById('page-' + page).classList.add('active');
+  var titles = { dashboard: 'Dashboard', settings: 'Settings', account: 'Account' };
+  document.getElementById('topBarTitle').textContent = titles[page] || page;
 }
 
-/* ========== toggleSidebar ========== */
-function toggleSidebar() {
-  var sb = document.getElementById('sidebar');
-  sb.classList.toggle('collapsed');
-  var mw = document.querySelector('.main-wrapper');
-  if (sb.classList.contains('collapsed')) {
-    mw.style.marginLeft = '56px';
+function goBack() {
+  showPage('dashboard');
+}
+
+function goToAccount() {
+  showPage('account');
+}
+
+// ==================== FEATURE TOGGLE (Dashboard) ====================
+function toggleFeature(btn) {
+  var card = btn.closest('.feature-card');
+  var isRunning = card.classList.contains('running');
+  if (isRunning) {
+    card.classList.remove('running');
+    btn.classList.remove('outline-dark');
+    btn.classList.add('primary');
+    btn.textContent = 'Start';
   } else {
-    mw.style.marginLeft = '220px';
+    card.classList.add('running');
+    btn.classList.remove('primary');
+    btn.classList.add('outline-dark');
+    btn.textContent = 'Stop';
   }
 }
 
-/* ========== toggleMobileSidebar ========== */
-function toggleMobileSidebar() {
-  var sb = document.getElementById('sidebar');
-  var overlay = document.getElementById('sidebar-overlay');
-  sb.classList.toggle('mobile-open');
-  overlay.classList.toggle('show');
+// ==================== SETTINGS PAGE ====================
+function openSettings(featureId, featureName) {
+  currentSettingsFeature = featureId;
+  var card = document.querySelector('[data-feature="' + featureId + '"]');
+  settingsFeatureRunning = card.classList.contains('running');
+
+  document.getElementById('settingsFeatureName').textContent = featureName;
+  document.getElementById('settingsTitle').textContent = featureName + ' settings';
+
+  var toggleBtn = document.getElementById('settingsToggleBtn');
+  if (settingsFeatureRunning) {
+    toggleBtn.textContent = 'Stop';
+    toggleBtn.className = 'btn-pill outline-dark';
+  } else {
+    toggleBtn.textContent = 'Start';
+    toggleBtn.className = 'btn-pill primary';
+  }
+
+  showPage('settings');
 }
 
-/* ========== toggleTheme ========== */
+function toggleSettingsFeature() {
+  var toggleBtn = document.getElementById('settingsToggleBtn');
+  settingsFeatureRunning = !settingsFeatureRunning;
+  if (settingsFeatureRunning) {
+    toggleBtn.textContent = 'Stop';
+    toggleBtn.className = 'btn-pill outline-dark';
+  } else {
+    toggleBtn.textContent = 'Start';
+    toggleBtn.className = 'btn-pill primary';
+  }
+  // Also toggle on the dashboard card
+  if (currentSettingsFeature) {
+    var card = document.querySelector('[data-feature="' + currentSettingsFeature + '"]');
+    var dashBtn = card.querySelector('.feature-actions .btn-pill');
+    if (settingsFeatureRunning) {
+      card.classList.add('running');
+      dashBtn.classList.remove('primary');
+      dashBtn.classList.add('outline-dark');
+      dashBtn.textContent = 'Stop';
+    } else {
+      card.classList.remove('running');
+      dashBtn.classList.remove('outline-dark');
+      dashBtn.classList.add('primary');
+      dashBtn.textContent = 'Start';
+    }
+  }
+}
+
+// ==================== PROFILE DROPDOWN ====================
+function toggleDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('profileDropdown').classList.toggle('open');
+}
+
+function closeDropdown() {
+  document.getElementById('profileDropdown').classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  var pill = document.getElementById('profilePill');
+  if (!pill.contains(e.target)) {
+    closeDropdown();
+  }
+});
+
+// ==================== THEME TOGGLE ====================
 function toggleTheme() {
   var html = document.documentElement;
   var current = html.getAttribute('data-theme');
-  var next = current === 'light' ? 'dark' : 'light';
-  html.setAttribute('data-theme', next);
-  var icon = document.getElementById('themeIcon');
-  if (next === 'dark') {
-    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  } else {
-    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-  }
-  renderBarChart();
+  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
 }
 
-/* ========== toggleCommentStyle ========== */
-function toggleCommentStyle() {
-  var toggle = document.getElementById('engage-comment-toggle');
-  var card = document.getElementById('engage-comment-style');
-  if (toggle.classList.contains('on')) {
-    card.style.display = '';
-  } else {
-    card.style.display = 'none';
-  }
-}
-
-/* ========== escapeHtml ========== */
-function escapeHtml(s) {
-  if (!s) return '';
-  var d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-/* ========== ENGAGE AUTOMATION ========== */
-function startEngagement() {
-  if (engageRunning) return;
-  engageRunning = true;
-  var targetCount = 120 + Math.floor(Math.random() * 30); // 120-150
-  var processed = 0, success = 0, failed = 0;
-
-  document.getElementById('engage-start-btn').disabled = true;
-
-  engageInterval = setInterval(function() {
-    if (processed >= targetCount || !engageRunning) {
-      clearInterval(engageInterval);
-      engageInterval = null;
-      engageRunning = false;
-      document.getElementById('engage-start-btn').disabled = false;
-      return;
-    }
-    var isSuccess = Math.random() < 0.92;
-    if (isSuccess) {
-      success++;
-    } else {
-      failed++;
-    }
-    processed++;
-    document.getElementById('engage-total').textContent = processed;
-    document.getElementById('engage-success').textContent = success;
-    document.getElementById('engage-failed').textContent = failed;
-    document.getElementById('engage-progress').style.width = Math.round(processed / targetCount * 100) + '%';
-  }, 400);
-}
-
-function stopEngagement() {
-  engageRunning = false;
-  if (engageInterval) {
-    clearInterval(engageInterval);
-    engageInterval = null;
-  }
-  document.getElementById('engage-start-btn').disabled = false;
-}
-
-function skipEngagement() {
-  // In prototype, just increment the counter by a few
-  if (engageRunning) {
-    var curr = parseInt(document.getElementById('engage-total').textContent) || 0;
-    document.getElementById('engage-total').textContent = curr + 5;
-    var s = parseInt(document.getElementById('engage-success').textContent) || 0;
-    document.getElementById('engage-success').textContent = s + 4;
-    var f = parseInt(document.getElementById('engage-failed').textContent) || 0;
-    document.getElementById('engage-failed').textContent = f + 1;
-  }
-}
-
-/* ========== CONNECT AUTOMATION ========== */
-function startConnect() {
-  if (connectRunning) return;
-  connectRunning = true;
-  var remaining = currentProfile.connectionLimit - currentProfile.connectionsUsed;
-  var targetCount = Math.min(remaining, 20 + Math.floor(Math.random() * 15));
-  var processed = 0, sent = 0, failed = 0;
-
-  document.getElementById('connect-start-btn').disabled = true;
-
-  connectInterval = setInterval(function() {
-    if (processed >= targetCount || !connectRunning) {
-      clearInterval(connectInterval);
-      connectInterval = null;
-      connectRunning = false;
-      document.getElementById('connect-start-btn').disabled = false;
-      // Update usage
-      currentProfile.connectionsUsed += sent;
-      var pct = Math.round(currentProfile.connectionsUsed / currentProfile.connectionLimit * 100);
-      document.getElementById('connect-limit-usage').textContent = currentProfile.connectionsUsed + '/' + currentProfile.connectionLimit + ' used this week';
-      document.getElementById('connect-limit-bar').style.width = pct + '%';
-      return;
-    }
-    var isSuccess = Math.random() < 0.88;
-    if (isSuccess) {
-      sent++;
-    } else {
-      failed++;
-    }
-    processed++;
-    document.getElementById('connect-total').textContent = processed;
-    document.getElementById('connect-sent').textContent = sent;
-    document.getElementById('connect-failed').textContent = failed;
-    document.getElementById('connect-progress').style.width = Math.round(processed / targetCount * 100) + '%';
-  }, 600);
-}
-
-function stopConnect() {
-  connectRunning = false;
-  if (connectInterval) {
-    clearInterval(connectInterval);
-    connectInterval = null;
-  }
-  document.getElementById('connect-start-btn').disabled = false;
-}
-
-/* ========== INVITE AUTOMATION ========== */
-function startInvite() {
-  if (inviteRunning) return;
-  var companyUrl = document.getElementById('invite-company-url').value;
-  if (!companyUrl) {
-    showWarning('Missing URL', 'Please enter your company LinkedIn page URL.');
-    return;
-  }
-  inviteRunning = true;
-  var remaining = currentProfile.invitationLimit - currentProfile.invitationsUsed;
-  var targetCount = Math.min(remaining, 30 + Math.floor(Math.random() * 20));
-  var processed = 0, sent = 0, declined = 0;
-
-  document.getElementById('invite-start-btn').disabled = true;
-
-  inviteInterval = setInterval(function() {
-    if (processed >= targetCount || !inviteRunning) {
-      clearInterval(inviteInterval);
-      inviteInterval = null;
-      inviteRunning = false;
-      document.getElementById('invite-start-btn').disabled = false;
-      // Update usage
-      currentProfile.invitationsUsed += sent;
-      var pct = Math.round(currentProfile.invitationsUsed / currentProfile.invitationLimit * 100);
-      document.getElementById('invite-limit-usage').textContent = currentProfile.invitationsUsed + '/' + currentProfile.invitationLimit + ' used this month';
-      document.getElementById('invite-limit-bar').style.width = pct + '%';
-      return;
-    }
-    var isSuccess = Math.random() < 0.85;
-    if (isSuccess) {
-      sent++;
-    } else {
-      declined++;
-    }
-    processed++;
-    document.getElementById('invite-total').textContent = processed;
-    document.getElementById('invite-sent').textContent = sent;
-    document.getElementById('invite-declined').textContent = declined;
-    document.getElementById('invite-progress').style.width = Math.round(processed / targetCount * 100) + '%';
-  }, 500);
-}
-
-function stopInvite() {
-  inviteRunning = false;
-  if (inviteInterval) {
-    clearInterval(inviteInterval);
-    inviteInterval = null;
-  }
-  document.getElementById('invite-start-btn').disabled = false;
-}
-
-/* ========== PUBLISH FUNCTIONS ========== */
-function setPublishStatus(text, cls) {
-  var bar = document.getElementById('publish-status');
-  bar.className = 'status-bar ' + cls;
-  bar.textContent = text;
-}
-
-function simulateFindNews() {
-  var btn = document.getElementById('find-news-btn');
-  btn.disabled = true;
-  btn.textContent = 'Searching...';
-  setPublishStatus('Scraping trending news from Twitter/X...', 'working');
-  setTimeout(function() {
-    var topics = [
-      'OpenAI Launches GPT-5 with Real-Time Reasoning',
-      'Kubernetes 2.0 Announced with AI-Native Orchestration',
-      'EU Passes Landmark AI Regulation Framework',
-      'GitHub Copilot Now Writes Full Applications',
-      'Cloudflare Introduces Zero-Trust AI Gateway'
-    ];
-    var captions = [
-      'Big news in AI today. GPT-5 just dropped and the reasoning capabilities are genuinely impressive. If you work in tech, this changes your workflow starting now.',
-      'Kubernetes 2.0 is here and it is a game changer for infrastructure teams. AI-native orchestration means less YAML, more results.',
-      'The EU just set the rules for AI in business. Whether you agree or not, this affects every tech company operating in Europe. Worth reading the details.',
-      'GitHub Copilot can now build full apps from a description. We tested it this morning. The results are surprisingly usable for MVPs.',
-      'Cloudflare just launched a zero-trust AI gateway. For anyone running AI workloads in production, this solves a real security gap.'
-    ];
-    var idx = Math.floor(Math.random() * topics.length);
-    document.getElementById('publish-topic').value = topics[idx];
-    document.getElementById('publish-caption').value = captions[idx] + getTagsString();
-    updateCharCount();
-    // Show image preview
-    document.getElementById('image-preview').innerHTML = '<div style="text-align:center"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="var(--foreground)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="0" ry="0"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><div style="margin-top:8px;color:var(--foreground);font-weight:500;font-size:11px;letter-spacing:0.04em;text-transform:uppercase">AI image generated</div></div>';
-    btn.disabled = false;
-    btn.textContent = 'Find Trending News';
-    setPublishStatus('News found and post prepared', 'done');
-  }, 2500);
-}
-
-function simulatePost() {
-  var caption = document.getElementById('publish-caption').value;
-  if (!caption) {
-    showWarning('Missing Caption', 'Please find trending news first to generate a post.');
-    return;
-  }
-  var btn = document.getElementById('post-btn');
-  btn.disabled = true;
-  setPublishStatus('Publishing post to LinkedIn...', 'working');
-  setTimeout(function() {
-    btn.disabled = false;
-    setPublishStatus('Post published successfully!', 'done');
-  }, 3000);
-}
-
-function updateCharCount() {
-  var count = document.getElementById('publish-caption').value.length;
-  document.getElementById('char-count').textContent = count;
-}
-
-/* ========== PUBLISH AUTOMATION ========== */
-function startPublish() {
-  if (publishRunning) return;
-  publishRunning = true;
-  var targetCount = 8 + Math.floor(Math.random() * 7);
-  var processed = 0, posted = 0, failed = 0;
-
-  document.getElementById('publish-start-btn').disabled = true;
-  setPublishStatus('Finding trending news and publishing...', 'working');
-
-  publishInterval = setInterval(function() {
-    if (processed >= targetCount || !publishRunning) {
-      clearInterval(publishInterval);
-      publishInterval = null;
-      publishRunning = false;
-      document.getElementById('publish-start-btn').disabled = false;
-      setPublishStatus('Publishing complete — ' + posted + ' posts published', 'done');
-      return;
-    }
-    var isSuccess = Math.random() < 0.9;
-    if (isSuccess) {
-      posted++;
-    } else {
-      failed++;
-    }
-    processed++;
-    document.getElementById('publish-found').textContent = processed;
-    document.getElementById('publish-posted').textContent = posted;
-    document.getElementById('publish-failed').textContent = failed;
-    document.getElementById('publish-progress').style.width = Math.round(processed / targetCount * 100) + '%';
-  }, 800);
-}
-
-function togglePublishCustomize() {
-  var panel = document.getElementById('publish-customize');
-  var btn = document.getElementById('customize-toggle-btn');
-  if (panel.style.display === 'none') {
-    panel.style.display = 'block';
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Hide Customize';
-  } else {
-    panel.style.display = 'none';
-    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Customize Post (Optional)';
-  }
-}
-
-function previewPublishImage(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      document.getElementById('image-preview').innerHTML = '<img src="' + e.target.result + '" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px">';
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-function stopPublish() {
-  publishRunning = false;
-  if (publishInterval) {
-    clearInterval(publishInterval);
-    publishInterval = null;
-  }
-  document.getElementById('publish-start-btn').disabled = false;
-  setPublishStatus('Publishing stopped', 'idle');
-}
-
-/* ========== ANALYTICS ========== */
-function renderBarChart() {
-  var area = document.getElementById('chart-area');
-  if (!area) return;
-  area.innerHTML = '';
-  var days = parseInt(area.dataset.days || '14');
-  var labels = [];
-  var now = new Date();
-  for (var i = days - 1; i >= 0; i--) {
-    var d = new Date(now);
-    d.setDate(d.getDate() - i);
-    labels.push(d.toLocaleDateString('en', { month: 'short', day: 'numeric' }));
-  }
-  var vals = labels.map(function() { return Math.floor(Math.random() * 180) + 40; });
-  var max = Math.max.apply(null, vals);
-
-  labels.forEach(function(l, idx) {
-    var wrap = document.createElement('div');
-    wrap.className = 'chart-bar-wrap';
-    var bar = document.createElement('div');
-    bar.className = 'chart-bar';
-    bar.style.height = '0px';
-    var lbl = document.createElement('div');
-    lbl.className = 'chart-bar-label';
-    lbl.textContent = days <= 14 ? l : (idx % 3 === 0 ? l : '');
-    wrap.appendChild(bar);
-    wrap.appendChild(lbl);
-    area.appendChild(wrap);
-    setTimeout(function() {
-      bar.style.height = Math.round(vals[idx] / max * 180) + 'px';
-    }, idx * 30);
-  });
-}
-
-function setRange(days, btn) {
-  document.querySelectorAll('#range-btns .range-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.getElementById('chart-area').dataset.days = days;
-  renderBarChart();
-}
-
-function syncAnalytics() {
-  showWarning('Sync Complete', 'Analytics data synced successfully.');
-}
-
-/* ========== MODALS ========== */
-function showWarning(title, body) {
-  document.getElementById('modal-warning-title').textContent = title;
-  document.getElementById('modal-warning-body').textContent = body;
-  document.getElementById('modal-warning').classList.add('show');
-}
-
-var confirmCallback = null;
-function showConfirm(title, body, onOk) {
-  document.getElementById('modal-confirm-title').textContent = title;
-  document.getElementById('modal-confirm-body').textContent = body;
-  confirmCallback = onOk;
-  document.getElementById('modal-confirm-ok').onclick = function() {
-    closeModal('modal-confirm');
-    if (confirmCallback) confirmCallback();
-    confirmCallback = null;
-  };
-  document.getElementById('modal-confirm').classList.add('show');
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('show');
-}
-
-// Close modals on overlay click
+// ==================== DAY TOGGLES ====================
 document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.classList.remove('show');
+  if (e.target.classList.contains('day-toggle')) {
+    e.target.classList.toggle('active');
   }
-});
-
-/* ========== BOOT ========== */
-document.addEventListener('DOMContentLoaded', function() {
-  renderBarChart();
-  renderPublishTags();
 });
 </script>
+
 </body>
 </html>
