@@ -1,1289 +1,1650 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLPA Console</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
 <style>
-:root, [data-theme="light"] {
-  --bg: #F5F5F5;
-  --surface: #FFFFFF;
-  --foreground: #0A0A0A;
-  --text-secondary: #525252;
-  --text-muted: #A3A3A3;
-  --border: #E5E5E5;
-  --hover: #EFEFEF;
-  --accent: #0A0A0A;
-}
-[data-theme="dark"] {
-  --bg: #0A0A0A;
-  --surface: #171717;
-  --foreground: #FAFAFA;
-  --text-secondary: #A3A3A3;
-  --text-muted: #737373;
-  --border: #2A2A2A;
-  --hover: #1E1E1E;
-  --accent: #FAFAFA;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'DM Sans', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--foreground);
-  min-height: 100vh;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+/* ════════════════════════════════════════════════════════════════════════
+   PLPA console — palette from the app's own theme.css, rebuilt on one
+   type scale, one spacing scale and one control height.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root{
+  color-scheme: light;
+  --font-ui:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 
-/* ========== LOGIN SCREEN ========== */
-.login-screen {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.login-screen.hidden { display: none; }
-.login-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 48px 40px;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-}
-.login-logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: var(--foreground);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 28px;
-  color: var(--bg);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: 0.04em;
-}
-.login-card h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  letter-spacing: -0.02em;
-}
-.login-card .login-sub {
-  font-size: 15px;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-  font-weight: 400;
-  line-height: 1.5;
-}
-.login-card .form-group {
-  text-align: left;
-  margin-bottom: 16px;
-}
-.login-card .form-group label {
-  display: block;
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-}
-.login-card .form-group input {
-  width: 100%;
-  height: 42px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  padding: 0 14px;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--foreground);
-  outline: none;
-  transition: border-color 150ms;
-}
-.login-card .form-group input:focus {
-  border-color: var(--foreground);
-}
-.login-btn {
-  width: 100%;
-  height: 44px;
-  border-radius: 999px;
-  background: var(--foreground);
-  color: var(--bg);
-  font-size: 15px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: opacity 200ms;
-  margin-top: 20px;
-}
-.login-btn:hover { opacity: 0.8; }
+  /* ── type · six steps, nothing off-scale ─────────────────────────────── */
+  --t-xs:.6875rem;   /* 11 · uppercase labels, units */
+  --t-sm:.8125rem;   /* 13 · secondary, table cells */
+  --t-md:.9375rem;   /* 15 · body, the default */
+  --t-lg:1.125rem;   /* 18 · panel + dialog titles */
+  --t-xl:1.5rem;     /* 24 · page titles */
+  --t-2xl:2.5rem;    /* 40 · stat figures */
 
-/* ========== APP SHELL ========== */
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
+  /* ── spacing · 4/8/12/16/24/32 ───────────────────────────────────────── */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
 
-/* ========== TOP BAR ========== */
-.top-bar {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  padding: 0 24px;
-  height: 64px;
-  flex-shrink: 0;
-  border-bottom: 1.5px solid var(--border);
-  background: var(--surface);
-}
-.top-bar-brand {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-.top-bar-sep {
-  width: 1.5px;
-  height: 20px;
-  background: var(--border);
-  margin: 0 16px;
-  flex-shrink: 0;
-}
-.top-bar-title {
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-.top-bar-spacer { flex: 1; }
-.top-bar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  /* ── ink · three levels, each with one job ───────────────────────────── */
+  --ink:#0A0A0A;      /* titles, values            · 16:1 */
+  --ink-2:#525252;    /* supporting text, meta     ·  8:1 */
+  --ink-3:#A3A3A3;    /* units, timestamps, disabled only */
+  --ink-inverse:#F5F5F5;
 
-/* ========== THEME TOGGLE ========== */
-.theme-toggle {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: all 120ms;
-  flex-shrink: 0;
-}
-.theme-toggle:hover {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.theme-toggle svg { width: 20px; height: 20px; }
-[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-[data-theme="light"] .theme-toggle .icon-sun { display: none; }
-[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  --ground:#F5F5F5; --surface:#FFFFFF; --surface-2:#FAFAFA; --surface-3:#EFEFEF;
+  --rule:#E5E5E5; --rule-strong:#D4D4D4;
+  --warn:#8F6410; --warn-dim:#FDF5E3; --warn-edge:#E2CB93;
+  --danger:#C33720; --danger-dim:#FDECE9; --danger-edge:#EDB9AF;
+  --ok:#22C55E;
+  --scrim:rgba(0,0,0,.45);
+  --live-tint:#EFEFEF; --live-edge:#E5E5E5; --live-ink:#0A0A0A;
+  --fill:#0A0A0A; --fill-hover:#2E2E2E;
+  --shadow-card:0 1px 2px rgba(0,0,0,.04);
+  --shadow-raised:0 8px 32px rgba(0,0,0,.08);
+  --shadow-modal:0 20px 48px rgba(0,0,0,.20);
+  --hover:rgba(0,0,0,.035);
 
-/* ========== PROFILE PILL ========== */
-.profile-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 12px 4px 4px;
-  border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  cursor: pointer;
-  transition: all 120ms;
-  position: relative;
-  user-select: none;
-}
-.profile-pill:hover { background: var(--hover); }
-.profile-pill .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--foreground);
-  color: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  flex-shrink: 0;
-}
-.profile-pill .pill-info {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.3;
-}
-.profile-pill .pill-name {
-  font-size: 13px;
-  font-weight: 600;
-}
-.profile-pill .pill-status {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.profile-pill .pill-status .green-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22C55E;
-  flex-shrink: 0;
-}
-.profile-pill .pill-chevron {
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-}
-.profile-pill .pill-chevron svg { width: 14px; height: 14px; }
-
-/* ========== PROFILE DROPDOWN ========== */
-.profile-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 260px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  z-index: 200;
-  display: none;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-}
-.profile-dropdown.open { display: block; }
-.dropdown-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.dropdown-header .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--foreground);
-  color: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.dropdown-header-info { line-height: 1.4; }
-.dropdown-header-info .name { font-size: 14px; font-weight: 600; }
-.dropdown-header-info .email { font-size: 12px; color: var(--text-muted); }
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--foreground);
-  cursor: pointer;
-  transition: background 120ms;
-}
-.dropdown-item:hover { background: var(--hover); }
-.dropdown-item .badge-connected {
-  font-size: 12px;
-  color: var(--text-muted);
-  background: var(--hover);
-  padding: 2px 8px;
-  border-radius: 999px;
-  margin-left: auto;
-}
-.dropdown-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 8px 0;
-}
-.dropdown-item.signout { color: var(--text-secondary); }
-
-/* ========== MAIN CONTENT ========== */
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 32px;
-}
-.main-content::-webkit-scrollbar { width: 4px; }
-.main-content::-webkit-scrollbar-track { background: transparent; }
-.main-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-.page { display: none; }
-.page.active { display: block; }
-
-/* ========== SUB-PAGE BAR (back + title + action) ========== */
-.sub-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1.5px solid var(--border);
-}
-.sub-bar .back-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: inherit;
-  padding: 0;
-  transition: color 120ms;
-}
-.sub-bar .back-btn:hover { color: var(--foreground); }
-.sub-bar .back-btn svg { width: 16px; height: 16px; }
-.sub-bar .sub-title {
-  font-size: 17px;
-  font-weight: 600;
-  flex: 1;
-}
-.sub-bar .sub-action { margin-left: auto; }
-
-/* ========== DASHBOARD ========== */
-.dash-label {
-  font-size: 17px;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-.dash-heading {
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 24px;
-}
-
-/* ========== FEATURE CARDS ========== */
-.feature-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 28px;
-}
-.feature-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  position: relative;
-  transition: all 150ms;
-}
-.feature-card.running {
-  background: var(--hover);
-  border-left: 3.5px solid var(--foreground);
-}
-.feature-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: transparent;
-  flex-shrink: 0;
-}
-.feature-card.running .feature-dot {
-  background: var(--foreground);
-  border-color: var(--foreground);
-  animation: pulse-dot 1.5s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
-}
-.feature-info { flex: 1; }
-.feature-name-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.feature-name {
-  font-size: 17px;
-  font-weight: 500;
-}
-.feature-progress {
-  font-size: 17px;
-  color: var(--text-muted);
-}
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.chip-muted {
-  background: var(--border);
-  color: var(--text-secondary);
-}
-.chip-dark {
-  background: var(--foreground);
-  color: var(--bg);
-}
-.feature-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* ========== BUTTONS ========== */
-.btn-pill {
-  height: 32px;
-  padding: 0 18px;
-  border-radius: 999px;
-  font-size: 17px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--foreground);
-  transition: all 150ms;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-.btn-pill:hover { background: var(--hover); }
-.btn-pill.primary {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.btn-pill.primary:hover { opacity: 0.85; }
-.btn-pill.outline-dark {
-  background: var(--surface);
-  color: var(--foreground);
-  border-color: var(--foreground);
-}
-.btn-pill.outline-dark:hover { background: var(--hover); }
-.btn-pill:disabled {
-  opacity: 0.4;
-  cursor: default;
-  pointer-events: none;
-}
-.btn-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: all 120ms;
-  flex-shrink: 0;
-}
-.btn-icon:hover { background: var(--hover); color: var(--foreground); }
-.btn-icon svg { width: 14px; height: 14px; }
-
-/* ========== STATS ROW ========== */
-.stats-row {
-  display: flex;
-  gap: 12px;
-}
-.stat-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 20px;
-  flex: 1;
-}
-.stat-value {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 2px;
-  letter-spacing: -0.02em;
-}
-.stat-label {
-  font-size: 17px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-/* ========== SETTINGS PAGE ========== */
-.settings-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin-bottom: 16px;
-}
-.settings-title {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  letter-spacing: -0.02em;
-}
-.settings-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 14px 0;
-  border-top: 1px solid var(--border);
-}
-.settings-row:first-of-type { border-top: none; }
-.settings-row-label {
-  font-size: 15px;
-  font-weight: 500;
-  min-width: 120px;
-  padding-top: 6px;
-}
-.settings-row-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.settings-row-control input[type="number"] {
-  width: 80px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  padding: 0 12px;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--foreground);
-  outline: none;
-  transition: border-color 150ms;
-}
-.settings-row-control input[type="number"]:focus { border-color: var(--foreground); }
-.settings-row-control .unit {
-  font-size: 17px;
-  color: var(--text-muted);
-}
-.settings-row-control input[type="time"] {
-  width: 110px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  padding: 0 10px;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--foreground);
-  outline: none;
-  transition: border-color 150ms;
-}
-.settings-row-control input[type="time"]:focus { border-color: var(--foreground); }
-.settings-row-control .time-sep {
-  font-size: 17px;
-  color: var(--text-muted);
-}
-.day-toggles {
-  display: flex;
-  gap: 6px;
-}
-.day-toggle {
-  width: 38px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  font-size: 15px;
-  font-weight: 500;
-  font-family: inherit;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 150ms;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.day-toggle.active {
-  background: var(--foreground);
-  color: var(--bg);
-  border-color: var(--foreground);
-}
-.day-toggle:hover:not(.active) {
-  background: var(--hover);
-  color: var(--foreground);
-}
-.hint {
-  font-size: 15px;
-  color: var(--text-muted);
-  margin-top: 10px;
-}
-.disable-btn {
-  margin-top: 12px;
-}
-
-/* ========== FOOTER BAR ========== */
-.footer-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  padding-top: 20px;
-  border-top: 1.5px solid var(--border);
-  margin-top: 24px;
-}
-.footer-bar .left { margin-right: auto; }
-
-/* ========== ACCOUNT PAGE ========== */
-.account-section {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin-bottom: 12px;
-}
-.account-section-title {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-.account-profile-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.account-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--foreground);
-  color: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.account-profile-info { flex: 1; }
-.account-profile-info .name { font-size: 17px; font-weight: 600; margin-bottom: 2px; }
-.account-profile-info .meta { font-size: 17px; color: var(--text-muted); }
-.account-field {
-  margin-bottom: 14px;
-}
-.account-field:last-child { margin-bottom: 0; }
-.account-field label {
-  display: block;
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
-}
-.account-field input {
-  width: 100%;
-  max-width: 360px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  padding: 0 12px;
-  font-size: 15px;
-  font-family: inherit;
-  color: var(--foreground);
-  outline: none;
-  transition: border-color 150ms;
-}
-.account-field input:focus { border-color: var(--foreground); }
-.follower-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.follower-row .follower-num {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.follower-row .follower-meta {
-  font-size: 17px;
-  color: var(--text-muted);
-  flex: 1;
-}
-/* ========== MOBILE ========== */
-@media (max-width: 600px) {
-  /* top bar: compact */
-  .top-bar {
-    padding: 0 16px;
-    height: 56px;
-    gap: 0;
-  }
-  .top-bar-brand { font-size: 18px; }
-  .top-bar-sep { margin: 0 8px; height: 16px; }
-  .top-bar-title { display: none; }
-  .top-bar-right { gap: 6px; }
-  .theme-toggle { width: 40px; height: 40px; }
-  .theme-toggle svg { width: 18px; height: 18px; }
-
-  /* profile pill: avatar only on mobile */
-  .profile-pill {
-    padding: 3px;
-    gap: 0;
-  }
-  .profile-pill .pill-info,
-  .profile-pill .pill-chevron { display: none; }
-  .profile-pill .avatar { width: 36px; height: 36px; font-size: 13px; }
-
-  /* dropdown */
-  .profile-dropdown {
-    width: calc(100vw - 24px);
-    max-width: 300px;
-    right: -4px;
-  }
-
-  /* main content */
-  .main-content { padding: 16px; }
-
-  /* page header */
-  .page-header { margin-bottom: 16px; }
-  .page-header h1 { font-size: 26px; }
-  .page-header .page-label { font-size: 14px; }
-
-  /* feature cards */
-  .feature-cards { gap: 14px; margin-bottom: 20px; }
-  .feature-card {
-    padding: 12px 14px;
-    gap: 10px;
-    border-radius: 10px;
-    flex-wrap: wrap;
-  }
-  .feature-name { font-size: 16px; }
-  .feature-progress { font-size: 14px; }
-  .feature-actions { gap: 6px; }
-  .feature-actions .btn-pill {
-    height: 34px;
-    padding: 0 16px;
-    font-size: 14px;
-  }
-  .feature-actions .btn-icon {
-    width: 30px;
-    height: 30px;
-  }
-  .feature-actions .btn-icon svg { width: 14px; height: 14px; }
-  .chip { font-size: 12px; padding: 2px 10px; }
-
-  /* stats */
-  .stats-row {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .stat-card { padding: 14px 16px; border-radius: 12px; }
-  .stat-value { font-size: 22px; }
-  .stat-label { font-size: 13px; }
-
-  /* settings page */
-  .sub-bar {
-    padding: 10px 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .sub-bar .btn-pill {
-    height: 32px;
-    font-size: 17px;
-  }
-  .sub-bar .sub-title { font-size: 15px; }
-  .settings-card { padding: 16px; }
-  .settings-title { font-size: 18px; margin-bottom: 14px; }
-  .settings-row {
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px 0;
-  }
-  .settings-row-label { min-width: 0; padding-top: 0; }
-  .settings-row-control { flex-wrap: wrap; }
-  .settings-row-control input[type="time"] { width: 90px; }
-  .day-toggles { gap: 4px; }
-  .day-toggle {
-    width: 36px;
-    height: 32px;
-    font-size: 15px;
-    border-radius: 6px;
-  }
-  .settings-hint { font-size: 13px; }
-  .footer-bar {
-    padding: 10px 12px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .footer-bar .btn-pill { flex: 1; justify-content: center; height: 38px; }
-
-  /* account page */
-  .account-section { padding: 16px; border-radius: 12px; }
-  .account-section-title { font-size: 16px; }
-  .account-section-sub { font-size: 14px; }
-  .account-row { flex-wrap: wrap; gap: 10px; }
-  .account-row .btn-pill { flex: none; }
-  .account-field input {
-    width: 100%;
-  }
-  .account-profile-row {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .follower-row { flex-wrap: wrap; gap: 8px; }
-  .follower-row .follower-num { font-size: 22px; }
-
-  /* login */
-  .login-card {
-    margin: 0 16px;
-    padding: 32px 24px;
+  /* ── shape and controls · one height, one radius set ─────────────────── */
+  --r-sm:8px; --r-md:12px; --r-lg:14px; --r-pill:999px;
+  --ctl:36px;          /* every button, field and icon button */
+  --bw:1.5px;          /* control edges */
+  --topbar:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ink:#FAFAFA; --ink-2:#B4B4B4; --ink-3:#737373; --ink-inverse:#0A0A0A;
+    --ground:#0A0A0A; --surface:#171717; --surface-2:#131313; --surface-3:#1E1E1E;
+    --rule:#2A2A2A; --rule-strong:#3A3A3A;
+    --warn:#E3B341; --warn-dim:#2A2113; --warn-edge:#4A3A14;
+    --danger:#F4553D; --danger-dim:#2A1512; --danger-edge:#5A2A22;
+    --scrim:rgba(0,0,0,.72);
+    --live-tint:#1E1E1E; --live-edge:#2A2A2A; --live-ink:#FAFAFA;
+    --fill:#FAFAFA; --fill-hover:#FFFFFF;
+    --shadow-card:0 1px 2px rgba(0,0,0,.5);
+    --shadow-raised:0 4px 8px rgba(0,0,0,.4),0 12px 24px rgba(0,0,0,.5);
+    --shadow-modal:0 20px 48px rgba(0,0,0,.7);
+    --hover:rgba(255,255,255,.04);
   }
 }
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ink:#FAFAFA; --ink-2:#B4B4B4; --ink-3:#737373; --ink-inverse:#0A0A0A;
+  --ground:#0A0A0A; --surface:#171717; --surface-2:#131313; --surface-3:#1E1E1E;
+  --rule:#2A2A2A; --rule-strong:#3A3A3A;
+  --warn:#E3B341; --warn-dim:#2A2113; --warn-edge:#4A3A14;
+  --danger:#F4553D; --danger-dim:#2A1512; --danger-edge:#5A2A22;
+  --scrim:rgba(0,0,0,.72);
+  --live-tint:#1E1E1E; --live-edge:#2A2A2A; --live-ink:#FAFAFA;
+  --fill:#FAFAFA; --fill-hover:#FFFFFF;
+  --shadow-card:0 1px 2px rgba(0,0,0,.5);
+  --shadow-raised:0 4px 8px rgba(0,0,0,.4),0 12px 24px rgba(0,0,0,.5);
+  --shadow-modal:0 20px 48px rgba(0,0,0,.7);
+  --hover:rgba(255,255,255,.04);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--font-ui); font-size:var(--t-md); line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+[hidden]{display:none!important}
+svg{flex:none}
+
+
+/* ── uppercase label · the one small-caps style in the system ─────────── */
+.label{
+  font-size:var(--t-xs); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); font-weight:500
+}
+.sub{color:var(--ink-2); font-size:var(--t-sm)}      /* supporting text */
+.meta{color:var(--ink-3); font-size:var(--t-sm)}     /* units, timestamps only */
+
+/* ══ top bar ═══════════════════════════════════════════════════════════ */
+.topbar{
+  position:sticky;top:0;z-index:40;height:var(--topbar);
+  display:flex;align-items:center;gap:var(--s3);
+  padding-inline:var(--s5);background:var(--surface);border-bottom:1px solid var(--rule)
+}
+.back{
+  display:inline-flex;align-items:center;gap:var(--s2);height:var(--ctl);
+  padding-inline:var(--s2);background:none;border:0;cursor:pointer;
+  border-radius:var(--r-sm);color:var(--ink);font-size:var(--t-md)
+}
+.back:hover{background:var(--hover)}
+.brand{display:inline-flex;align-items:center;gap:var(--s2);flex:0 0 auto}
+.mark{display:block;width:24px;height:24px;flex:0 0 auto;color:var(--fill)}
+.wordmark{font-weight:700;letter-spacing:.16em;font-size:var(--t-md)}
+.bar-sep{width:1px;height:20px;background:var(--rule)}
+.crumb{color:var(--ink-2);font-size:var(--t-md);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:var(--s2)}
+
+.iconbtn{
+  width:var(--ctl);height:var(--ctl);border-radius:var(--r-pill);
+  border:var(--bw) solid var(--rule);background:var(--surface);
+  display:grid;place-items:center;cursor:pointer;color:var(--ink)
+}
+.iconbtn:hover{background:var(--surface-3)}
+.acct{
+  display:flex;align-items:center;gap:var(--s2);cursor:pointer;background:var(--surface);
+  border:var(--bw) solid var(--rule);border-radius:var(--r-pill);
+  padding:3px var(--s3) 3px 3px;text-align:left;height:var(--ctl)
+}
+.acct:hover{background:var(--surface-2)}
+.avatar{
+  width:28px;height:28px;border-radius:var(--r-pill);background:var(--fill);
+  color:var(--ink-inverse);display:grid;place-items:center;
+  font-size:var(--t-xs);font-weight:700;flex:none;letter-spacing:.02em;line-height:1
+}
+.acct-name{display:block;font-weight:500;font-size:var(--t-sm);line-height:1.2}
+.acct-sub{display:block;font-size:var(--t-xs);color:var(--ink-2);line-height:1.25}
+.acct-sub.is-alert{color:var(--danger)}
+.dot-state{width:7px;height:7px;border-radius:var(--r-pill);background:var(--ok);flex:none}
+.dot-state.is-alert{background:var(--danger)}
+
+/* account menu */
+.menu{
+  position:absolute;right:var(--s5);top:calc(var(--topbar) + var(--s1));z-index:60;width:310px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-raised);padding:var(--s1);overflow:hidden
+}
+.menu-id{display:flex;gap:var(--s3);align-items:center;padding:var(--s3) var(--s3) var(--s4)}
+.menu-id .who b{display:block;font-size:var(--t-md);font-weight:500}
+.menu-id .who span{display:block;font-size:var(--t-sm);color:var(--ink-2)}
+.menu-item{
+  width:100%;display:flex;align-items:center;gap:var(--s3);padding:var(--s2) var(--s3);
+  border:0;background:none;cursor:pointer;border-radius:var(--r-sm);
+  font-size:var(--t-md);text-align:left;color:var(--ink);min-height:var(--ctl)
+}
+.menu-item:hover{background:var(--hover)}
+.menu-item > svg{color:var(--ink-2)}
+.menu-item .tail{margin-left:auto;font-size:var(--t-sm);color:var(--ink-2);white-space:nowrap}
+.menu-rule{height:1px;background:var(--rule);margin:var(--s1) var(--s1)}
+
+/* ══ layout ════════════════════════════════════════════════════════════ */
+.screen{padding:var(--s5) var(--s6) 88px}
+@media (max-width:640px){
+  .screen{padding:var(--s4) var(--s4) 96px}
+  .topbar{padding-inline:var(--s3);gap:var(--s2)}
+  .menu{right:var(--s3);width:auto;left:var(--s3)}
+}
+.eyebrow{color:var(--ink-2);font-size:var(--t-md)}
+h1.title{font-size:var(--t-xl);font-weight:500;margin:var(--s1) 0 0;letter-spacing:-.01em;text-wrap:balance}
+.head-row{display:flex;align-items:flex-end;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s5)}
+.head-row .spacer{margin-left:auto}
+.stack{display:flex;flex-direction:column;gap:var(--s4)}
+.stack-sm{display:flex;flex-direction:column;gap:var(--s3)}
+p.prose{margin:0;line-height:1.6}
+
+/* ══ buttons · one height ══════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);
+  height:var(--ctl);padding:0 var(--s4);border-radius:var(--r-pill);cursor:pointer;
+  border:var(--bw) solid var(--ink);background:var(--surface);color:var(--ink);
+  font-size:var(--t-sm);font-weight:500;white-space:nowrap
+}
+.btn:hover{background:var(--surface-3)}
+.btn--primary{background:var(--fill);border-color:var(--fill);color:var(--ink-inverse)}
+.btn--primary:hover{background:var(--fill-hover);border-color:var(--fill-hover)}
+.btn--quiet{border-color:var(--rule);color:var(--ink-2)}
+.btn--quiet:hover{color:var(--ink)}
+.btn--danger{border-color:var(--danger);color:var(--danger)}
+.btn--danger:hover{background:var(--danger-dim)}
+.btn--ghost{border-color:transparent;background:none;color:var(--ink-2)}
+.btn--ghost:hover{background:var(--hover);color:var(--ink)}
+.btn[disabled]{
+  background:var(--surface-3);border-color:var(--surface-3);color:var(--ink-3);cursor:not-allowed
+}
+.gear{
+  width:var(--ctl);height:var(--ctl);border-radius:var(--r-pill);border:1px solid var(--rule);
+  background:var(--surface);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink-2)
+}
+.gear:hover{background:var(--surface-3);color:var(--ink)}
+
+/* ══ panels ════════════════════════════════════════════════════════════ */
+.panel{
+  background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--r-lg);box-shadow:var(--shadow-card);overflow:hidden
+}
+.panel--live{border-color:var(--rule-strong)}
+.panel__head{
+  display:flex;align-items:center;gap:var(--s3);min-height:48px;
+  padding:var(--s2) var(--s5);border-bottom:1px solid var(--rule)
+}
+.panel__head .spacer{margin-left:auto}
+.panel__body{padding:var(--s4) var(--s5) var(--s5)}
+.panel__foot{
+  display:flex;gap:var(--s2);justify-content:flex-end;align-items:center;
+  padding:var(--s3) var(--s5);border-top:1px solid var(--rule);background:var(--surface-2)
+}
+.factlist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--s2)}
+.factlist li{position:relative;padding-left:18px;font-size:var(--t-sm);color:var(--ink-2)}
+.factlist li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;
+                     border-radius:var(--r-pill);background:var(--ink-3)}
+.nowbox{
+  display:flex;align-items:baseline;gap:var(--s2);border:1px solid var(--rule);
+  border-radius:var(--r-md);background:var(--surface-2);padding:var(--s3) var(--s4)
+}
+.nowbox b{font-size:var(--t-lg);font-weight:500;line-height:1}
+.nowbox span{font-size:var(--t-sm);color:var(--ink-2)}
+
+/* setting rows */
+.rows{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-card);padding-inline:var(--s5)
+}
+.row{display:flex;align-items:center;gap:var(--s4);padding:var(--s3) 0;
+     border-bottom:1px solid var(--rule);min-height:60px}
+.row:last-child{border-bottom:0}
+.row__main b{display:block;font-weight:500;font-size:var(--t-md)}
+.row__main .sub{display:block;margin-top:2px}
+.row__main .warnline{display:block;margin-top:2px;color:var(--warn);font-size:var(--t-sm)}
+.row__ctl{margin-left:auto;display:flex;align-items:center;gap:var(--s2);flex-wrap:nowrap}
+.unit{color:var(--ink-3);font-size:var(--t-sm);white-space:nowrap}
+@media (max-width:640px){
+  .row{flex-direction:column;align-items:flex-start;gap:var(--s2)}
+  .row__ctl{margin-left:0;flex-wrap:wrap}
+}
+
+/* ══ fields ════════════════════════════════════════════════════════════ */
+.field{display:flex;flex-direction:column;gap:var(--s2)}
+.field > .sub{margin-top:-2px}
+input[type=text],input[type=email],input[type=password],input[type=number],
+input[type=date],input[type=time],input[type=datetime-local],textarea,select{
+  background:var(--surface-2);border:1px solid var(--rule);color:var(--ink);
+  border-radius:var(--r-sm);padding:0 var(--s3);height:var(--ctl);width:100%;font-size:var(--t-md)
+}
+textarea{resize:vertical;min-height:120px;height:auto;padding:var(--s3);line-height:1.6}
+input[readonly]{color:var(--ink-2)}
+input[aria-invalid="true"]{border-color:var(--danger)}
+.num{width:84px;text-align:right}
+.time{width:124px}
+select{appearance:none;padding-right:var(--s6);cursor:pointer}
+.select-wrap{position:relative;display:block}
+.select-wrap::after{
+  content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;pointer-events:none;
+  border-right:1.6px solid var(--ink-2);border-bottom:1.6px solid var(--ink-2);
+  transform:translateY(-70%) rotate(45deg)
+}
+.w-sm{max-width:320px}
+.w-md{max-width:22rem}
+
+/* segmented + days */
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:var(--r-sm);
+     overflow:hidden;background:var(--surface);height:var(--ctl)}
+.seg button{border:0;background:none;cursor:pointer;padding:0 var(--s3);
+            font-size:var(--t-sm);color:var(--ink-2);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--fill);color:var(--ink-inverse);font-weight:500}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.days button{
+  min-width:44px;height:var(--ctl);border-radius:var(--r-sm);cursor:pointer;font-size:var(--t-sm);
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink-2)
+}
+.days button[aria-pressed="true"]{background:var(--fill);border-color:var(--fill);color:var(--ink-inverse)}
+
+.tabs{display:inline-flex;border:1px solid var(--rule);border-radius:var(--r-sm);
+      overflow:hidden;background:var(--surface);height:var(--ctl)}
+.tabs button{border:0;background:none;cursor:pointer;padding:0 var(--s4);
+             font-size:var(--t-sm);color:var(--ink-2);white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--fill);color:var(--ink-inverse);font-weight:500}
+
+/* ══ badges ════════════════════════════════════════════════════════════ */
+.badge{
+  display:inline-flex;align-items:center;border-radius:var(--r-pill);padding:3px var(--s3);
+  font-size:var(--t-xs);font-weight:500;border:1px solid var(--rule-strong);
+  color:var(--ink-2);background:var(--surface);white-space:nowrap
+}
+.badge--solid{background:var(--fill);border-color:var(--fill);color:var(--ink-inverse)}
+.badge--warn{color:var(--warn);border-color:var(--warn-edge);background:var(--warn-dim)}
+.badge--danger{color:var(--danger);border-color:var(--danger-edge);background:var(--danger-dim)}
+.badge--off{color:var(--ink-2);background:var(--surface-3);border-color:var(--rule)}
+
+/* ══ alert strips ══════════════════════════════════════════════════════ */
+.alert{
+  display:flex;gap:var(--s4);align-items:center;padding:var(--s3) var(--s4);
+  border-radius:var(--r-md);border:var(--bw) solid var(--warn-edge);
+  background:var(--surface)
+}
+.alert b{display:block;color:var(--warn);font-size:var(--t-md);font-weight:500}
+.alert p{margin:var(--s1) 0 0;color:var(--ink-2);font-size:var(--t-sm);line-height:1.5}
+.alert .spacer{margin-left:auto}
+.alert--danger{border-color:var(--danger-edge)}
+.alert--danger b{color:var(--danger)}
+.alert--live{border-color:var(--rule-strong)}
+.alert--live b{color:var(--ink)}
+@media (max-width:640px){.alert{flex-direction:column;align-items:flex-start}.alert .spacer{margin-left:0}}
+
+/* ══ console ═══════════════════════════════════════════════════════════ */
+/* the schedule · one row per feature, three aligned columns.
+   It was five sentences that differed by two words each, so nothing scanned. */
+.schedule__row{
+  display:grid;grid-template-columns:minmax(0,1fr) 116px 186px;gap:var(--s4);
+  align-items:center;padding:var(--s3) var(--s5);border-top:1px solid var(--rule)
+}
+.schedule__row:first-child{border-top:0}
+.schedule__name{font-size:var(--t-md)}
+.schedule__what{font-size:var(--t-sm);color:var(--ink-2);text-align:right}
+.schedule__when{font-size:var(--t-sm);color:var(--ink-2)}
+.schedule__empty{padding:var(--s4) var(--s5)}
+@media (max-width:720px){
+  .schedule__row{grid-template-columns:1fr;gap:2px}
+  .schedule__what,.schedule__when{text-align:left}
+}
+.controls{display:flex;flex-direction:column;gap:var(--s3)}
+.frow{
+  display:flex;align-items:center;gap:var(--s3);min-height:64px;
+  padding:var(--s3) var(--s3) var(--s3) var(--s5);background:var(--surface);
+  border:var(--bw) solid var(--rule);border-radius:var(--r-lg);position:relative
+}
+.frow.is-running{background:var(--live-tint);border-color:var(--live-edge)}
+.frow.is-running::before{
+  content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;
+  border-radius:0 4px 4px 0;background:var(--live-ink)
+}
+.frow__dot{width:8px;height:8px;border-radius:var(--r-pill);flex:none;
+           border:1.5px solid var(--ink-3);background:transparent}
+.frow.is-running .frow__dot{background:var(--live-ink);border-color:var(--live-ink);
+                            animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.frow__wrap{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;min-width:0}
+.frow__name{font-size:var(--t-md);font-weight:500}
+.frow__meta{color:var(--ink-2);font-size:var(--t-sm)}   /* was ink-3 · 2.6:1 */
+.frow__ctl{margin-left:auto;display:flex;align-items:center;gap:var(--s2);flex:none}
+@media (max-width:720px){
+  .frow{flex-direction:column;align-items:flex-start}
+  .frow__ctl{margin-left:0;width:100%;justify-content:flex-end}
+}
+
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s5)}
+@media (max-width:720px){.stats-row{grid-template-columns:1fr}}
+.stat-card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);
+           padding:var(--s5);box-shadow:var(--shadow-card)}
+.stat-value{font-size:var(--t-2xl);font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.stat-label{color:var(--ink-2);font-size:var(--t-sm);margin-top:var(--s2)}
+
+/* ══ dialogs ═══════════════════════════════════════════════════════════ */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:70}
+.modal{
+  position:fixed;z-index:71;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(880px,calc(100vw - var(--s6)));max-height:calc(100vh - var(--s6));overflow:auto;
+  background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow-modal)
+}
+.modal--narrow{width:min(460px,calc(100vw - var(--s6)))}
+.modal--wide{width:min(1180px,calc(100vw - var(--s6)))}
+.modal__head{padding:var(--s4) var(--s5);border-bottom:1px solid var(--rule)}
+.modal__head h2{margin:0;font-size:var(--t-lg);font-weight:500}
+.modal__body{padding:var(--s5)}
+.modal__foot{display:flex;gap:var(--s2);justify-content:flex-end;padding:0 var(--s5) var(--s5)}
+
+/* plan comparison · a real table so every row shares one height across the
+   four columns, with each plan column painted as a card. Monochrome: the
+   choice is carried by fill and border, never by a second hue. */
+.only-narrow{display:none}
+@media (max-width:860px){
+  .only-wide{display:none}
+  .only-narrow{display:block}
+}
+
+table.plans{
+  width:100%;border-collapse:separate;border-spacing:var(--s3) 0;
+  table-layout:fixed;margin-inline:calc(var(--s3) * -1)
+}
+table.plans col.plans__labels{width:210px}
+
+.plans__rowlbl{
+  text-align:left;font-weight:400;font-size:var(--t-sm);color:var(--ink);
+  padding:var(--s3) var(--s3) var(--s3) 0;vertical-align:middle
+}
+.plans__rowlbl--foot{color:var(--ink-2)}
+
+/* every cell of a plan column shares these · the row divider is border-top */
+.pcol{
+  background:var(--surface-2);border-left:1px solid var(--rule);
+  border-right:1px solid var(--rule);border-top:1px solid var(--rule);
+  padding:var(--s3) var(--s4);vertical-align:middle;text-align:left
+}
+.pcol--head{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:var(--s4);vertical-align:bottom}
+.pcol--foot{border-radius:0 0 var(--r-lg) var(--r-lg);border-bottom:1px solid var(--rule)}
+.pcol.is-on{background:var(--surface);border-left-color:var(--ink);border-right-color:var(--ink)}
+.pcol--head.is-on{border-top-color:var(--ink)}
+.pcol--foot.is-on{border-bottom-color:var(--ink)}
+
+.pcol__flag{display:block;min-height:24px}
+.pcol__name{display:block;font-size:var(--t-lg);font-weight:500;line-height:1.2;margin-top:var(--s2)}
+.pcol__sum{display:block;font-size:var(--t-sm);color:var(--ink-2);margin-top:2px;min-height:2.6em}
+.pcol__cost{display:flex;align-items:baseline;gap:6px;margin-top:var(--s3)}
+.pcol__cost b{font-size:var(--t-xl);font-weight:500;letter-spacing:-.01em;line-height:1}
+.pcol__cost span{font-size:var(--t-sm);color:var(--ink-2)}
+.pcol__writes{display:block;font-size:var(--t-sm);color:var(--ink-2);margin-top:2px}
+.pcol--head .btn{width:100%;margin-top:var(--s3)}
+.pcol__v{display:block;font-size:var(--t-md);font-weight:500}
+.pcol__q{display:block;font-size:var(--t-sm);color:var(--ink-2);margin-top:1px}
+.pcol__off{display:block;font-size:var(--t-md);color:var(--ink-3)}
+
+/* the same three plans, stacked, for a phone */
+.plan-card{border:1px solid var(--rule);border-radius:var(--r-lg);background:var(--surface-2);overflow:hidden}
+.plan-card.is-on{background:var(--surface);border:var(--bw) solid var(--ink)}
+.plan-card__head{padding:var(--s4);border-bottom:1px solid var(--rule)}
+.plan-card__row{display:flex;align-items:baseline;gap:var(--s3);
+                padding:var(--s3) var(--s4);border-top:1px solid var(--rule)}
+.plan-card__row:first-of-type{border-top:0}
+.plan-card__row dt{flex:1;font-size:var(--t-sm);color:var(--ink-2);margin:0}
+.plan-card__row dd{margin:0;text-align:right}
+.checkrow{
+  display:flex;gap:var(--s3);align-items:flex-start;border:1px solid var(--rule);
+  border-radius:var(--r-md);padding:var(--s3) var(--s4);cursor:pointer
+}
+.checkrow:hover{background:var(--surface-2)}
+.checkrow input{margin:3px 0 0;width:16px;height:16px;flex:none;accent-color:var(--fill)}
+.checkrow b{display:block;font-weight:500;font-size:var(--t-md)}
+.checkrow .sub{display:block;margin-top:2px}
+
+/* ══ tables ════════════════════════════════════════════════════════════ */
+.tablewrap{overflow-x:auto}
+table.data{width:100%;border-collapse:collapse;font-size:var(--t-sm)}
+table.data th{
+  text-align:left;font-size:var(--t-xs);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);font-weight:500;padding:var(--s3) var(--s4);border-bottom:1px solid var(--rule)
+}
+table.data td{padding:var(--s3) var(--s4);border-bottom:1px solid var(--rule);vertical-align:middle}
+table.data tr:last-child td{border-bottom:0}
+table.data a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.detail-fail{color:var(--danger)}
+
+.filters{
+  display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap;background:var(--surface);
+  border:1px solid var(--rule);border-radius:var(--r-lg);padding:var(--s3) var(--s4);
+  box-shadow:var(--shadow-card)
+}
+.filters .spacer{margin-left:auto}
+.filters input[type=date]{width:auto}
+.filters .select-wrap{display:inline-block}
+.filters select{width:auto}
+
+/* ══ posts ═════════════════════════════════════════════════════════════ */
+.draft{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r-lg);
+       box-shadow:var(--shadow-card);overflow:hidden}
+.draft__head{display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);
+             border-bottom:1px solid var(--rule)}
+.draft__body{padding:var(--s4)}
+.draft__body p{margin:0 0 var(--s3);line-height:1.6;max-width:72ch}
+.draft__foot{display:flex;gap:var(--s2);align-items:center;padding:0 var(--s4) var(--s4);flex-wrap:wrap}
+.draft__foot .spacer{margin-left:auto}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);align-items:start}
+@media (max-width:860px){.two-col{grid-template-columns:1fr}}
+.imgslot{
+  height:180px;border:1px dashed var(--rule-strong);border-radius:var(--r-md);
+  display:grid;place-items:center;color:var(--ink-2);font-size:var(--t-sm);background:var(--surface-2)
+}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:var(--s3) var(--s5);margin:0}
+.kv dt{font-size:var(--t-xs);letter-spacing:.12em;text-transform:uppercase;
+       color:var(--ink-2);font-weight:500;padding-top:3px}
+.kv dd{margin:0;font-size:var(--t-md)}
+
+/* comment mix */
+.mixrow{display:grid;grid-template-columns:200px 1fr auto;gap:var(--s4);align-items:center;
+        padding:var(--s3) 0;border-bottom:1px solid var(--rule)}
+.mixrow:last-of-type{border-bottom:0}
+.mixrow b{display:block;font-weight:500;font-size:var(--t-md)}
+.mixrow em{display:block;font-style:normal;color:var(--ink-2);font-size:var(--t-sm);margin-top:2px}
+input[type=range]{width:100%;accent-color:var(--fill)}
+@media (max-width:640px){.mixrow{grid-template-columns:1fr}}
+
+/* ══ auth ══════════════════════════════════════════════════════════════ */
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:var(--s6) var(--s4);background:var(--ground)}
+.auth-card{
+  width:min(420px,100%);background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:var(--s6);text-align:center
+}
+.auth-mark{width:52px;height:52px;border-radius:var(--r-md);background:var(--fill);
+           color:var(--ink-inverse);display:grid;place-items:center;margin:0 auto var(--s4);
+           font-weight:700;letter-spacing:.08em;font-size:var(--t-md)}
+.auth-card h1{margin:0 0 var(--s2);font-size:var(--t-xl);font-weight:500}
+.auth-card > .sub{margin:0 auto var(--s5);max-width:34ch}
+.auth-form{display:flex;flex-direction:column;gap:var(--s4);text-align:left}
+.auth-form .btn{width:100%;margin-top:var(--s1)}
+.auth-links{margin-top:var(--s4);display:flex;flex-direction:column;gap:var(--s2);
+            font-size:var(--t-sm);color:var(--ink-2)}
+.auth-links a{color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.auth-err{border:var(--bw) solid var(--danger-edge);border-radius:var(--r-md);
+          padding:var(--s3) var(--s4);margin-bottom:var(--s4);text-align:left}
+.auth-err b{color:var(--danger);display:block;font-weight:500}
+.auth-err p{margin:var(--s1) 0 0;color:var(--ink-2);font-size:var(--t-sm);line-height:1.5}
+.is-bad{border-color:var(--danger)!important}
+
+/* sticky action bar */
+.actionbar{
+  position:sticky;bottom:0;display:flex;align-items:center;gap:var(--s2);
+  padding:var(--s3) var(--s6);background:var(--surface);border-top:1px solid var(--rule)
+}
+.actionbar .spacer{margin-left:auto}
+@media (max-width:640px){.actionbar{padding:var(--s3) var(--s4)}}
+
+.subtabs{display:flex;gap:var(--s5);padding-inline:var(--s6);background:var(--surface);
+         border-bottom:1px solid var(--rule)}
+.subtabs button{
+  display:inline-flex;align-items:center;gap:var(--s2);border:0;background:none;cursor:pointer;
+  padding:var(--s3) 2px;font-size:var(--t-md);color:var(--ink-2);border-bottom:2px solid transparent
+}
+.subtabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
+@media (max-width:640px){.subtabs{padding-inline:var(--s4)}}
+
+/* screen index */
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:var(--s2)}
+.index-grid button{
+  text-align:left;padding:var(--s3);border-radius:var(--r-md);cursor:pointer;
+  border:1px solid var(--rule);background:var(--surface-2);color:var(--ink)
+}
+.index-grid button:hover{background:var(--surface-3)}
+.index-grid b{display:block;font-weight:500;font-size:var(--t-md)}
+.index-grid span{display:block;color:var(--ink-2);font-size:var(--t-sm);margin-top:2px}
+.index-section + .index-section{margin-top:var(--s5)}
+.index-section > h3{margin:0 0 var(--s3);font-size:var(--t-xs);letter-spacing:.12em;
+                    text-transform:uppercase;color:var(--ink-2);font-weight:500}
 </style>
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 
-<!-- ==================== LOGIN SCREEN ==================== -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <div class="login-logo">PL</div>
-    <h2>Sign in</h2>
-    <p class="login-sub">Use your 8SENECA credentials, not LinkedIn.</p>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="loginEmail" value="tomas.bucek@8seneca.com" placeholder="you@8seneca.com">
+<div id="app">
+  <header class="topbar">
+    <button class="back" id="backBtn" hidden></button>
+    <span class="brand">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <mask id="plpaMark" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+          <rect width="24" height="24" rx="7" fill="#fff"/>
+          <g fill="#000" transform="translate(.52 .77)">
+            <rect x="7.55" y="5.4" width="2.7" height="13.2" rx="1.35"/>
+            <path d="M7.55 9.85A4.45 4.45 0 1 1 12 14.3L12 11.6A1.75 1.75 0 1 0 10.25 9.85Z"/>
+          </g>
+        </mask>
+        <rect width="24" height="24" rx="7" fill="currentColor" mask="url(#plpaMark)"/>
+      </svg>
+      <span class="wordmark">PLPA</span>
+    </span>
+    <span class="bar-sep"></span>
+    <span class="crumb" id="crumb">Console</span>
+    <div class="topbar-right">
+      <button class="iconbtn" id="themeBtn" aria-label="Switch to dark mode"></button>
+      <button class="acct" id="acctBtn" aria-haspopup="true" aria-expanded="false">
+        <span class="avatar">TB</span>
+        <span>
+          <span class="acct-name">Tomas Bucek</span>
+          <span class="acct-sub" id="acctSub">LinkedIn · connected</span>
+        </span>
+        <span class="dot-state" id="acctDot"></span>
+      </button>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="loginPassword" value="password" placeholder="Enter password">
-    </div>
-    <button class="login-btn" onclick="doLogin()">Sign in</button>
-  </div>
+  </header>
+  <div class="menu" id="acctMenu" hidden></div>
+  <main id="main"></main>
 </div>
 
-<!-- ==================== APP SHELL ==================== -->
-<div class="app-shell">
+<div id="authHost" hidden></div>
+<div id="overlay"></div>
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
-    <span class="top-bar-brand">PLPA</span>
-    <div class="top-bar-sep"></div>
-    <span class="top-bar-title" id="topBarTitle">Dashboard</span>
-    <div class="top-bar-spacer"></div>
-    <div class="top-bar-right">
-      <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-        <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<script>
+"use strict";
+
+/* ══ icons · one 20px grid, 1.5 stroke, round caps ════════════════════ */
+const P = {
+  back:'<path d="M19 12H5"/><path d="m11 18-6-6 6-6"/>',
+  moon:'<path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a6.6 6.6 0 0 0 10.8 10.8z"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2.2M12 19.8V22M22 12h-2.2M4.2 12H2M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6M18.8 18.8l-1.6-1.6M6.8 6.8 5.2 5.2"/>',
+  grid:'<rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/>',
+  chev:'<path d="m6 9.5 6 6 6-6"/>',
+  /* three ascending bars · legible at 20px, and there are three plans */
+  plan:'<path d="M4 19.2h16"/><path d="M7.6 19.2v-4.6"/><path d="M12 19.2v-8.4"/><path d="M16.4 19.2v-12.2"/>',
+  /* eight even spokes, not a scribble */
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  signout:'<path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="m9 16-4-4 4-4"/><path d="M5 12h11"/>',
+  linkedin:'<rect x="3" y="3" width="18" height="18" rx="4.2" fill="currentColor" stroke="none"/>'
+    + '<rect x="6.7" y="10" width="2.1" height="7.1" rx=".4" fill="var(--surface)" stroke="none"/>'
+    + '<circle cx="7.75" cy="7.4" r="1.32" fill="var(--surface)" stroke="none"/>'
+    + '<path d="M11.6 17.1v-4a2.2 2.2 0 0 1 4.4 0v4" fill="none" stroke="var(--surface)" stroke-width="2.1"/>',
+};
+const icon = (n, size = 20) =>
+  `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor"
+        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+
+/* ══ data ═════════════════════════════════════════════════════════════ */
+const FEATURES = [
+  { key:'like', name:'Like follower posts', verb:'like', unit:'likes', cycle:'day',
+    used:93, limit:150, detected:120, batchNow:10, batchSched:20, from:'09:00', to:'18:00', days:[1,1,1,1,1,0,0] },
+  { key:'comment', name:'Comment on follower posts', verb:'comment on', unit:'comments', cycle:'day',
+    used:128, limit:150, detected:120, batchNow:3, batchSched:6, from:'09:00', to:'18:00', days:[1,1,1,1,1,0,0] },
+  { key:'page-invite', name:'Invite connections to follow a company page', verb:'send', unit:'invitations', cycle:'month',
+    used:250, limit:250, detected:250, batchNow:4, batchSched:8, from:'09:00', to:'18:00', days:[1,1,1,1,1,0,0] },
+  { key:'connect', name:'Connect with people in IT', verb:'send', unit:'invitations', cycle:'week',
+    used:8, limit:100, detected:60, batchNow:5, batchSched:10, from:'09:00', to:'18:00', days:[1,1,1,1,1,0,0] },
+  { key:'news', name:'Post technology news', verb:'publish', unit:'posts', cycle:'day',
+    used:1, limit:1, detected:null, batchNow:1, batchSched:1, from:'06:00', to:'09:00', days:[1,1,1,1,1,0,0] },
+];
+
+const SCENARIOS = {
+  'default':              { label:'Everything running · two features live',   account:'connected',    master:true,  running:['like','comment','news'] },
+  'all-paused':           { label:'Master switch off · every feature paused', account:'connected',    master:false, running:[] },
+  'account-blocked':      { label:'LinkedIn password rejected',              account:'error',        master:true,  running:[] },
+  'account-challenge':    { label:'LinkedIn wants a verification check',     account:'challenge',    master:true,  running:[] },
+  'account-unconfigured': { label:'No LinkedIn account set up yet',          account:'unconfigured', master:true,  running:[] },
+  'followers-never-synced':{label:'Follower list never fetched',             account:'connected',    master:true,  running:['like','comment','news'], followers:null },
+};
+
+const ACCOUNT_COPY = {
+  connected:   { badge:'LinkedIn · connected',  alert:false, tail:'connected' },
+  error:       { badge:'LinkedIn · needs you',  alert:true,  tail:'password rejected' },
+  challenge:   { badge:'LinkedIn · needs you',  alert:true,  tail:'check needed' },
+  unconfigured:{ badge:'LinkedIn · not set up', alert:true,  tail:'not set up' },
+};
+
+const PLANS = [
+  { key:'careful', title:'Careful', summary:'a light, very safe day', minutes:95, writes:34,
+    rows:[[20,'day',5],[8,'day',2],[1,'day',1],[30,'week',5],[0,'day',0]] },
+  { key:'steady', title:'Steady', summary:'the one most accounts run', minutes:240, writes:62,
+    rows:[[40,'day',10],[15,'day',3],[1,'day',1],[60,'week',10],[8,'day',4]] },
+  { key:'busy', title:'Busy', summary:'as much as the day holds', minutes:430, writes:79,
+    rows:[[60,'day',15],[24,'day',4],[2,'day',1],[90,'week',15],[12,'day',6]] },
+];
+const PLAN_ROWS = ['Like posts','Comment on posts','Publish posts','Connection invitations','Page invitations'];
+
+const DRAFTS = [
+  { id:'d1', state:'waiting', written:'13:04', image:false, src:'Hacker News', credit:'@8senecanews',
+    text:'A quieter one: the tooling survey everyone quotes changed its methodology this year, which explains most of the swing people are reading as a trend.',
+    why:'Unusual traction for its age, not the highest total' },
+  { id:'d2', state:'waiting', written:'13:02', image:true, src:'Hacker News', credit:'@8senecanews',
+    text:"The interesting part of this week's platform release is not the release itself. It is how fast teams moved onto it — three of the four I spoke to had it in staging within a day.",
+    why:'Three independent write-ups in five hours' },
+  { id:'d3', state:'posted', written:'08:12', image:false, src:'Hacker News', credit:'@8senecanews',
+    text:'Most "AI infrastructure" posts are about training. The bill everyone actually pays is inference, and it is a scheduling problem before it is a hardware one.',
+    why:'Sustained traction overnight' },
+  { id:'d4', state:'failed', written:'07:40', image:false, src:'Hacker News', credit:'@8senecanews',
+    text:'Notes from a week of moving a monolith onto a queue: the hard part was never the queue.',
+    why:'Steady climb from a small start' },
+];
+const DRAFT_STATE = {
+  waiting:{ label:'Waiting for you', cls:'badge--warn' },
+  posted: { label:'Posted', cls:'' },
+  failed: { label:'Not posted', cls:'badge--danger' },
+  skipped:{ label:'Skipped', cls:'badge--off' },
+};
+
+const ACTIVITY = [
+  { time:'14:32', action:'Like', feature:'like', person:'Petra Novák', link:true, result:'done', detail:'—' },
+  { time:'14:31', action:'Comment', feature:'comment', person:'Marek Dvořák', link:true, result:'done', detail:'“Really useful, thanks”' },
+  { time:'14:31', action:'Like', feature:'like', person:'Jana Horáková', link:false, result:'skipped', detail:'No post in the last 30 days' },
+  { time:'14:29', action:'Comment', feature:'comment', person:'Ondřej Malý', link:false, result:'skipped', detail:'Already commented this cycle' },
+  { time:'14:26', action:'Connect invite', feature:'connect', person:'Lucie Pokorná', link:false, result:'failed', detail:'LinkedIn refused — weekly limit reached' },
+];
+
+const CONNECTIONS = [
+  ['Anna Nguyen','Head of Engineering at Loop','2 Jul',true],
+  ['Marek Svoboda','CTO at Bytefield','28 Jun',true],
+  ['Priya Raman','Staff Data Engineer','14 Jun',true],
+  ['Tuan Le','Founder, Hexa Labs','30 May',false],
+];
+
+const CITIES = [['Frankfurt',9],['Singapore',6],['Ho Chi Minh City',4],['Hanoi',2],['Prague',1]];
+
+const S = {
+  scenario:'default', running:new Set(['like','comment','news']), schedEnabled:true,
+  planChosen:false, planKey:'steady', postsTab:'waiting',
+  activityFilter:'all', activityFeature:'', newsTab:'settings',
+  connect:'connected',           /* the ConnectPanel state on show */
+  connectCode:'', connectConfirm:false, connectReopened:false, connectStarting:false,
+};
+
+/* ══ helpers ══════════════════════════════════════════════════════════ */
+const h = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const feat = (k) => FEATURES.find(f => f.key === k);
+const acctState = () => SCENARIOS[S.scenario].account;
+const blocked = () => acctState() !== 'connected';
+
+const SCHED_NOUN = { like:'posts', comment:'posts', connect:'invitations', 'page-invite':'invitations', news:'posts' };
+const plural = (n, w) => n === 1 ? w.replace(/s$/,'') : w;
+const runLine = (f, n) => `${f.verb} ${n} ${plural(n, SCHED_NOUN[f.key])}`;
+const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+function daysLabel(f){
+  const on = f.days.map((v,i) => v ? i : -1).filter(i => i >= 0);
+  if (on.length === 7) return 'every day';
+  if (on.length === 0) return 'no days';
+  if (on.join() === '0,1,2,3,4') return 'Mon–Fri';
+  if (on.join() === '5,6') return 'weekends';
+  return on.map(i => DAY_NAMES[i]).join(' ');
+}
+const cycleWord = (f) => f.cycle === 'day' ? 'today' : f.cycle === 'week' ? 'this week' : 'this month';
+function clock(t){
+  const [hh, mm] = t.split(':').map(Number);
+  return `${hh % 12 === 0 ? 12 : hh % 12}:${String(mm).padStart(2,'0')}${hh >= 12 ? 'pm' : 'am'}`;
+}
+function featureState(f){
+  if (blocked()) return 'needs-you';
+  if (!SCENARIOS[S.scenario].master) return 'paused';
+  if (S.running.has(f.key)) return 'running';
+  if (f.limit - f.used <= 0) return 'quota';
+  return 'idle';
+}
+const spaced = (c) => c.length === 6 ? `${c.slice(0,3)} ${c.slice(3)}` : c;
+
+function alertStrip(kind, title, body){
+  const cls = kind === 'stop' ? ' alert--danger' : kind === 'live' ? ' alert--live' : '';
+  return `<div class="alert${cls}"><div><b>${h(title)}</b><p>${body}</p></div></div>`;
+}
+
+/* ══ screens ══════════════════════════════════════════════════════════ */
+const SCREENS = {};
+
+SCREENS.console = () => {
+  const sc = SCENARIOS[S.scenario];
+  const rows = FEATURES.map(f => {
+    const st = featureState(f);
+    let meta = '', ctl = '';
+    if (st === 'needs-you') {
+      meta = `<span class="badge badge--danger">Needs you</span>
+              <span class="frow__meta">LinkedIn sign-in needs your attention</span>`;
+      ctl = `<button class="btn btn--danger" data-go="linkedin">Fix sign-in</button>`;
+    } else if (st === 'paused') {
+      meta = `<span class="badge badge--off">Paused</span>
+              <span class="frow__meta">Automation is switched off for everything</span>`;
+      ctl = `<button class="btn" disabled>Start now</button>`;
+    } else if (st === 'running') {
+      meta = `<span class="frow__meta">${f.used} of ${f.limit} ${cycleWord(f)}</span>
+              <span class="frow__meta">Now running: ${h(runLine(f, f.batchNow))}</span>`;
+      ctl = `<button class="btn" data-stop="${f.key}" aria-label="Stop ${h(f.name)}">Stop</button>`;
+    } else if (st === 'quota') {
+      meta = `<span class="badge badge--off">Nothing left this ${f.cycle}</span>
+              <span class="frow__meta">${f.used} of ${f.limit} ${cycleWord(f)}</span>`;
+      ctl = `<button class="btn" disabled>Start now</button>`;
+    } else {
+      meta = `<span class="frow__meta">Start now will ${h(runLine(f, f.batchNow))}</span>`;
+      ctl = `<button class="btn btn--primary" data-start="${f.key}" aria-label="Start ${h(f.name)} now">Start now</button>`;
+    }
+    const waiting = f.key === 'news' && !blocked()
+      ? `<span class="badge badge--solid">2 posts waiting for you</span>` : '';
+    return `<div class="frow${st === 'running' ? ' is-running' : ''}" role="listitem">
+      <span class="frow__dot"></span>
+      <div class="frow__wrap"><span class="frow__name">${h(f.name)}</span>${meta}${waiting}</div>
+      <div class="frow__ctl">${ctl}
+        <button class="gear" data-go="feature:${f.key}" aria-label="Settings for ${h(f.name)}">${icon('gear',18)}</button>
       </div>
-      <div class="profile-pill" id="profilePill" onclick="toggleDropdown(event)">
-        <div class="avatar">TB</div>
-        <div class="pill-info">
-          <span class="pill-name">Tomas Bucek</span>
-          <span class="pill-status">LinkedIn &middot; connected <span class="green-dot"></span></span>
-        </div>
-        <div class="pill-chevron">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
+    </div>`;
+  }).join('');
 
-        <!-- DROPDOWN -->
-        <div class="profile-dropdown" id="profileDropdown" onclick="event.stopPropagation()">
-          <div class="dropdown-header">
-            <div class="avatar">TB</div>
-            <div class="dropdown-header-info">
-              <div class="name">Tomas Bucek</div>
-              <div class="email">tomas.bucek@8seneca.com</div>
-            </div>
-          </div>
-          <div class="dropdown-item" onclick="goToAccount(); closeDropdown();">
-            LinkedIn account
-            <span class="badge-connected">connected</span>
-          </div>
-          <div class="dropdown-item" onclick="goToAccount(); closeDropdown();">
-            Settings
-          </div>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-item signout" onclick="doSignOut()">
-            Sign out
-          </div>
+  const followers = sc.followers === null
+    ? `<div class="stat-value">—</div>
+       <div class="stat-label">followers · never read · the next like or comment run reads the list</div>`
+    : `<div class="stat-value">3,880</div><div class="stat-label">followers · last synced 21 Aug</div>`;
+
+  return `${blocked() ? accountBanner() : ''}
+    <div class="screen">
+      <div class="eyebrow">Today · 11 September</div>
+      <h1 class="title">Console</h1>
+      <div style="height:var(--s5)"></div>
+
+      <div class="panel" style="margin-bottom:var(--s4)">
+        <div class="panel__head">
+          <span class="label">Scheduled runs</span>
+          <span class="spacer"></span>
+          <span class="meta">${S.schedEnabled
+            ? 'Started · these run on their own' : 'Stopped · no window will fire'}</span>
+          <button class="btn" id="schedBtn" aria-label="${S.schedEnabled ? 'Stop' : 'Start'} scheduled jobs">
+            ${S.schedEnabled ? 'Stop scheduled jobs' : 'Start scheduled jobs'}</button>
         </div>
+        ${sc.master
+          ? FEATURES.map(f => `<div class="schedule__row">
+              <span class="schedule__name">${h(f.name)}</span>
+              <span class="schedule__what">${f.batchSched} ${h(plural(f.batchSched, SCHED_NOUN[f.key]))}</span>
+              <span class="schedule__when">${h(f.from)}–${h(f.to)} · ${h(daysLabel(f))}</span>
+            </div>`).join('')
+          : `<div class="schedule__empty"><p class="sub prose">Nothing is scheduled. Open a feature's settings and turn <b>Run this on a schedule</b> on.</p></div>`}
       </div>
-    </div>
-  </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-
-    <!-- ========== DASHBOARD PAGE ========== -->
-    <div class="page active" id="page-dashboard">
-      <div class="dash-label">Today &middot; 26 August</div>
-      <div class="dash-heading">Dashboard</div>
-
-      <div class="feature-cards">
-        <!-- Auto-like posts -->
-        <div class="feature-card running" data-feature="autolike">
-          <div class="feature-dot"></div>
-          <div class="feature-info">
-            <div class="feature-name-row">
-              <span class="feature-name">Auto-like posts</span>
-              <span class="feature-progress">93/150 today</span>
-            </div>
-          </div>
-          <div class="feature-actions">
-            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
-            <button class="btn-icon" onclick="openSettings('autolike', 'Auto-like posts')" title="Settings">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Auto-comment -->
-        <div class="feature-card running" data-feature="autocomment">
-          <div class="feature-dot"></div>
-          <div class="feature-info">
-            <div class="feature-name-row">
-              <span class="feature-name">Auto-comment</span>
-              <span class="feature-progress">128/150 today</span>
-            </div>
-          </div>
-          <div class="feature-actions">
-            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
-            <button class="btn-icon" onclick="openSettings('autocomment', 'Auto-comment')" title="Settings">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Page invitations -->
-        <div class="feature-card" data-feature="invitations">
-          <div class="feature-dot"></div>
-          <div class="feature-info">
-            <div class="feature-name-row">
-              <span class="feature-name">Page invitations</span>
-              <span class="feature-progress">250/250 this month</span>
-              <span class="chip chip-muted">Limit reached</span>
-            </div>
-          </div>
-          <div class="feature-actions">
-            <button class="btn-pill primary" disabled>Start</button>
-            <button class="btn-icon" onclick="openSettings('invitations', 'Page invitations')" title="Settings">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Auto-connect IT -->
-        <div class="feature-card" data-feature="autoconnect">
-          <div class="feature-dot"></div>
-          <div class="feature-info">
-            <div class="feature-name-row">
-              <span class="feature-name">Auto-connect &middot; IT</span>
-            </div>
-          </div>
-          <div class="feature-actions">
-            <button class="btn-pill primary" onclick="toggleFeature(this)">Start</button>
-            <button class="btn-icon" onclick="openSettings('autoconnect', 'Auto-connect &middot; IT')" title="Settings">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Auto-post news -->
-        <div class="feature-card running" data-feature="autopost">
-          <div class="feature-dot"></div>
-          <div class="feature-info">
-            <div class="feature-name-row">
-              <span class="feature-name">Auto-post news</span>
-              <span class="feature-progress">1/1 today</span>
-              <span class="chip chip-dark">2 drafts to review</span>
-            </div>
-          </div>
-          <div class="feature-actions">
-            <button class="btn-pill outline-dark" onclick="toggleFeature(this)">Stop</button>
-            <button class="btn-icon" onclick="openSettings('autopost', 'Auto-post news')" title="Settings">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+      <div class="controls" role="list">${rows}</div>
 
       <div class="stats-row">
         <div class="stat-card">
           <div class="stat-value">231</div>
-          <div class="stat-label">actions &middot; All features combined &middot; resets at midnight</div>
+          <div class="stat-label">actions · all five features combined · resets at midnight</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-value">3,880</div>
-          <div class="stat-label">followers &middot; Last synced 21 Aug</div>
-        </div>
+        <div class="stat-card">${followers}</div>
       </div>
+    </div>`;
+};
+
+function accountBanner(){
+  const copy = {
+    error:['Your LinkedIn password no longer works','Everything stopped. Nothing will run until the sign-in details are updated.','Update sign-in','alert--danger'],
+    challenge:['LinkedIn asked for a verification check','Everything stopped until the check is cleared. We will not retry on our own — retrying escalates it.','Open the check',''],
+    unconfigured:['No LinkedIn account yet','Add your LinkedIn sign-in details and the five features can start.','Add sign-in details',''],
+  }[acctState()];
+  return `<div class="screen" style="padding-bottom:0">
+    <div class="alert ${copy[3]}">
+      <div><b>${h(copy[0])}</b><p>${h(copy[1])}</p></div>
+      <span class="spacer"></span>
+      <button class="btn" data-go="linkedin">${h(copy[2])}</button>
+    </div></div>`;
+}
+
+/* ── feature settings ──────────────────────────────────────────────── */
+SCREENS.feature = (key) => {
+  const f = feat(key);
+  const cyc = f.cycle === 'day' ? 'a day' : f.cycle === 'week' ? 'a week' : 'a month';
+  const st = featureState(f);
+  const ceiling = f.detected
+    ? `<span class="warnline">LinkedIn has allowed about ${f.detected} ${cyc} on this account. You can save ${f.limit} — the figure may be out of date.</span>` : '';
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i) =>
+    `<button type="button" aria-pressed="${f.days[i] ? 'true':'false'}" data-day="${key}:${i}">${d}</button>`).join('');
+  const extras = { comment:mixPanel, connect:connectSettings, 'page-invite':companiesPanel, news:newsPanels }[key];
+
+  const notes = [
+    f.detected ? '' : 'No LinkedIn ceiling detected yet.',
+    `Your timezone, Asia/Ho_Chi_Minh. The ${f.cycle}'s count resets at midnight there.`,
+    (key === 'connect' || key === 'page-invite')
+      ? `Mon–Fri between ${f.from} and ${f.to}.` : `Next run: 22 Aug ${f.from}.`,
+  ].filter(Boolean).map(t => `<p class="sub">${h(t)}</p>`).join('');
+
+  const action = st === 'running' ? `<button class="btn" data-stop="${key}">Stop</button>`
+    : st === 'quota' ? `<span class="badge badge--off">Nothing left in this cycle</span><button class="btn" disabled>Start</button>`
+    : `<button class="btn btn--primary" data-start="${key}">Start</button>`;
+
+  const tabs = key === 'news' ? `<div class="subtabs" role="tablist">
+      <button role="tab" aria-selected="${S.newsTab === 'settings'}" data-newstab="settings">Settings</button>
+      <button role="tab" aria-selected="${S.newsTab === 'posts'}" data-newstab="posts">Posts <span class="badge">2</span></button>
+    </div>` : '';
+  if (key === 'news' && S.newsTab === 'posts') return tabs + SCREENS.posts(true);
+
+  return `${tabs}<div class="screen">
+    <h2 class="label" style="margin:0 0 var(--s3)">${h(f.name)} settings</h2>
+    <div class="rows">
+      <div class="row"><div class="row__main"><b>How many ${cyc}</b>${ceiling}</div>
+        <div class="row__ctl"><input class="num" type="number" value="${f.limit}" aria-label="How many ${cyc}"><span class="unit">${h(f.unit)}</span></div></div>
+      <div class="row"><div class="row__main"><b>Run this on a schedule</b><span class="sub">This task runs by itself inside the hours below.</span></div>
+        <div class="row__ctl"><div class="seg"><button type="button" aria-pressed="true">On</button><button type="button" aria-pressed="false">Off</button></div></div></div>
+      <div class="row"><div class="row__main"><b>Each time you press Start now</b></div>
+        <div class="row__ctl"><input class="num" type="number" value="${f.batchNow}" aria-label="Each time you press Start now"><span class="unit">${h(f.unit)}</span></div></div>
+      <div class="row"><div class="row__main"><b>Each scheduled run</b>${
+        key === 'news' ? '<span class="sub">1 now plus 1 scheduled is more than the 1 a day. Whichever runs first wins; the other will be cut short or skipped.</span>' : ''}</div>
+        <div class="row__ctl"><input class="num" type="number" value="${f.batchSched}" aria-label="Each scheduled run"><span class="unit">${h(f.unit)}</span></div></div>
+      <div class="row"><div class="row__main"><b>Between these hours</b></div>
+        <div class="row__ctl"><input class="time" type="time" value="${f.from}" aria-label="From"><span class="unit">to</span><input class="time" type="time" value="${f.to}" aria-label="To"></div></div>
+      <div class="row"><div class="row__main"><b>On these days</b></div>
+        <div class="row__ctl"><div class="days">${days}</div></div></div>
     </div>
-
-    <!-- ========== SETTINGS PAGE ========== -->
-    <div class="page" id="page-settings">
-      <div class="sub-bar">
-        <button class="back-btn" onclick="goBack()">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-          Dashboard
-        </button>
-        <span class="sub-title" id="settingsFeatureName">Auto-like posts</span>
-        <div class="sub-action">
-          <button class="btn-pill outline-dark" id="settingsToggleBtn" onclick="toggleSettingsFeature()">Stop</button>
-        </div>
-      </div>
-
-      <div class="settings-title" id="settingsTitle">Auto-like settings</div>
-
-      <div class="settings-card">
-        <div class="settings-row">
-          <div class="settings-row-label">Daily limit</div>
-          <div class="settings-row-control">
-            <input type="number" value="150" min="1" max="500" id="settingsLimit">
-            <span class="unit">likes</span>
-          </div>
-        </div>
-        <div class="settings-row">
-          <div class="settings-row-label">Active hours</div>
-          <div class="settings-row-control">
-            <input type="time" value="09:00" id="settingsTimeFrom">
-            <span class="time-sep">to</span>
-            <input type="time" value="18:00" id="settingsTimeTo">
-          </div>
-        </div>
-        <div class="settings-row">
-          <div class="settings-row-label">Active days</div>
-          <div class="settings-row-control">
-            <div class="day-toggles" id="settingsDays">
-              <button class="day-toggle active">Mon</button>
-              <button class="day-toggle active">Tue</button>
-              <button class="day-toggle active">Wed</button>
-              <button class="day-toggle active">Thu</button>
-              <button class="day-toggle active">Fri</button>
-              <button class="day-toggle">Sat</button>
-              <button class="day-toggle">Sun</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hint">LinkedIn allows ~120/day for this account.</div>
-      <div class="hint">Timezone: Asia/Ho_Chi_Minh</div>
-      <div class="hint">Next: 27 Aug, 09:00</div>
-
-      <div class="disable-btn">
-        <button class="btn-pill" onclick="alert('Feature disabled.')">Disable</button>
-      </div>
-
-      <div class="footer-bar">
-        <button class="btn-pill" onclick="goBack()">Cancel</button>
-        <button class="btn-pill primary" onclick="alert('Settings saved.'); goBack();">Save</button>
-      </div>
-    </div>
-
-    <!-- ========== ACCOUNT PAGE ========== -->
-    <div class="page" id="page-account">
-      <div class="sub-bar">
-        <button class="back-btn" onclick="goBack()">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-          Dashboard
-        </button>
-        <span class="sub-title">Account</span>
-      </div>
-
-      <!-- Connected account -->
-      <div class="account-section">
-        <div class="account-section-title">Connected account</div>
-        <div class="account-profile-row">
-          <div class="account-avatar">TB</div>
-          <div class="account-profile-info">
-            <div class="name">Tomas Bucek</div>
-            <div class="meta">Last verified 4 min ago &middot; Active</div>
-          </div>
-          <button class="btn-pill" onclick="alert('Verifying...')">Verify</button>
-        </div>
-      </div>
-
-      <!-- LinkedIn credentials -->
-      <div class="account-section">
-        <div class="account-section-title">LinkedIn credentials</div>
-        <div class="account-field">
-          <label>Email</label>
-          <input type="email" value="tomas.bucek@company.com">
-        </div>
-        <div class="account-field">
-          <label>Password</label>
-          <input type="password" value="securepassword">
-        </div>
-        <div class="hint" style="margin-top:12px;">Stored securely. Enter new values to update.</div>
-      </div>
-
-      <!-- Follower list -->
-      <div class="account-section">
-        <div class="account-section-title">Follower list</div>
-        <div class="follower-row">
-          <span class="follower-num">3,880</span>
-          <span class="follower-meta">followers &middot; Last synced 21 Aug</span>
-          <button class="btn-pill" onclick="alert('Syncing followers...')">Sync now</button>
-        </div>
-      </div>
-
-      <div class="footer-bar">
-        <button class="btn-pill left" onclick="doSignOut()">Sign out</button>
-        <button class="btn-pill" onclick="goBack()">Cancel</button>
-        <button class="btn-pill primary" onclick="alert('Account saved.'); goBack();">Save</button>
-      </div>
-    </div>
-
+    <div class="stack-sm" style="margin-top:var(--s3)">${notes}</div>
+    ${extras ? `<div class="stack" style="margin-top:var(--s4)">${extras()}</div>` : ''}
   </div>
-</div>
+  <div class="actionbar">${action}<span class="spacer"></span>
+    <button class="btn btn--ghost">Discard</button><button class="btn" disabled>Save</button></div>`;
+};
 
-<script>
-// ==================== STATE ====================
-var currentSettingsFeature = null;
-var settingsFeatureRunning = false;
-
-// ==================== LOGIN ====================
-function doLogin() {
-  document.getElementById('loginScreen').classList.add('hidden');
+function mixPanel(){
+  const mix = [['One word','“Insightful”',30],
+               ['Two to five words','“Really useful, thanks”',40],
+               ['Up to fifteen words','“Agreed on the tooling point — the same shift happened on our side last year.”',30]];
+  return `<div class="panel">
+    <div class="panel__head"><span class="label">Comment length mix</span>
+      <span class="spacer"></span><span class="badge" id="mixPill">Total 100%</span></div>
+    <div class="panel__body" id="mixBody">
+      ${mix.map(([t,ex,v],i) => `<div class="mixrow">
+        <div><b>${h(t)}</b><em>${h(ex)}</em></div>
+        <input type="range" min="0" max="100" value="${v}" data-mix="${i}" aria-label="${h(t)} share">
+        <div class="row__ctl"><input class="num" type="number" value="${v}" data-mixnum="${i}" aria-label="${h(t)} percent"><span class="unit">%</span></div>
+      </div>`).join('')}
+      <div class="row" style="border-top:1px solid var(--rule);border-bottom:0">
+        <div class="row__main"><b>Total <span id="mixTotal">100%</span></b></div>
+        <span class="sub" style="margin-left:auto">Must be exactly 100 to save.</span></div>
+    </div></div>`;
 }
 
-function doSignOut() {
-  closeDropdown();
-  document.getElementById('loginScreen').classList.remove('hidden');
-  showPage('dashboard');
+function connectSettings(){
+  return `<div class="panel">
+    <div class="panel__head"><span class="label">Who to reach</span></div>
+    <div class="panel__body stack">
+      <div class="field"><span class="label">Job titles or keywords</span>
+        <input type="text" value="backend engineer, platform engineer, devops">
+        <span class="sub">Separated by commas. Type anything — a title we do not know yet is added. We only invite people whose current role matches.</span></div>
+      <div class="field"><span class="label">Send a note with the invite</span>
+        <div><div class="seg"><button type="button" aria-pressed="true">With a note</button><button type="button" aria-pressed="false">No note</button></div></div>
+        <span class="sub">Notes get accepted more often, but LinkedIn limits invites with notes harder on free accounts.</span></div>
+      <div class="field"><span class="label">The note</span>
+        <textarea id="note" maxlength="200">Hi — I work with backend teams in Prague and post about platform engineering. Happy to connect.</textarea>
+        <span class="meta" style="text-align:right" id="noteCount">95 / 200</span></div>
+    </div></div>`;
 }
 
-// ==================== PAGE NAVIGATION ====================
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  document.getElementById('page-' + page).classList.add('active');
-  var titles = { dashboard: 'Dashboard', settings: 'Settings', account: 'Account' };
-  document.getElementById('topBarTitle').textContent = titles[page] || page;
+function companiesPanel(){
+  const list = [
+    ['8SENECA','Page you administer','4,180 followers · 214 of 250 invitation credits left · checked 10 Sep','',true],
+    ['Loop Vietnam','From your profile','962 followers','No invitation credits left on this page this month.',false],
+    ['VNU-HCM','From your profile','Followers not read yet','',false],
+  ];
+  return `<div class="panel">
+    <div class="panel__head"><span class="label">Which companies</span>
+      <span class="spacer"></span><button class="btn">Look again</button></div>
+    <div class="panel__body stack-sm">
+      <p class="sub prose">Read from your LinkedIn account. Changed job, or made a new page since? Look again.</p>
+      <label class="checkrow"><input type="checkbox">
+        <span><b>All my companies</b><span class="sub">Including any we find later — change job or add a page and it is covered without coming back here.</span></span></label>
+      ${list.map(([n,rel,meta,warn,on]) => `<label class="checkrow">
+        <input type="checkbox"${on ? ' checked':''}${warn ? ' disabled':''}>
+        <span><b>${h(n)}</b><span class="sub">${h(rel)} · ${h(meta)}</span>
+        ${warn ? `<span class="sub" style="color:var(--warn)">${h(warn)}</span>` : ''}</span></label>`).join('')}
+    </div></div>`;
 }
 
-function goBack() {
-  showPage('dashboard');
+function newsPanels(){
+  return `<div class="panel">
+    <div class="panel__head"><span class="label">Before anything is posted</span>
+      <span class="spacer"></span><span class="badge badge--warn">You review each one</span></div>
+    <div class="panel__body stack">
+      <div><div class="seg"><button type="button" aria-pressed="true">I review each one</button><button type="button" aria-pressed="false">Post automatically</button></div></div>
+      <p class="sub prose">This is the only difference between the two modes. Everything else — topics, how many a day, the credit — is the same.</p>
+      <dl class="kv">
+        <dt>Review</dt><dd>Each finished draft waits on the <b>Posts</b> tab above. Nothing appears on LinkedIn until you press Post it. This is the default.</dd>
+        <dt>Automatic</dt><dd>Drafts go straight to LinkedIn at the time they are written. They still all appear under Posts afterwards, and you can switch back at any point.</dd>
+      </dl>
+    </div></div>
+  <div class="panel">
+    <div class="panel__head"><span class="label">What to write about</span></div>
+    <div class="panel__body"><div class="two-col">
+      <div class="field"><span class="label">Topics</span>
+        <input type="text" value="platform engineering, developer tooling, AI infrastructure">
+        <span class="sub">We look for stories from the last five hours with unusual traction, not just the most-liked.</span></div>
+      <div class="field"><span class="label">Account to credit</span>
+        <input type="text" value="@8senecanews"><span class="sub">Mentioned in the post body.</span></div>
+      <div class="field"><span class="label">Picture</span>
+        <div><div class="seg"><button type="button" aria-pressed="true">Add a photo</button><button type="button" aria-pressed="false">Text only</button></div></div>
+        <span class="sub">A licensed stock photo matched to the story. Photos from Pexels.</span></div>
+      <div class="field"><span class="label">Where the drafts go</span>
+        <span class="sub">Finished drafts appear on the <b>Posts</b> tab above. Stopping this feature halts writing; drafts already written stay reviewable.</span></div>
+    </div></div></div>`;
 }
 
-function goToAccount() {
-  showPage('account');
-}
+/* ── LinkedIn account ──────────────────────────────────────────────── */
+SCREENS.linkedin = () => {
+  const st = acctState();
+  const status = {
+    connected:['Connected','checked 21 Aug','Everything is working. We sign in as you automatically and nothing needs doing here.'],
+    error:['Password rejected','checked 11 Sep','LinkedIn refused the password we hold. Update it below and we will check straight away.'],
+    challenge:['Check needed','checked 11 Sep','LinkedIn asked for a verification check on the last sign-in. An operator clears it; retrying on our own escalates it.'],
+    unconfigured:['Not set up','never checked','Add the LinkedIn email and password this account should run as. Saving runs a real sign-in straight away.'],
+  }[st];
 
-// ==================== FEATURE TOGGLE (Dashboard) ====================
-function toggleFeature(btn) {
-  var card = btn.closest('.feature-card');
-  var isRunning = card.classList.contains('running');
-  if (isRunning) {
-    card.classList.remove('running');
-    btn.classList.remove('outline-dark');
-    btn.classList.add('primary');
-    btn.textContent = 'Start';
+  return `<div class="screen">
+    <div class="head-row">
+      <div><div class="eyebrow">Account</div><h1 class="title">LinkedIn account</h1></div>
+      <span class="spacer"></span><button class="btn" id="checkNow">Check sign-in now</button>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="panel__head"><span class="label">${h(status[0])}</span>
+          <span class="spacer"></span><span class="meta">${h(status[1])}</span></div>
+        <div class="panel__body">
+          <p class="prose${st === 'connected' ? '' : ''}" style="${st === 'connected' ? '' : 'color:var(--warn)'}">${h(status[2])}</p>
+          ${st === 'unconfigured' ? '' : `<dl class="kv" style="margin-top:var(--s4)">
+            <dt>Signed in as</dt><dd>tomas.bucek@8seneca.com</dd>
+            <dt>Password</dt><dd>Set · never shown again</dd>
+            <dt>Two-step secret</dt><dd>Set</dd>
+            <dt>Company page</dt><dd>8seneca</dd></dl>`}
+        </div></div>
+
+      ${st === 'unconfigured' ? '' : `<div class="panel"><div class="panel__body" style="display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;padding-block:var(--s4)">
+        <div><b style="font-weight:500">Your followers</b><div class="sub">${
+          SCENARIOS[S.scenario].followers === null
+            ? 'Never read. A like or comment run reads it first.'
+            : '3,880 people · last read 21 Aug · liking and commenting work through this list'}</div></div>
+        <span style="margin-left:auto"></span>
+        <button class="btn" data-go="followers">View the list</button></div></div>`}
+
+      ${connectPanel()}
+
+      <div class="panel">
+        <div class="panel__head"><span class="label">Change the sign-in details</span></div>
+        <div class="panel__body">
+          <div class="two-col">
+            <div class="field"><span class="label">Email</span>
+              <input type="email" value="${st === 'unconfigured' ? '' : 'tomas.bucek@8seneca.com'}" placeholder="you@company.com"></div>
+            <div class="field"><span class="label">New password</span>
+              <input type="password" value="${st === 'unconfigured' ? '' : '••••••••'}">
+              <span class="sub">Leave blank to keep. Your LinkedIn password, not your Google or email one.</span></div>
+            <div class="field"><span class="label">Two-step secret</span>
+              <input type="text" placeholder="e.g. JBSWY3DPEHPK3PXP">
+              <span class="sub">The long string LinkedIn shows when you switch two-step verification on — not the six digits from your phone. About 16 to 32 characters.</span></div>
+          </div>
+          <p class="sub prose" style="margin-top:var(--s4)">Saving runs a real sign-in straight away, so it takes 30 to 60 seconds. A field left blank keeps what is already there — it does not clear it.</p>
+          <div style="display:flex;gap:var(--s3);align-items:center;margin-top:var(--s4);flex-wrap:wrap">
+            ${st === 'unconfigured' ? '' : '<button class="btn btn--danger" id="disconnectBtn">Disconnect this account</button>'}
+            <span style="margin-left:auto"></span><button class="btn" disabled>Save and check</button>
+          </div>
+          ${st === 'unconfigured' ? '' : '<p class="meta" style="margin:var(--s3) 0 0">Last changed 21 Aug, 14:26.</p>'}
+        </div></div>
+    </div></div>`;
+};
+
+/* ── the supervised sign-in · ConnectPanel, all six states ─────────── */
+function connectPanel(){
+  const st = S.connect;
+  const live = ['provisioning','logging_in','awaiting_otp','awaiting_captcha'].includes(st);
+  let body = '';
+
+  if (st === 'awaiting_otp') {
+    body = `
+      ${alertStrip('warn','LinkedIn emailed you a code','Enter the six digits LinkedIn just sent to this account’s email address.')}
+      <div class="field w-sm"><label class="label" for="cx-otp">Verification code</label>
+        <input id="cx-otp" inputmode="numeric" autocomplete="one-time-code" value="${h(spaced(S.connectCode))}">
+        <span class="sub">Six digits, from the email LinkedIn just sent.</span></div>
+      ${S.connectConfirm ? `
+        ${alertStrip('warn',`Send ${spaced(S.connectCode)} to LinkedIn?`,'Read it against the email once more. A wrong code makes LinkedIn ask again, and repeated wrong codes can lock the account out.')}
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap">
+          <button class="btn btn--primary" data-cx="sent">Yes, send ${h(spaced(S.connectCode))}</button>
+          <button class="btn" data-cx="uncheck">Let me check again</button></div>`
+      : `<div style="display:flex;gap:var(--s2);flex-wrap:wrap">
+          <button class="btn btn--primary" data-cx="check"${S.connectCode.length !== 6 ? ' disabled' : ''}>
+            ${S.connectCode.length === 6 ? 'Continue' : `${S.connectCode.length} of 6 digits`}</button>
+          <button class="btn" data-cx="idle">Stop</button></div>`}`;
+  } else if (st === 'awaiting_captcha') {
+    body = `${alertStrip('warn','LinkedIn is asking for a security check','Someone at 8SENECA has to clear it by hand. Leave this page open.')}
+      <p class="sub prose">Nothing is wrong with your account. This happens on a first sign-in and is cleared by a person, not by retrying — retrying is what makes it worse.</p>
+      <div><button class="btn" data-cx="idle">Stop</button></div>`;
+  } else if (st === 'provisioning' || st === 'logging_in') {
+    body = `${alertStrip('live','Signing in','Opening LinkedIn and entering the details.')}
+      <p class="sub prose">This takes a minute or so. The details are typed at human speed on purpose — LinkedIn notices anything faster.</p>
+      <div><button class="btn" data-cx="idle">Stop</button></div>`;
+  } else if (st === 'connected' && !S.connectReopened) {
+    body = `${alertStrip('live','Connected','connected · exit 42.113.2.43 (Hanoi, VN)')}
+      <p class="sub prose">Sign in again if LinkedIn has signed this account out, or to point the bot at a different account. Expect another verification code.</p>
+      <div><button class="btn" data-cx="reopen">Sign in again</button></div>`;
   } else {
-    card.classList.add('running');
-    btn.classList.remove('primary');
-    btn.classList.add('outline-dark');
-    btn.textContent = 'Stop';
-  }
-}
-
-// ==================== SETTINGS PAGE ====================
-function openSettings(featureId, featureName) {
-  currentSettingsFeature = featureId;
-  var card = document.querySelector('[data-feature="' + featureId + '"]');
-  settingsFeatureRunning = card.classList.contains('running');
-
-  document.getElementById('settingsFeatureName').textContent = featureName;
-  document.getElementById('settingsTitle').textContent = featureName + ' settings';
-
-  var toggleBtn = document.getElementById('settingsToggleBtn');
-  if (settingsFeatureRunning) {
-    toggleBtn.textContent = 'Stop';
-    toggleBtn.className = 'btn-pill outline-dark';
-  } else {
-    toggleBtn.textContent = 'Start';
-    toggleBtn.className = 'btn-pill primary';
+    const failed = st === 'failed';
+    body = `${failed ? alertStrip('stop','LinkedIn did not accept that password',
+        'Please double-check it. It has to be your <b>LinkedIn</b> password, not your Google or email one.') : ''}
+      ${S.connectStarting ? `
+        ${alertStrip('warn','Start signing in to LinkedIn?','We will open LinkedIn as tomas.bucek@8seneca.com from Ho Chi Minh City, and type these details at human speed. LinkedIn will then email a code to that address, and this page will ask you for it.')}
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap">
+          <button class="btn btn--primary" data-cx="awaiting_otp">Yes, sign in now</button>
+          <button class="btn" data-cx="unstart">Let me check again</button></div>`
+      : `<p class="sub prose">Signing in as <b>tomas.bucek@8seneca.com</b> with the password already stored. To use different details, change them below first.</p>
+        <div class="field w-md"><label class="label" for="cx-city">Where should this account be run from?</label>
+          <span class="select-wrap"><select id="cx-city">
+            ${CITIES.map(([c,n]) => `<option${c === 'Ho Chi Minh City' ? ' selected':''}>${h(c)}${n > 1 ? ` · ${n} available` : ''}</option>`).join('')}
+          </select></span>
+          <span class="sub">Pick somewhere close to where you live. LinkedIn ties its trust to the address a sign-in comes from, so one far from home looks like somebody else using your account.</span></div>
+        <p class="sub prose">Chosen once and kept — moving it later means another verification code, and looks suspicious to LinkedIn.</p>
+        <div><button class="btn btn--primary" data-cx="start">${failed ? 'Try again' : 'Sign in to LinkedIn'}</button></div>`}
+      <p class="sub prose">After the details go in, LinkedIn emails a verification code to that account. Have the inbox open — this page will wait and ask you for it, and the code is only good for a few minutes.</p>`;
   }
 
-  showPage('settings');
+  return `<div class="panel${live ? ' panel--live' : ''}">
+    <div class="panel__head"><span class="label">Connect this account to LinkedIn</span>
+      <span class="spacer"></span><span class="meta">${h(st.replace('_',' '))}</span></div>
+    <div class="panel__body stack-sm">${body}</div></div>`;
 }
 
-function toggleSettingsFeature() {
-  var toggleBtn = document.getElementById('settingsToggleBtn');
-  settingsFeatureRunning = !settingsFeatureRunning;
-  if (settingsFeatureRunning) {
-    toggleBtn.textContent = 'Stop';
-    toggleBtn.className = 'btn-pill outline-dark';
-  } else {
-    toggleBtn.textContent = 'Start';
-    toggleBtn.className = 'btn-pill primary';
+SCREENS.followers = () => {
+  if (SCENARIOS[S.scenario].followers === null) {
+    return `<div class="screen"><div class="eyebrow">Account</div><h1 class="title">Followers</h1>
+      <div style="height:var(--s5)"></div>
+      <div class="panel"><div class="panel__body" style="text-align:center;padding:var(--s6)">
+        <b style="font-weight:500">The list has never been read</b>
+        <p class="sub" style="margin:var(--s2) 0 0">The first like or comment run reads it, and it appears here afterwards.</p>
+      </div></div></div>`;
   }
-  // Also toggle on the dashboard card
-  if (currentSettingsFeature) {
-    var card = document.querySelector('[data-feature="' + currentSettingsFeature + '"]');
-    var dashBtn = card.querySelector('.feature-actions .btn-pill');
-    if (settingsFeatureRunning) {
-      card.classList.add('running');
-      dashBtn.classList.remove('primary');
-      dashBtn.classList.add('outline-dark');
-      dashBtn.textContent = 'Stop';
-    } else {
-      card.classList.remove('running');
-      dashBtn.classList.remove('outline-dark');
-      dashBtn.classList.add('primary');
-      dashBtn.textContent = 'Start';
-    }
+  return `<div class="screen"><div class="eyebrow">Account</div><h1 class="title">Followers</h1>
+    <p class="sub" style="margin:var(--s3) 0 var(--s5)">3,880 people, last read 21 Aug. Read again at the start of every like or comment run.</p>
+    <div class="panel">
+      <div class="panel__head"><span class="label">Connections</span><span class="spacer"></span><span class="meta">4 shown</span></div>
+      <div class="tablewrap"><table class="data">
+        <thead><tr><th>Name</th><th>Position</th><th>Connected</th></tr></thead>
+        <tbody>${CONNECTIONS.map(([n,p,d,l]) => `<tr>
+          <td>${l ? `<a href="#" onclick="return false">${h(n)}</a>` : h(n)}</td>
+          <td class="sub">${h(p)}</td><td class="meta">${h(d)}</td></tr>`).join('')}</tbody>
+      </table></div></div></div>`;
+};
+
+SCREENS.posts = (embedded) => {
+  const c = (s) => DRAFTS.filter(d => d.state === s).length;
+  const tabs = [['waiting',`Waiting for you · ${c('waiting')}`],['posted',`Posted · ${c('posted')}`],
+                ['failed',`Not posted · ${c('failed')}`],['skipped',`Skipped · ${c('skipped')}`]];
+  const list = DRAFTS.filter(d => d.state === S.postsTab);
+
+  const cards = list.length ? list.map(d => {
+    const m = DRAFT_STATE[d.state];
+    const act = d.state === 'waiting'
+      ? `<button class="btn btn--primary" data-post="${d.id}">Post it</button>
+         <button class="btn" data-go="draft:${d.id}">Edit</button>
+         <button class="btn btn--ghost" data-skip="${d.id}">Skip</button>
+         <span class="spacer"></span><span class="meta">Posting takes 30 to 60 seconds.</span>`
+      : d.state === 'failed'
+        ? `<button class="btn" data-post="${d.id}">Try again</button>
+           <span class="spacer"></span><span class="sub detail-fail">LinkedIn refused the post — the session had expired.</span>`
+        : `<span class="meta">Posted to LinkedIn at ${h(d.written)}.</span>`;
+    return `<div class="draft">
+      <div class="draft__head"><span class="badge ${m.cls}">${h(m.label)}</span><span class="meta">written ${h(d.written)}</span></div>
+      <div class="draft__body"><p>${h(d.text)}</p>
+        <div class="meta">Source: ${h(d.src)} · credit ${h(d.credit)}${d.image ? ' · image attached' : ''}</div></div>
+      <div class="draft__foot">${act}</div></div>`;
+  }).join('') : `<div class="panel"><div class="panel__body" style="text-align:center;padding:var(--s6)">
+      <b style="font-weight:500">Nothing here</b>
+      <p class="sub" style="margin:var(--s2) 0 0">Drafts move into this tab as they are handled.</p></div></div>`;
+
+  return `<div class="screen">
+    ${embedded ? '' : `<div class="head-row">
+      <div><div class="eyebrow">Under your name</div><h1 class="title">Posts</h1></div>
+      <span class="spacer"></span><button class="btn" id="writeNow">Write one now</button></div>`}
+    <div style="display:flex;gap:var(--s4);align-items:center;flex-wrap:wrap;margin-bottom:var(--s4)">
+      <div class="tabs" role="tablist">${tabs.map(([k,l]) =>
+        `<button role="tab" aria-selected="${S.postsTab === k}" data-tab="${k}">${h(l)}</button>`).join('')}</div>
+      <span style="margin-left:auto"></span>
+      <span class="sub">Writing is on · you review each one ·
+        <a href="#" data-go="feature:news" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Change</a></span>
+    </div>
+    <div class="stack">${cards}</div></div>`;
+};
+
+SCREENS.draft = (id) => {
+  const d = DRAFTS.find(x => x.id === id) || DRAFTS[0];
+  const m = DRAFT_STATE[d.state];
+  return `<div class="screen">
+    <div class="head-row">
+      <div><div class="eyebrow">Under your name</div><h1 class="title">Draft · 21 August</h1></div>
+      <span class="spacer"></span>
+      <button class="btn btn--ghost" data-skip="${d.id}">Skip</button>
+      <button class="btn btn--primary" data-post="${d.id}">Post it</button></div>
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel__head"><span class="label">What will be posted</span>
+          <span class="spacer"></span><span class="badge ${m.cls}">${h(m.label)}</span></div>
+        <div class="panel__body">
+          <textarea id="draftText" style="min-height:180px">${h(d.text)}</textarea>
+          <div class="meta" style="text-align:right;margin-top:var(--s2)" id="draftCount">${d.text.length} / 3,000</div>
+          <p class="meta" style="margin-top:var(--s3)">Saved as you type.</p></div></div>
+      <div class="stack">
+        <div class="panel">
+          <div class="panel__head"><span class="label">Image</span>
+            <span class="spacer"></span><button class="btn btn--ghost">Make another</button></div>
+          <div class="panel__body">
+            <div class="imgslot">${d.image ? 'A licensed stock photo is attached' : 'No image on this draft'}</div>
+            <dl class="kv" style="margin-top:var(--s4)">
+              <dt>Source</dt><dd><a href="#" onclick="return false" style="color:inherit;text-decoration:underline;text-underline-offset:3px">${h(d.src)}</a></dd>
+              <dt>Why this one</dt><dd>${h(d.why)}</dd>
+              <dt>Credit</dt><dd>${h(d.credit)}</dd></dl></div></div>
+        <div class="panel">
+          <div class="panel__head"><span class="label">Or post it later</span></div>
+          <div class="panel__body">
+            <div class="field"><span class="label">Send it at</span>
+              <input type="datetime-local" aria-label="Send it at">
+              <span class="sub">Your timezone, Asia/Ho_Chi_Minh. A time in the past is refused.</span></div>
+            <div style="display:flex;justify-content:flex-end;margin-top:var(--s3)">
+              <button class="btn" disabled>Schedule it</button></div></div></div>
+      </div></div></div>`;
+};
+
+SCREENS.activity = () => {
+  const rows = ACTIVITY.filter(a => (S.activityFilter === 'all' || a.result === S.activityFilter)
+                                 && (!S.activityFeature || a.feature === S.activityFeature));
+  const cls = { done:'', skipped:'badge--off', failed:'badge--danger' };
+  const word = { done:'Done', skipped:'Skipped', failed:'Failed' };
+  return `<div class="screen">
+    <div class="eyebrow">Everything the system did</div><h1 class="title">Activity</h1>
+    <div style="height:var(--s5)"></div>
+    <div class="filters">
+      <div class="tabs">${['all','done','skipped','failed'].map(k =>
+        `<button aria-selected="${S.activityFilter === k}" data-afilter="${k}">${k === 'all' ? 'All' : word[k]}</button>`).join('')}</div>
+      <input type="date" aria-label="Day">
+      <span class="select-wrap"><select id="afeature" aria-label="Feature">
+        <option value="">Every feature</option>
+        ${FEATURES.map(f => `<option value="${f.key}"${S.activityFeature === f.key ? ' selected':''}>${h(f.name)}</option>`).join('')}
+      </select></span>
+      <span class="spacer"></span>
+      <span class="sub">Filters are in the address bar, so this view can be shared or reloaded.</span>
+    </div>
+    <div class="panel" style="margin-top:var(--s4)">
+      <div class="tablewrap"><table class="data">
+        <thead><tr><th>Time</th><th>Action</th><th>Person</th><th>Result</th><th>Detail</th></tr></thead>
+        <tbody>${rows.length ? rows.map(a => `<tr>
+          <td class="meta">${h(a.time)}</td><td>${h(a.action)}</td>
+          <td>${a.link ? `<a href="#" onclick="return false">${h(a.person)}</a>` : h(a.person)}</td>
+          <td><span class="badge ${cls[a.result]}">${h(word[a.result])}</span></td>
+          <td class="${a.result === 'failed' ? 'detail-fail' : 'sub'}">${h(a.detail)}</td></tr>`).join('')
+          : `<tr><td colspan="5" style="text-align:center;padding:var(--s6)" class="sub">Nothing matches these filters.</td></tr>`}</tbody>
+      </table></div>
+      <div class="panel__head" style="border-bottom:0;border-top:1px solid var(--rule)">
+        <span class="sub">Showing ${rows.length} of ${ACTIVITY.length} actions</span>
+        <span class="spacer"></span><span class="meta">That is all of them.</span></div>
+    </div>
+    <details style="margin-top:var(--s4)">
+      <summary style="cursor:pointer;padding:var(--s3) 0;color:var(--ink-2)">Why a day can look lower than the one before</summary>
+      <p class="sub prose">A run stops when the batch is done, the quota is spent, or LinkedIn refuses — and a refusal on one action does not stop the rest. Skipped is a decision, not a failure: someone with no post in the last thirty days is skipped rather than liked twice.</p>
+    </details></div>`;
+};
+
+SCREENS.plan = () => `<div class="screen">
+  <div class="eyebrow">What this account may do</div><h1 class="title">Plan</h1>
+  <div style="height:var(--s5)"></div>
+  <div class="panel">
+    <div class="panel__head"><span class="label">Recommended plans</span>
+      <span class="spacer"></span><span class="meta">74 of 80 write actions a day committed</span></div>
+    <div class="panel__body">${planPicker()}</div></div></div>`;
+
+function planCell(p, i){
+  const [per, period, run] = p.rows[i];
+  return per <= 0 ? '<span class="pcol__off">off</span>'
+    : `<span class="pcol__v">${per} a ${period}</span><span class="pcol__q">${run} per run</span>`;
+}
+
+function planHead(p, tag){
+  const on = S.planKey === p.key;
+  const cls = tag === 'th' ? `pcol pcol--head${on ? ' is-on' : ''}` : 'plan-card__head';
+  return `<${tag} class="${cls}" scope="col">
+    <span class="pcol__flag">${p.key === 'steady' ? '<span class="badge badge--solid">Most accounts</span>' : ''}</span>
+    <span class="pcol__name">${h(p.title)}</span>
+    <span class="pcol__sum">${h(p.summary)}</span>
+    <span class="pcol__cost"><b>${p.minutes}</b><span>min a day</span></span>
+    <span class="pcol__writes">${p.writes} write actions a day</span>
+    <button type="button" class="btn ${on ? 'btn--primary' : 'btn--quiet'}"
+            aria-pressed="${on}" data-plan="${p.key}">${on ? 'Chosen' : 'Choose ' + h(p.title)}</button>
+  </${tag}>`;
+}
+
+function planPicker(){
+  const cell = (p, extra) => `class="pcol${extra}${S.planKey === p.key ? ' is-on' : ''}"`;
+
+  const wide = `<div class="tablewrap only-wide"><table class="plans">
+    <colgroup><col class="plans__labels"><col><col><col></colgroup>
+    <thead><tr><td></td>${PLANS.map(p => planHead(p, 'th')).join('')}</tr></thead>
+    <tbody>
+      ${PLAN_ROWS.map((name, i) => `<tr>
+        <th class="plans__rowlbl" scope="row">${h(name)}</th>
+        ${PLANS.map(p => `<td ${cell(p, '')}>${planCell(p, i)}</td>`).join('')}
+      </tr>`).join('')}
+      <tr>
+        <th class="plans__rowlbl plans__rowlbl--foot" scope="row">Machine time</th>
+        ${PLANS.map(p => `<td ${cell(p, ' pcol--foot')}><span class="pcol__q">about ${p.minutes} min a day</span></td>`).join('')}
+      </tr>
+    </tbody></table></div>`;
+
+  const narrow = `<div class="only-narrow stack">
+    ${PLANS.map(p => `<div class="plan-card${S.planKey === p.key ? ' is-on' : ''}">
+      ${planHead(p, 'div')}
+      <dl style="margin:0">
+        ${PLAN_ROWS.map((name, i) => `<div class="plan-card__row">
+          <dt>${h(name)}</dt><dd>${planCell(p, i)}</dd></div>`).join('')}
+        <div class="plan-card__row"><dt>Machine time</dt>
+          <dd><span class="pcol__q">about ${p.minutes} min a day</span></dd></div>
+      </dl></div>`).join('')}
+  </div>`;
+
+  return `<p class="prose" style="margin-bottom:var(--s4)">${S.planChosen
+      ? 'Switching replaces every figure below.' : 'Nothing runs until you pick one.'}
+      All three are within what LinkedIn tolerates and what this machine can get through. Any figure can be changed later.</p>
+    ${wide}${narrow}
+    <label class="checkrow" style="margin-top:var(--s4)"><input type="checkbox">
+      <span><b>Publish posts automatically</b><span class="sub">Off means drafts wait for your approval before anything appears on LinkedIn.</span></span></label>
+    <p class="sub" style="margin:var(--s3) 0 0">Machine time for Connection invitations and Page invitations is estimated — nothing has run yet.</p>
+    <div style="display:flex;justify-content:flex-end;margin-top:var(--s4)">
+      <button class="btn btn--primary" id="acceptPlan">Start with ${h(PLANS.find(x => x.key === S.planKey).title)}</button></div>`;
+}
+
+SCREENS.settings = () => `<div class="screen">
+  <div class="eyebrow">Your account with 8SENECA</div><h1 class="title">Settings</h1>
+  <div style="height:var(--s5)"></div>
+  <div class="stack">
+    <div class="panel"><div class="panel__head"><span class="label">Sign in to PLPA</span></div>
+      <div class="panel__body"><div class="two-col">
+        <div class="field"><span class="label">Email</span><input type="email" value="tomas@8seneca.com" readonly>
+          <span class="sub">Ask 8SENECA to change this.</span></div>
+        <div class="field"><span class="label">Name</span><input type="text" value="Tomas Bucek">
+          <span class="sub">How you are addressed in the console.</span></div>
+      </div></div></div>
+
+    <div class="panel">
+      <div class="panel__head"><span class="label">Time</span>
+        <span class="spacer"></span><span class="meta">Asia/Ho_Chi_Minh</span></div>
+      <div class="panel__body">
+        <div class="two-col">
+          <div class="stack-sm">
+            <div class="field"><span class="label">Your timezone</span>
+              <span class="select-wrap"><select>
+                <option>Asia/Ho_Chi_Minh · GMT+7</option><option>Europe/Prague · GMT+2</option>
+                <option>Europe/London · GMT+1</option><option>America/New_York · GMT−4</option></select></span>
+              <span class="sub">Not in the list? Ask 8SENECA to add it.</span></div>
+            <div class="nowbox"><b>16:16</b><span>there right now</span></div>
+          </div>
+          <div class="field">
+            <span class="label">What this zone controls</span>
+            <ul class="factlist">
+              <li>Daily limits reset at midnight here</li>
+              <li>Weekly and monthly cycles turn over here</li>
+              <li>A task window of 09:00 means 09:00 <b>here</b>, not where you are</li>
+              <li>Every timestamp in the console is shown in this zone</li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert" style="margin-top:var(--s5)">
+          <div><b>Changing it moves the reset</b>
+            <p>The day you change it can come out short or long, once. Nothing is lost either way.</p></div>
+        </div>
+      </div>
+      <div class="panel__foot">
+        <button class="btn btn--ghost">Discard</button><button class="btn">Save</button></div></div>
+
+    <div class="panel"><div class="panel__head"><span class="label">Appearance</span></div>
+      <div class="panel__body">
+        <div class="field w-sm"><span class="label">Text</span>
+          <span class="select-wrap"><select id="fontPick">
+            <option>DM Sans</option><option>Inter</option><option>Source Sans 3</option>
+            <option>Geist</option><option>Manrope</option><option>Atkinson Hyperlegible</option></select></span>
+          <span class="sub">The face of the approved reference design. Geometric, friendly, low contrast.</span></div>
+
+</div></div>
+
+    <div class="panel"><div class="panel__body" style="display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;padding-block:var(--s4)">
+      <span class="sub">Signed in on this browser. Sessions end after thirty days without use. Signing out clears the session here and ends it on the server.</span>
+      <span style="margin-left:auto"></span><button class="btn btn--quiet" id="signOutBtn">Sign out</button></div></div>
+
+    <div class="panel"><div class="panel__head"><span class="label">Delete this account</span></div>
+      <div class="panel__body">
+        <p class="prose">This removes your PLPA account: the LinkedIn email and password we hold, every draft, the run history, the follower list we built, and the browser profile the bot used. It cannot be undone.</p>
+        <p class="sub prose" style="margin:var(--s3) 0 var(--s4)">Your LinkedIn account itself is not touched — it is yours, and it stays exactly as it is. Only what PLPA stores is removed.</p>
+        <button class="btn btn--danger" id="deleteBtn">Delete my account</button></div></div>
+  </div></div>`;
+
+/* ══ auth ═════════════════════════════════════════════════════════════ */
+const AUTH = {
+  login:(err) => authCard('Sign in','Automation for your LinkedIn account, run by 8SENECA.', `
+    ${err ? `<div class="auth-err"><b>Email or password is wrong</b>
+      <p>Check both and try again. Five wrong attempts lock sign-in for fifteen minutes.</p></div>` : ''}
+    <form class="auth-form" onsubmit="return false">
+      <div class="field"><label class="label" for="li-email">Email</label>
+        <input id="li-email" type="email" class="${err ? 'is-bad':''}" value="${err ? 'tomas@8seneca.com':''}"></div>
+      <div class="field"><label class="label" for="li-pass">Password</label>
+        <input id="li-pass" type="password" class="${err ? 'is-bad':''}" value="${err ? '••••••••':''}"></div>
+      <button class="btn btn--primary" id="doLogin">Sign in</button></form>
+    <div class="auth-links"><a data-auth="forgot">Forgotten your password?</a>
+      <span>No account? <a data-auth="register">Create one</a></span></div>`),
+
+  register:() => authCard('Create an account','One console for the five things we run on your LinkedIn profile.', `
+    <form class="auth-form" onsubmit="return false">
+      <div class="field"><label class="label" for="rg-name">Your name</label><input id="rg-name" type="text" placeholder="Tomas Bucek"></div>
+      <div class="field"><label class="label" for="rg-email">Email</label><input id="rg-email" type="email" placeholder="you@company.com"></div>
+      <div class="field"><label class="label" for="rg-pass">Password</label><input id="rg-pass" type="password">
+        <span class="sub">At least twelve characters. A passphrase beats a short scramble.</span></div>
+      <button class="btn btn--primary" data-auth="confirmed">Create account</button></form>
+    <div class="auth-links"><span>Already have one? <a data-auth="login">Sign in</a></span></div>`),
+
+  forgot:() => authCard('Reset your password','We email a six-digit code. It is good for fifteen minutes.', `
+    <form class="auth-form" onsubmit="return false">
+      <div class="field"><label class="label" for="fg-email">Email</label><input id="fg-email" type="email" value="tomas@8seneca.com"></div>
+      <div class="field"><label class="label" for="fg-code">Code</label><input id="fg-code" type="text" inputmode="numeric" placeholder="123456">
+        <span class="sub">Sent, if that address has an account. We never say whether it does.</span></div>
+      <button class="btn btn--primary" data-auth="login">Check the code</button></form>
+    <div class="auth-links"><a data-auth="login">Back to sign in</a></div>`),
+
+  confirmed:() => authCard('Address confirmed','Your email is verified. Sign in and the console is ready.',
+    `<div class="auth-form"><button class="btn btn--primary" data-auth="login">Go to sign in</button></div>`),
+};
+const authCard = (t, s, body) => `<div class="auth-wrap"><div class="auth-card">
+  <div class="auth-mark">PL</div><h1>${h(t)}</h1><p class="sub">${h(s)}</p>${body}</div></div>`;
+
+/* ══ router ═══════════════════════════════════════════════════════════ */
+let route = { name:'console', arg:null };
+const CRUMBS = { console:'Console', linkedin:'LinkedIn account', followers:'Followers',
+                 posts:'Posts', draft:'Draft', activity:'Activity', plan:'Plan', settings:'Settings' };
+
+function go(target){
+  const [name, arg] = String(target).split(':');
+  route = { name, arg: arg || null };
+  closeMenu(); closeOverlay();
+  if (AUTH[name]) { renderAuth(); return; }
+  render();
+  window.scrollTo(0, 0);
+}
+
+function renderAuth(){
+  $('#app').hidden = true;
+  const host = $('#authHost'); host.hidden = false;
+  host.innerHTML = AUTH[route.name](route.arg === 'err');
+}
+
+function menuHTML(){
+  const copy = ACCOUNT_COPY[acctState()];
+  return `<div class="menu-id"><span class="avatar">TB</span>
+      <span class="who"><b>Tomas Bucek</b><span>tomas@8seneca.com</span></span></div>
+    <button class="menu-item" data-go="linkedin">${icon('linkedin')} LinkedIn account
+      <span class="tail">${h(copy.tail)}</span></button>
+    <button class="menu-item" data-go="plan">${icon('plan')} Plan</button>
+    <button class="menu-item" data-go="settings">${icon('gear')} Settings</button>
+    <div class="menu-rule"></div>
+    <button class="menu-item" data-go="login">${icon('signout')} Sign out</button>`;
+}
+
+function render(){
+  $('#authHost').hidden = true; $('#app').hidden = false;
+  const { name, arg } = route;
+  $('#crumb').textContent = name === 'feature' ? feat(arg).name : (CRUMBS[name] || 'Console');
+
+  const back = $('#backBtn');
+  back.hidden = name === 'console';
+  back.innerHTML = icon('back', 18) + 'Back';
+
+  const copy = ACCOUNT_COPY[acctState()];
+  $('#acctSub').textContent = copy.badge;
+  $('#acctSub').classList.toggle('is-alert', copy.alert);
+  $('#acctDot').classList.toggle('is-alert', copy.alert);
+  $('#acctMenu').innerHTML = menuHTML();
+
+  $('#main').innerHTML = name === 'feature' ? SCREENS.feature(arg)
+                       : name === 'draft' ? SCREENS.draft(arg)
+                       : (SCREENS[name] || SCREENS.console)();
+
+  if (name === 'console' && !S.planChosen) openPlanModal();
+}
+
+/* ══ overlays ═════════════════════════════════════════════════════════ */
+const overlay = $('#overlay');
+const closeOverlay = () => { overlay.innerHTML = ''; };
+const openOverlay = (html) => { overlay.innerHTML = `<div class="scrim" data-scrim></div>${html}`; };
+
+const openPlanModal = () => openOverlay(`<div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="pm">
+  <div class="modal__head"><h2 id="pm">Pick a starting plan</h2></div>
+  <div class="modal__body">${planPicker()}</div></div>`);
+
+const confirmDialog = (title, body, label, danger) => openOverlay(
+  `<div class="modal modal--narrow" role="dialog" aria-modal="true" aria-labelledby="cd">
+    <div class="modal__head"><h2 id="cd">${h(title)}</h2></div>
+    <div class="modal__body"><p class="prose">${h(body)}</p></div>
+    <div class="modal__foot"><button class="btn btn--ghost" data-close>Keep it</button>
+      <button class="btn ${danger ? 'btn--danger':'btn--primary'}" data-close>${h(label)}</button></div></div>`);
+
+const INDEX = [
+  ['The console', [['console','Console','five cards, the schedule, the totals'],
+                   ['plan','Plan','the three recommended plans'],
+                   ['activity','Activity','everything the system did']]],
+  ['Feature settings', FEATURES.map(f => ['feature:' + f.key, f.name, 'limits, schedule, own options'])],
+  ['Account and posts', [['linkedin','LinkedIn account','sign-in details and the connect flow'],
+                         ['followers','Followers','the list like and comment work through'],
+                         ['posts','Posts','waiting, posted, not posted, skipped'],
+                         ['draft:d1','One draft','editor, image, schedule-it'],
+                         ['settings','Settings','name, time, appearance, deletion']]],
+  ['Signed out', [['login','Sign in',''],['login:err','Sign in · wrong password',''],
+                  ['register','Create an account',''],['forgot','Reset your password',''],
+                  ['confirmed','Address confirmed','']]],
+];
+const CONNECT_STATES = [['provisioning','Signing in'],['awaiting_otp','Waiting for the code'],
+  ['awaiting_captcha','Security check'],['connected','Connected'],['failed','Password refused']];
+
+function openIndex(){
+  openOverlay(`<div class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="ix">
+    <div class="modal__head"><h2 id="ix">Every screen</h2></div>
+    <div class="modal__body">
+      ${INDEX.map(([t, items]) => `<div class="index-section"><h3>${h(t)}</h3>
+        <div class="index-grid">${items.map(([go,l,d]) =>
+          `<button data-go="${go}"><b>${h(l)}</b>${d ? `<span>${h(d)}</span>` : ''}</button>`).join('')}</div></div>`).join('')}
+      <div class="index-section"><h3>Account state</h3><div class="index-grid">
+        ${Object.entries(SCENARIOS).map(([k,v]) => `<button data-scenario="${k}"
+          style="${S.scenario === k ? 'border-color:var(--ink)' : ''}"><b>${h(k)}</b><span>${h(v.label)}</span></button>`).join('')}
+      </div></div>
+      <div class="index-section"><h3>Connect flow</h3><div class="index-grid">
+        ${CONNECT_STATES.map(([k,l]) => `<button data-cxgo="${k}"
+          style="${S.connect === k ? 'border-color:var(--ink)' : ''}"><b>${h(l)}</b><span>${h(k)}</span></button>`).join('')}
+      </div></div>
+    </div>
+    <div class="modal__foot"><button class="btn btn--ghost" data-close>Close</button></div></div>`);
+}
+
+/* ══ events ═══════════════════════════════════════════════════════════ */
+const closeMenu = () => {
+  $('#acctMenu').hidden = true;
+  $('#acctBtn').setAttribute('aria-expanded','false');
+};
+
+function setTheme(){
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+    || (!document.documentElement.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+  const b = $('#themeBtn');
+  b.setAttribute('aria-label', dark ? 'Switch to dark mode' : 'Switch to light mode');
+  b.innerHTML = icon(dark ? 'moon' : 'sun', 18);
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target;
+  if (t.closest('[data-close]')) return closeOverlay();
+  if (t.closest('[data-scrim]')) {
+    if (!S.planChosen && route.name === 'console') return;
+    return closeOverlay();
   }
-}
 
-// ==================== PROFILE DROPDOWN ====================
-function toggleDropdown(e) {
-  e.stopPropagation();
-  document.getElementById('profileDropdown').classList.toggle('open');
-}
+  const g = t.closest('[data-go]');
+  if (g) { e.preventDefault(); return go(g.dataset.go); }
+  const a = t.closest('[data-auth]');
+  if (a) { e.preventDefault(); return go(a.dataset.auth); }
 
-function closeDropdown() {
-  document.getElementById('profileDropdown').classList.remove('open');
-}
+  if (t.closest('#backBtn')) return go('console');
+  if (t.closest('#acctBtn')) {
+    const m = $('#acctMenu'); m.hidden = !m.hidden;
+    $('#acctBtn').setAttribute('aria-expanded', String(!m.hidden)); return;
+  }
+  if (!t.closest('#acctMenu')) closeMenu();
+  if (t.closest('#themeBtn')) return setTheme();
 
-document.addEventListener('click', function(e) {
-  var pill = document.getElementById('profilePill');
-  if (!pill.contains(e.target)) {
-    closeDropdown();
+  const sc = t.closest('[data-scenario]');
+  if (sc) { S.scenario = sc.dataset.scenario; S.running = new Set(SCENARIOS[S.scenario].running);
+            S.connect = SCENARIOS[S.scenario].account === 'connected' ? 'connected' : 'failed';
+            return go('console'); }
+
+  const cg = t.closest('[data-cxgo]');
+  if (cg) { S.connect = cg.dataset.cxgo; S.connectReopened = false; S.connectStarting = false;
+            S.connectCode = ''; S.connectConfirm = false; return go('linkedin'); }
+
+  const cx = t.closest('[data-cx]');
+  if (cx) {
+    const v = cx.dataset.cx;
+    if (v === 'reopen') S.connectReopened = true;
+    else if (v === 'start') S.connectStarting = true;
+    else if (v === 'unstart') S.connectStarting = false;
+    else if (v === 'check') S.connectConfirm = true;
+    else if (v === 'uncheck') S.connectConfirm = false;
+    else if (v === 'sent') { S.connect = 'connected'; S.connectReopened = false; S.connectCode = ''; S.connectConfirm = false; }
+    else { S.connect = v; S.connectStarting = false; S.connectReopened = false; }
+    return render();
+  }
+
+  const st = t.closest('[data-start]');
+  if (st) { S.running.add(st.dataset.start); return render(); }
+  const sp = t.closest('[data-stop]');
+  if (sp) { S.running.delete(sp.dataset.stop); return render(); }
+  if (t.closest('#schedBtn')) { S.schedEnabled = !S.schedEnabled; return render(); }
+
+  const pl = t.closest('[data-plan]');
+  if (pl) { S.planKey = pl.dataset.plan;
+            return overlay.querySelector('.modal') ? openPlanModal() : render(); }
+  if (t.closest('#acceptPlan')) { S.planChosen = true; closeOverlay(); return render(); }
+
+  const tb = t.closest('[data-tab]');
+  if (tb) { S.postsTab = tb.dataset.tab; return render(); }
+  const nt = t.closest('[data-newstab]');
+  if (nt) { S.newsTab = nt.dataset.newstab; return render(); }
+  const af = t.closest('[data-afilter]');
+  if (af) { S.activityFilter = af.dataset.afilter; return render(); }
+
+  const dy = t.closest('[data-day]');
+  if (dy) { const [k,i] = dy.dataset.day.split(':'); feat(k).days[+i] ^= 1;
+            dy.setAttribute('aria-pressed', String(!!feat(k).days[+i])); return; }
+
+  const sg = t.closest('.seg button');
+  if (sg) { $$('button', sg.parentElement).forEach(b => b.setAttribute('aria-pressed','false'));
+            sg.setAttribute('aria-pressed','true'); return; }
+
+  const po = t.closest('[data-post]');
+  if (po) { const d = DRAFTS.find(x => x.id === po.dataset.post);
+            if (d) { d.state = 'posted'; d.written = '16:1' + Math.floor(Math.random()*9); }
+            S.postsTab = 'posted'; return go('posts'); }
+  const sk = t.closest('[data-skip]');
+  if (sk) { const d = DRAFTS.find(x => x.id === sk.dataset.skip);
+            if (d) d.state = 'skipped'; S.postsTab = 'skipped'; return go('posts'); }
+
+  if (t.closest('#writeNow')) {
+    DRAFTS.unshift({ id:'d' + (DRAFTS.length + 1), state:'waiting', written:'16:18', image:false,
+      src:'Hacker News', credit:'@8senecanews',
+      text:'Written just now: the quiet story this week is how much of the “agent” tooling is really a scheduler with better copy.',
+      why:'Written on request, not picked from the feed' });
+    S.postsTab = 'waiting'; return render();
+  }
+
+  if (t.closest('#checkNow')) return confirmDialog('Checking the sign-in',
+    'We are signing in as you on the automation machine. This takes 30 to 60 seconds and nothing else runs while it happens.','Leave it running');
+  if (t.closest('#disconnectBtn')) return confirmDialog('Disconnect this LinkedIn account?',
+    'The five features stop immediately and the sign-in details are deleted. Your LinkedIn account itself is untouched.','Disconnect', true);
+  if (t.closest('#signOutBtn')) return confirmDialog('Sign out of this browser?',
+    'The session here is cleared and ended on the server. Scheduled runs keep going — signing out does not stop the automation.','Sign out');
+  if (t.closest('#deleteBtn')) return confirmDialog('Delete this PLPA account?',
+    'Every draft, the run history, the follower list and the stored LinkedIn password go with it. This cannot be undone.','Delete it', true);
+  if (t.closest('#doLogin')) { S.planChosen = false; return go('console'); }
+});
+
+document.addEventListener('input', (e) => {
+  const t = e.target;
+  if (t.dataset.mix !== undefined || t.dataset.mixnum !== undefined) {
+    const i = t.dataset.mix ?? t.dataset.mixnum, box = $('#mixBody');
+    $(`[data-mix="${i}"]`, box).value = t.value;
+    $(`[data-mixnum="${i}"]`, box).value = t.value;
+    const total = [0,1,2].reduce((s,n) => s + Number($(`[data-mix="${n}"]`, box).value), 0);
+    $('#mixTotal').textContent = total + '%';
+    const pill = $('#mixPill');
+    pill.textContent = 'Total ' + total + '%';
+    pill.className = 'badge' + (total === 100 ? '' : ' badge--warn');
+    return;
+  }
+  if (t.id === 'note') $('#noteCount').textContent = `${t.value.length} / 200`;
+  if (t.id === 'draftText') $('#draftCount').textContent = `${t.value.length} / 3,000`;
+  if (t.id === 'afeature') { S.activityFeature = t.value; render(); }
+  if (t.id === 'cx-otp') { S.connectCode = t.value.replace(/\D/g,'').slice(0,6); S.connectConfirm = false; render(); }
+  if (t.id === 'fontPick') {
+    const m = { 'DM Sans':'"DM Sans"', 'Inter':'Inter', 'Source Sans 3':'"Source Sans 3"',
+                'Geist':'Geist', 'Manrope':'Manrope', 'Atkinson Hyperlegible':'"Atkinson Hyperlegible"' };
+    document.documentElement.style.setProperty('--font-ui', `${m[t.value]}, "DM Sans", system-ui, sans-serif`);
   }
 });
 
-// ==================== THEME TOGGLE ====================
-function toggleTheme() {
-  var html = document.documentElement;
-  var current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
-}
-
-// ==================== DAY TOGGLES ====================
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('day-toggle')) {
-    e.target.classList.toggle('active');
-  }
+document.addEventListener('keydown', (e) => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+  if (e.key === '?' && !typing) { e.preventDefault(); return openIndex(); }
+  if (e.key !== 'Escape') return;
+  if (!S.planChosen && route.name === 'console' && overlay.querySelector('.modal')) return;
+  closeOverlay(); closeMenu();
 });
+
+$('#themeBtn').innerHTML = icon('moon', 18);
+render();
 </script>
-
 </body>
 </html>
