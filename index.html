@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLPA Console</title>
+<title>Perpetua Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
 <style>
 /* ════════════════════════════════════════════════════════════════════════
-   PLPA console — palette from the app's own theme.css, rebuilt on one
+   Perpetua console — palette from the app's own theme.css, rebuilt on one
    type scale, one spacing scale and one control height.
    ═══════════════════════════════════════════════════════════════════════ */
 :root{
@@ -558,25 +558,25 @@ input[type=range]{width:100%;accent-color:var(--fill)}
     <button class="back" id="backBtn" hidden></button>
     <span class="brand">
       <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <mask id="plpaMark" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+        <mask id="perpetuaMark" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
           <rect width="24" height="24" rx="7" fill="#fff"/>
           <g fill="#000" transform="translate(.52 .77)">
             <rect x="7.55" y="5.4" width="2.7" height="13.2" rx="1.35"/>
             <path d="M7.55 9.85A4.45 4.45 0 1 1 12 14.3L12 11.6A1.75 1.75 0 1 0 10.25 9.85Z"/>
           </g>
         </mask>
-        <rect width="24" height="24" rx="7" fill="currentColor" mask="url(#plpaMark)"/>
+        <rect width="24" height="24" rx="7" fill="currentColor" mask="url(#perpetuaMark)"/>
       </svg>
-      <span class="wordmark">PLPA</span>
+      <span class="wordmark">Perpetua</span>
     </span>
     <span class="bar-sep"></span>
     <span class="crumb" id="crumb">Console</span>
     <div class="topbar-right">
       <button class="iconbtn" id="themeBtn" aria-label="Switch to dark mode"></button>
       <button class="acct" id="acctBtn" aria-haspopup="true" aria-expanded="false">
-        <span class="avatar">TB</span>
+        <span class="avatar">AM</span>
         <span>
-          <span class="acct-name">Tomas Bucek</span>
+          <span class="acct-name">Alex Morgan</span>
           <span class="acct-sub" id="acctSub">LinkedIn · connected</span>
         </span>
         <span class="dot-state" id="acctDot"></span>
@@ -655,16 +655,16 @@ const PLANS = [
 const PLAN_ROWS = ['Like posts','Comment on posts','Publish posts','Connection invitations','Page invitations'];
 
 const DRAFTS = [
-  { id:'d1', state:'waiting', written:'13:04', image:false, src:'Hacker News', credit:'@8senecanews',
+  { id:'d1', state:'waiting', written:'13:04', image:false, src:'Hacker News', credit:'@northwindnews',
     text:'A quieter one: the tooling survey everyone quotes changed its methodology this year, which explains most of the swing people are reading as a trend.',
     why:'Unusual traction for its age, not the highest total' },
-  { id:'d2', state:'waiting', written:'13:02', image:true, src:'Hacker News', credit:'@8senecanews',
+  { id:'d2', state:'waiting', written:'13:02', image:true, src:'Hacker News', credit:'@northwindnews',
     text:"The interesting part of this week's platform release is not the release itself. It is how fast teams moved onto it — three of the four I spoke to had it in staging within a day.",
     why:'Three independent write-ups in five hours' },
-  { id:'d3', state:'posted', written:'08:12', image:false, src:'Hacker News', credit:'@8senecanews',
+  { id:'d3', state:'posted', written:'08:12', image:false, src:'Hacker News', credit:'@northwindnews',
     text:'Most "AI infrastructure" posts are about training. The bill everyone actually pays is inference, and it is a scheduling problem before it is a hardware one.',
     why:'Sustained traction overnight' },
-  { id:'d4', state:'failed', written:'07:40', image:false, src:'Hacker News', credit:'@8senecanews',
+  { id:'d4', state:'failed', written:'07:40', image:false, src:'Hacker News', credit:'@northwindnews',
     text:'Notes from a week of moving a monolith onto a queue: the hard part was never the queue.',
     why:'Steady climb from a small start' },
 ];
@@ -922,7 +922,7 @@ function connectSettings(){
 
 function companiesPanel(){
   const list = [
-    ['8SENECA','Page you administer','4,180 followers · 214 of 250 invitation credits left · checked 10 Sep','',true],
+    ['Northwind','Page you administer','4,180 followers · 214 of 250 invitation credits left · checked 10 Sep','',true],
     ['Loop Vietnam','From your profile','962 followers','No invitation credits left on this page this month.',false],
     ['VNU-HCM','From your profile','Followers not read yet','',false],
   ];
@@ -959,7 +959,7 @@ function newsPanels(){
         <input type="text" value="platform engineering, developer tooling, AI infrastructure">
         <span class="sub">We look for stories from the last five hours with unusual traction, not just the most-liked.</span></div>
       <div class="field"><span class="label">Account to credit</span>
-        <input type="text" value="@8senecanews"><span class="sub">Mentioned in the post body.</span></div>
+        <input type="text" value="@northwindnews"><span class="sub">Mentioned in the post body.</span></div>
       <div class="field"><span class="label">Picture</span>
         <div><div class="seg"><button type="button" aria-pressed="true">Add a photo</button><button type="button" aria-pressed="false">Text only</button></div></div>
         <span class="sub">A licensed stock photo matched to the story. Photos from Pexels.</span></div>
@@ -990,10 +990,10 @@ SCREENS.linkedin = () => {
         <div class="panel__body">
           <p class="prose${st === 'connected' ? '' : ''}" style="${st === 'connected' ? '' : 'color:var(--warn)'}">${h(status[2])}</p>
           ${st === 'unconfigured' ? '' : `<dl class="kv" style="margin-top:var(--s4)">
-            <dt>Signed in as</dt><dd>tomas.bucek@8seneca.com</dd>
+            <dt>Signed in as</dt><dd>alex.morgan@northwind.example</dd>
             <dt>Password</dt><dd>Set · never shown again</dd>
             <dt>Two-step secret</dt><dd>Set</dd>
-            <dt>Company page</dt><dd>8seneca</dd></dl>`}
+            <dt>Company page</dt><dd>Northwind</dd></dl>`}
         </div></div>
 
       ${st === 'unconfigured' ? '' : `<div class="panel"><div class="panel__body" style="display:flex;align-items:center;gap:var(--s4);flex-wrap:wrap;padding-block:var(--s4)">
@@ -1011,7 +1011,7 @@ SCREENS.linkedin = () => {
         <div class="panel__body">
           <div class="two-col">
             <div class="field"><span class="label">Email</span>
-              <input type="email" value="${st === 'unconfigured' ? '' : 'tomas.bucek@8seneca.com'}" placeholder="you@company.com"></div>
+              <input type="email" value="${st === 'unconfigured' ? '' : 'alex.morgan@northwind.example'}" placeholder="you@company.com"></div>
             <div class="field"><span class="label">New password</span>
               <input type="password" value="${st === 'unconfigured' ? '' : '••••••••'}">
               <span class="sub">Leave blank to keep. Your LinkedIn password, not your Google or email one.</span></div>
@@ -1051,7 +1051,7 @@ function connectPanel(){
             ${S.connectCode.length === 6 ? 'Continue' : `${S.connectCode.length} of 6 digits`}</button>
           <button class="btn" data-cx="idle">Stop</button></div>`}`;
   } else if (st === 'awaiting_captcha') {
-    body = `${alertStrip('warn','LinkedIn is asking for a security check','Someone at 8SENECA has to clear it by hand. Leave this page open.')}
+    body = `${alertStrip('warn','LinkedIn is asking for a security check','Someone at Northwind has to clear it by hand. Leave this page open.')}
       <p class="sub prose">Nothing is wrong with your account. This happens on a first sign-in and is cleared by a person, not by retrying — retrying is what makes it worse.</p>
       <div><button class="btn" data-cx="idle">Stop</button></div>`;
   } else if (st === 'provisioning' || st === 'logging_in') {
@@ -1067,11 +1067,11 @@ function connectPanel(){
     body = `${failed ? alertStrip('stop','LinkedIn did not accept that password',
         'Please double-check it. It has to be your <b>LinkedIn</b> password, not your Google or email one.') : ''}
       ${S.connectStarting ? `
-        ${alertStrip('warn','Start signing in to LinkedIn?','We will open LinkedIn as tomas.bucek@8seneca.com from Ho Chi Minh City, and type these details at human speed. LinkedIn will then email a code to that address, and this page will ask you for it.')}
+        ${alertStrip('warn','Start signing in to LinkedIn?','We will open LinkedIn as alex.morgan@northwind.example from Ho Chi Minh City, and type these details at human speed. LinkedIn will then email a code to that address, and this page will ask you for it.')}
         <div style="display:flex;gap:var(--s2);flex-wrap:wrap">
           <button class="btn btn--primary" data-cx="awaiting_otp">Yes, sign in now</button>
           <button class="btn" data-cx="unstart">Let me check again</button></div>`
-      : `<p class="sub prose">Signing in as <b>tomas.bucek@8seneca.com</b> with the password already stored. To use different details, change them below first.</p>
+      : `<p class="sub prose">Signing in as <b>alex.morgan@northwind.example</b> with the password already stored. To use different details, change them below first.</p>
         <div class="field w-md"><label class="label" for="cx-city">Where should this account be run from?</label>
           <span class="select-wrap"><select id="cx-city">
             ${CITIES.map(([c,n]) => `<option${c === 'Ho Chi Minh City' ? ' selected':''}>${h(c)}${n > 1 ? ` · ${n} available` : ''}</option>`).join('')}
@@ -1294,14 +1294,14 @@ function planPicker(){
 }
 
 SCREENS.settings = () => `<div class="screen">
-  <div class="eyebrow">Your account with 8SENECA</div><h1 class="title">Settings</h1>
+  <div class="eyebrow">Your account with Northwind</div><h1 class="title">Settings</h1>
   <div style="height:var(--s5)"></div>
   <div class="stack">
-    <div class="panel"><div class="panel__head"><span class="label">Sign in to PLPA</span></div>
+    <div class="panel"><div class="panel__head"><span class="label">Sign in to Perpetua</span></div>
       <div class="panel__body"><div class="two-col">
-        <div class="field"><span class="label">Email</span><input type="email" value="tomas@8seneca.com" readonly>
-          <span class="sub">Ask 8SENECA to change this.</span></div>
-        <div class="field"><span class="label">Name</span><input type="text" value="Tomas Bucek">
+        <div class="field"><span class="label">Email</span><input type="email" value="alex.morgan@northwind.example" readonly>
+          <span class="sub">Ask Northwind to change this.</span></div>
+        <div class="field"><span class="label">Name</span><input type="text" value="Alex Morgan">
           <span class="sub">How you are addressed in the console.</span></div>
       </div></div></div>
 
@@ -1315,7 +1315,7 @@ SCREENS.settings = () => `<div class="screen">
               <span class="select-wrap"><select>
                 <option>Asia/Ho_Chi_Minh · GMT+7</option><option>Europe/Prague · GMT+2</option>
                 <option>Europe/London · GMT+1</option><option>America/New_York · GMT−4</option></select></span>
-              <span class="sub">Not in the list? Ask 8SENECA to add it.</span></div>
+              <span class="sub">Not in the list? Ask Northwind to add it.</span></div>
             <div class="nowbox"><b>16:16</b><span>there right now</span></div>
           </div>
           <div class="field">
@@ -1352,19 +1352,19 @@ SCREENS.settings = () => `<div class="screen">
 
     <div class="panel"><div class="panel__head"><span class="label">Delete this account</span></div>
       <div class="panel__body">
-        <p class="prose">This removes your PLPA account: the LinkedIn email and password we hold, every draft, the run history, the follower list we built, and the browser profile the bot used. It cannot be undone.</p>
-        <p class="sub prose" style="margin:var(--s3) 0 var(--s4)">Your LinkedIn account itself is not touched — it is yours, and it stays exactly as it is. Only what PLPA stores is removed.</p>
+        <p class="prose">This removes your Perpetua account: the LinkedIn email and password we hold, every draft, the run history, the follower list we built, and the browser profile the bot used. It cannot be undone.</p>
+        <p class="sub prose" style="margin:var(--s3) 0 var(--s4)">Your LinkedIn account itself is not touched — it is yours, and it stays exactly as it is. Only what Perpetua stores is removed.</p>
         <button class="btn btn--danger" id="deleteBtn">Delete my account</button></div></div>
   </div></div>`;
 
 /* ══ auth ═════════════════════════════════════════════════════════════ */
 const AUTH = {
-  login:(err) => authCard('Sign in','Automation for your LinkedIn account, run by 8SENECA.', `
+  login:(err) => authCard('Sign in','Automation for your LinkedIn account, run by Northwind.', `
     ${err ? `<div class="auth-err"><b>Email or password is wrong</b>
       <p>Check both and try again. Five wrong attempts lock sign-in for fifteen minutes.</p></div>` : ''}
     <form class="auth-form" onsubmit="return false">
       <div class="field"><label class="label" for="li-email">Email</label>
-        <input id="li-email" type="email" class="${err ? 'is-bad':''}" value="${err ? 'tomas@8seneca.com':''}"></div>
+        <input id="li-email" type="email" class="${err ? 'is-bad':''}" value="${err ? 'alex.morgan@northwind.example':''}"></div>
       <div class="field"><label class="label" for="li-pass">Password</label>
         <input id="li-pass" type="password" class="${err ? 'is-bad':''}" value="${err ? '••••••••':''}"></div>
       <button class="btn btn--primary" id="doLogin">Sign in</button></form>
@@ -1373,7 +1373,7 @@ const AUTH = {
 
   register:() => authCard('Create an account','One console for the five things we run on your LinkedIn profile.', `
     <form class="auth-form" onsubmit="return false">
-      <div class="field"><label class="label" for="rg-name">Your name</label><input id="rg-name" type="text" placeholder="Tomas Bucek"></div>
+      <div class="field"><label class="label" for="rg-name">Your name</label><input id="rg-name" type="text" placeholder="Alex Morgan"></div>
       <div class="field"><label class="label" for="rg-email">Email</label><input id="rg-email" type="email" placeholder="you@company.com"></div>
       <div class="field"><label class="label" for="rg-pass">Password</label><input id="rg-pass" type="password">
         <span class="sub">At least twelve characters. A passphrase beats a short scramble.</span></div>
@@ -1382,7 +1382,7 @@ const AUTH = {
 
   forgot:() => authCard('Reset your password','We email a six-digit code. It is good for fifteen minutes.', `
     <form class="auth-form" onsubmit="return false">
-      <div class="field"><label class="label" for="fg-email">Email</label><input id="fg-email" type="email" value="tomas@8seneca.com"></div>
+      <div class="field"><label class="label" for="fg-email">Email</label><input id="fg-email" type="email" value="alex.morgan@northwind.example"></div>
       <div class="field"><label class="label" for="fg-code">Code</label><input id="fg-code" type="text" inputmode="numeric" placeholder="123456">
         <span class="sub">Sent, if that address has an account. We never say whether it does.</span></div>
       <button class="btn btn--primary" data-auth="login">Check the code</button></form>
@@ -1416,8 +1416,8 @@ function renderAuth(){
 
 function menuHTML(){
   const copy = ACCOUNT_COPY[acctState()];
-  return `<div class="menu-id"><span class="avatar">TB</span>
-      <span class="who"><b>Tomas Bucek</b><span>tomas@8seneca.com</span></span></div>
+  return `<div class="menu-id"><span class="avatar">AM</span>
+      <span class="who"><b>Alex Morgan</b><span>alex.morgan@northwind.example</span></span></div>
     <button class="menu-item" data-go="linkedin">${icon('linkedin')} LinkedIn account
       <span class="tail">${h(copy.tail)}</span></button>
     <button class="menu-item" data-go="plan">${icon('plan')} Plan</button>
@@ -1594,7 +1594,7 @@ document.addEventListener('click', (e) => {
 
   if (t.closest('#writeNow')) {
     DRAFTS.unshift({ id:'d' + (DRAFTS.length + 1), state:'waiting', written:'16:18', image:false,
-      src:'Hacker News', credit:'@8senecanews',
+      src:'Hacker News', credit:'@northwindnews',
       text:'Written just now: the quiet story this week is how much of the “agent” tooling is really a scheduler with better copy.',
       why:'Written on request, not picked from the feed' });
     S.postsTab = 'waiting'; return render();
@@ -1606,7 +1606,7 @@ document.addEventListener('click', (e) => {
     'The five features stop immediately and the sign-in details are deleted. Your LinkedIn account itself is untouched.','Disconnect', true);
   if (t.closest('#signOutBtn')) return confirmDialog('Sign out of this browser?',
     'The session here is cleared and ended on the server. Scheduled runs keep going — signing out does not stop the automation.','Sign out');
-  if (t.closest('#deleteBtn')) return confirmDialog('Delete this PLPA account?',
+  if (t.closest('#deleteBtn')) return confirmDialog('Delete this Perpetua account?',
     'Every draft, the run history, the follower list and the stored LinkedIn password go with it. This cannot be undone.','Delete it', true);
   if (t.closest('#doLogin')) { S.planChosen = false; return go('console'); }
 });
